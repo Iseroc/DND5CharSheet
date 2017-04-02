@@ -1,0 +1,23 @@
+.btn-newItem {
+  position: fixed;
+  top: 50px;
+  right: 0;
+  margin: 10px;
+  z-index: 100;
+}
+
+.newItem-area {
+  position: fixed;
+  top: 50px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  background: white;
+  border: 1px solid #333;
+  width: 400px;
+  height: 300px;
+  box-shadow: 0 2px 3px #888;
+}
+.newItem-createBtn {
+}

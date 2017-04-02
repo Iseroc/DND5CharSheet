@@ -436,25 +436,6 @@ define('resources/value-converters/select',["require", "exports", "../../data/ex
     exports.SelectValueConverter = SelectValueConverter;
 });
 
-define('resources/value-converters/skillCalculator',["require", "exports"], function (require, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    class SkillCalculatorValueConverter {
-        toView(profiencyBonus, baseStat, profiency, expertise) {
-            var statBonus = Math.floor((baseStat - 10) / 2);
-            var skill = statBonus;
-            if (profiency)
-                skill += profiencyBonus;
-            if (expertise)
-                skill += profiencyBonus;
-            if (skill > 0)
-                return "+" + skill;
-            return skill;
-        }
-    }
-    exports.SkillCalculatorValueConverter = SkillCalculatorValueConverter;
-});
-
 define('resources/value-converters/statModifier',["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
@@ -605,6 +586,109 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+define('components/inventory/newitem/newtem',["require", "exports", "aurelia-framework", "../../../data/dataAccessor"], function (require, exports, aurelia_framework_1, dataAccessor_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    let Newitem = class Newitem {
+        constructor(data) {
+            this.data = data;
+        }
+    };
+    Newitem = __decorate([
+        aurelia_framework_1.inject(dataAccessor_1.DataAccessor),
+        __metadata("design:paramtypes", [dataAccessor_1.DataAccessor])
+    ], Newitem);
+    exports.Newitem = Newitem;
+});
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+define('components/levelup/lvskill/lvskill',["require", "exports", "aurelia-framework", "aurelia-framework", "../../../data/dataAccessor", "../../../data/extra/enums"], function (require, exports, aurelia_framework_1, aurelia_framework_2, dataAccessor_1, enums_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    let Lvskill = class Lvskill {
+        constructor(data) {
+            this.data = data;
+        }
+        get name() {
+            return this.data.translations.translateSkill(this.model);
+        }
+        get profiency() {
+            return this.data.character.skills.includes(this.model);
+        }
+        set profiency(value) {
+            if (!value) {
+                this.data.character.skills.splice(this.data.character.skills.indexOf(this.model), 1);
+            }
+            if (value) {
+                this.data.character.skills.push(this.model);
+            }
+        }
+    };
+    __decorate([
+        aurelia_framework_1.bindable,
+        __metadata("design:type", Number)
+    ], Lvskill.prototype, "model", void 0);
+    Lvskill = __decorate([
+        aurelia_framework_2.inject(dataAccessor_1.DataAccessor),
+        __metadata("design:paramtypes", [dataAccessor_1.DataAccessor])
+    ], Lvskill);
+    exports.Lvskill = Lvskill;
+});
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+define('components/levelup/lvstat/lvstat',["require", "exports", "aurelia-framework", "aurelia-framework", "../../../data/dataAccessor", "../../../data/extra/enums"], function (require, exports, aurelia_framework_1, aurelia_framework_2, dataAccessor_1, enums_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    let Lvstat = class Lvstat {
+        constructor(data) {
+            this.data = data;
+        }
+        get name() {
+            return this.data.translations.translateStat(this.model);
+        }
+        get value() {
+            return this.data.character.stats.get(this.model);
+        }
+        set value(value) {
+            this.data.character.stats.set(this.model, value);
+        }
+    };
+    __decorate([
+        aurelia_framework_1.bindable,
+        __metadata("design:type", Number)
+    ], Lvstat.prototype, "model", void 0);
+    Lvstat = __decorate([
+        aurelia_framework_2.inject(dataAccessor_1.DataAccessor),
+        __metadata("design:paramtypes", [dataAccessor_1.DataAccessor])
+    ], Lvstat);
+    exports.Lvstat = Lvstat;
+});
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 define('components/levelup/traits/traits',["require", "exports", "aurelia-framework", "../../../data/dataAccessor", "../../../data/models/components/traitModel"], function (require, exports, aurelia_framework_1, dataAccessor_1, traitModel_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
@@ -724,37 +808,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-define('components/levelup/lvskill/lvskill',["require", "exports", "aurelia-framework", "aurelia-framework", "../../../data/dataAccessor", "../../../data/extra/enums"], function (require, exports, aurelia_framework_1, aurelia_framework_2, dataAccessor_1, enums_1) {
+define('components/inventory/newitem/newitem',["require", "exports", "aurelia-framework", "../../../data/dataAccessor"], function (require, exports, aurelia_framework_1, dataAccessor_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    let Lvskill = class Lvskill {
+    let NewItem = class NewItem {
         constructor(data) {
             this.data = data;
         }
-        get name() {
-            return this.data.translations.translateSkill(this.model);
-        }
-        get profiency() {
-            return this.data.character.skills.includes(this.model);
-        }
-        set profiency(value) {
-            if (!value) {
-                this.data.character.skills.splice(this.data.character.skills.indexOf(this.model), 1);
-            }
-            if (value) {
-                this.data.character.skills.push(this.model);
-            }
-        }
     };
-    __decorate([
-        aurelia_framework_1.bindable,
-        __metadata("design:type", Number)
-    ], Lvskill.prototype, "model", void 0);
-    Lvskill = __decorate([
-        aurelia_framework_2.inject(dataAccessor_1.DataAccessor),
+    NewItem = __decorate([
+        aurelia_framework_1.inject(dataAccessor_1.DataAccessor),
         __metadata("design:paramtypes", [dataAccessor_1.DataAccessor])
-    ], Lvskill);
-    exports.Lvskill = Lvskill;
+    ], NewItem);
+    exports.NewItem = NewItem;
 });
 
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -766,32 +832,89 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-define('components/levelup/lvstat/lvstat',["require", "exports", "aurelia-framework", "aurelia-framework", "../../../data/dataAccessor", "../../../data/extra/enums"], function (require, exports, aurelia_framework_1, aurelia_framework_2, dataAccessor_1, enums_1) {
+define('components/inventory/newitem/newItem',["require", "exports", "aurelia-framework", "../../../data/dataAccessor"], function (require, exports, aurelia_framework_1, dataAccessor_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    let Lvstat = class Lvstat {
+    let NewItem = class NewItem {
         constructor(data) {
             this.data = data;
         }
-        get name() {
-            return this.data.translations.translateStat(this.model);
+    };
+    NewItem = __decorate([
+        aurelia_framework_1.inject(dataAccessor_1.DataAccessor),
+        __metadata("design:paramtypes", [dataAccessor_1.DataAccessor])
+    ], NewItem);
+    exports.NewItem = NewItem;
+});
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+define('components/inventory/newItem/newItem',["require", "exports", "aurelia-framework", "../../../data/dataAccessor", "../../../data/models/components/itemModel", "../../../data/models/components/profiency", "../../../data/models/components/traitModel"], function (require, exports, aurelia_framework_1, dataAccessor_1, itemModel_1, profiency_1, traitModel_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    let NewItem = class NewItem {
+        constructor(data) {
+            this.data = data;
+            this.additionalSkillProfiencies = [];
+            this.additionalOtherProfiencies = [];
+            this.additionalTraits = [];
         }
-        get value() {
-            return this.data.character.stats.get(this.model);
+        addSkillProfiency() {
+            if (!this.additionalSkillProfiencies.includes(this.selectedSkillProfiency)) {
+                this.additionalSkillProfiencies.push(this.selectedSkillProfiency);
+            }
         }
-        set value(value) {
-            this.data.character.stats.set(this.model, value);
+        addOtherProfiency() {
+            if (this.newOtherProfiencyName) {
+                this.additionalOtherProfiencies.push(new profiency_1.Profiency(this.newOtherProfiencyName, 'other'));
+                this.newOtherProfiencyName = '';
+            }
+        }
+        addTrait() {
+            if (this.newTraitName) {
+                this.additionalTraits.push(new traitModel_1.TraitModel(this.newTraitName));
+                this.newTraitName = '';
+            }
+        }
+        createItem() {
+            var item = new itemModel_1.ItemModel(this.name, true);
+            item.additionalOtherProfiencies = this.additionalOtherProfiencies;
+            item.additionalSkillProfiencies = this.additionalSkillProfiencies;
+            item.additionalTraits = this.additionalTraits;
+            this.data.inventory.backpack.push(item);
         }
     };
-    __decorate([
-        aurelia_framework_1.bindable,
-        __metadata("design:type", Number)
-    ], Lvstat.prototype, "model", void 0);
-    Lvstat = __decorate([
-        aurelia_framework_2.inject(dataAccessor_1.DataAccessor),
+    NewItem = __decorate([
+        aurelia_framework_1.inject(dataAccessor_1.DataAccessor),
         __metadata("design:paramtypes", [dataAccessor_1.DataAccessor])
-    ], Lvstat);
-    exports.Lvstat = Lvstat;
+    ], NewItem);
+    exports.NewItem = NewItem;
+});
+
+define('resources/value-converters/skillCalculator',["require", "exports"], function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    class SkillCalculatorValueConverter {
+        toView(profiencyBonus, baseStat, profiency, expertise) {
+            var statBonus = Math.floor((baseStat - 10) / 2);
+            var skill = statBonus;
+            if (profiency)
+                skill += profiencyBonus;
+            if (expertise)
+                skill += profiencyBonus;
+            if (skill > 0)
+                return "+" + skill;
+            return skill;
+        }
+    }
+    exports.SkillCalculatorValueConverter = SkillCalculatorValueConverter;
 });
 
 define('text!app.html', ['module'], function(module) { module.exports = "<template><require from=\"./styles.css\"></require><nav class=\"navbar\" role=\"navigation\"><a class=\"navbar-item ${row.isActive ? 'active' : ''}\" repeat.for=\"row of router.navigation\" href.bind=\"row.href\">${row.title}</a></nav><div class=\"content\"><router-view></router-view></div></template>"; });
@@ -799,13 +922,17 @@ define('text!styles.css', ['module'], function(module) { module.exports = "body 
 define('text!components/character/character.html', ['module'], function(module) { module.exports = "<template><require from=\"./character.css\"></require><require from=\"./skill/skill\"></require><require from=\"./stat/stat\"></require><require from=\"../../data/extra/enums\"></require><require from=\"../../resources/value-converters/select\"></require><div class=\"attribute-area\"><table class=\"attribute-table\"><tr class=\"attribute\" repeat.for=\"[statKey, statValue] of data.character.stats\"><td><stat model.bind=\"[statKey, statValue]\"></stat></td><td><div class=\"skills\"><skill repeat.for=\"skillEnum of SkillEnums | select:statKey\" model.bind=\"skillEnum\"></skill></div></td></tr></table></div><div class=\"features\"><div class=\"profiency-area\"><h3 class=\"profiency-header\">Profiencies</h3><div class=\"profiency-list\"><ul><li repeat.for=\"prof of data.character.profiencies\">${prof.name}</li><li repeat.for=\"prof of data.inventory.profiencies\">${prof.name}</li></ul></div></div><div class=\"traits-area\"><h3 class=\"traits-header\">Features and Traits</h3><div class=\"traits-list\"><ul><li repeat.for=\"trait of data.character.traits\">${trait.name}</li><li repeat.for=\"trait of data.inventory.traits\">${trait.name}</li></ul></div></div></div></template>"; });
 define('text!components/character/character.css', ['module'], function(module) { module.exports = ".attribute-area {\n  padding: 0 10px;\n}\n.attribute-table {\n  border-collapse: separate;\n  border-spacing: 0 10px;\n}\n.attribute {\n  margin-top: 10px;\n}\n  .attribute .stat {\n    border: 1px solid black;\n    padding: 5px;\n  }\n    .attribute .stat .stat-header {\n      text-transform: uppercase;\n      font-size: 10px;\n      text-align: center;\n    }\n    .attribute .stat .stat-value {\n      font-size: 24px;\n      text-align: center;\n    }\n    .attribute .stat .stat-modifier {\n      font-size: 16px;\n      text-align: center;\n    }\n\n  .attribute .skills {\n    display: flex;\n    flex-wrap: wrap;\n  }\n    .attribute .skills .skill {\n      flex: 0 auto;\n      padding: 0 10px;\n      margin: auto 0 0;\n    }\n      .attribute .skills .skill .skill-header {\n        text-align: center;\n        font-size: 10px;\n        text-transform: uppercase;\n        text-align: center;\n      }\n        .attribute .skills .skill-header.proficient::after {\n          content: '*';\n        }\n      .attribute .skills .skill .skill-value {\n        text-align: center;\n        font-size: 16px;\n        text-align: center;\n      }\n.features {\n  display: flex;\n  margin-bottom: 10px;\n}\n.features > * {\n  flex: 1 auto;\n}\n\n.profiency-area {\n  padding: 0 5px 0 10px;\n}\n.traits-area {\n  padding: 0 10px 0 5px;\n}\n.profiency-area .profiency-header,\n.traits-area .traits-header {\n  margin: 0 0 10px 0;\n}\n.profiency-area .profiency-list,\n.traits-area .traits-list {\n  border: 1px solid black;\n  padding: 10px;\n}\n"; });
 define('text!components/combat/combat.html', ['module'], function(module) { module.exports = "<template><h1>Combat</h1></template>"; });
-define('text!components/inventory/inventory.html', ['module'], function(module) { module.exports = "<template><require from=\"./item/item\"></require><h3>Equipped items</h3><ul><li repeat.for=\"item of data.inventory.equipped\"><item model.bind=\"item\"></item></li></ul><h3>Backpack</h3><ul><li repeat.for=\"item of data.inventory.backpack\"><item model.bind=\"item\"></item></li></ul></template>"; });
+define('text!components/inventory/inventory.css', ['module'], function(module) { module.exports = ".btn-newItem {\n  position: fixed;\n  top: 50px;\n  right: 0;\n  margin: 10px;\n  z-index: 100;\n}\n\n.newItem-area {\n  position: fixed;\n  top: 50px;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  margin: auto;\n  background: white;\n  border: 1px solid #333;\n  width: 400px;\n  height: 300px;\n  box-shadow: 0 2px 3px #888;\n}\n.newItem-createBtn {\n}\n"; });
+define('text!components/inventory/inventory.html', ['module'], function(module) { module.exports = "<template><require from=\"./inventory.css\"></require><require from=\"./item/item\"></require><require from=\"./newItem/newItem\"></require><h3>Equipped items</h3><ul><li repeat.for=\"item of data.inventory.equipped\"><item model.bind=\"item\"></item></li></ul><h3>Backpack</h3><ul><li repeat.for=\"item of data.inventory.backpack\"><item model.bind=\"item\"></item></li></ul><button class=\"btn-newItem\">Create a new item</button><new-item></new-item></template>"; });
 define('text!components/levelup/levelup.html', ['module'], function(module) { module.exports = "<template><require from=\"../../resources/value-converters/pointBuy\"></require><require from=\"./traits/traits\"></require><require from=\"./lvskill/lvskill\"></require><require from=\"./lvstat/lvstat\"></require><require from=\"../../data/extra/enums\"></require><div class=\"stats\"><h3>Stats</h3><lvstat repeat.for=\"[statKey, statValue] of data.character.stats\" model.bind=\"statKey\"></lvstat></div><div class=\"profiencies\"><h3>Skill profiencies</h3><lvskill repeat.for=\"skillEnum of SkillEnums\" model.bind=\"skillEnum\"></lvskill></div><h3>Traits and features</h3><traits></traits></template>"; });
 define('text!components/spells/spells.html', ['module'], function(module) { module.exports = "<template><h1>Spells</h1></template>"; });
 define('text!components/character/skill/skill.html', ['module'], function(module) { module.exports = "<template><require from=\"../../../resources/value-converters/skillCalculator\"></require><div class=\"skill\"><div class=\"skill-header ${hasProfiency ? 'proficient' : ''}\">${name}</div><div class=\"skill-value\">${skillScore}</div></div></template>"; });
 define('text!components/character/stat/stat.html', ['module'], function(module) { module.exports = "<template><require from=\"../../../resources/value-converters/statModifier\"></require><div class=\"stat\"><div class=\"stat-header\">${name}</div><div class=\"stat-value\">${value}</div><div class=\"stat-modifier\">${value | statModifier}</div></div></template>"; });
 define('text!components/inventory/item/item.html', ['module'], function(module) { module.exports = "<template>${model.name}<ul><li repeat.for=\"prof of model.skillProfiency\">Grants profiency in ${prof}</li></ul><template if.bind=\"model.equippable\"><button click.delegate=\"unequip()\">Unequip</button> <button click.delegate=\"equip()\">Equip</button></template></template>"; });
-define('text!components/levelup/traits/traits.html', ['module'], function(module) { module.exports = "<template><div class=\"traits-area\"><ul><li repeat.for=\"trait of data.character.traits\">${trait.name} <button click.delegate=\"removeTrait(trait)\">Remove</button></li></ul><div><input placeholder=\"Trait name\" type=\"text\" id=\"trait-name\" value.bind=\"newTraitText\"> <button click.delegate=\"addTrait()\">Add</button></div></div></template>"; });
+define('text!components/inventory/newitem/newitem.html', ['module'], function(module) { module.exports = "<template><div class=\"newItem-area\"><input type=\"text\" placeholder=\"Name\"></div></template>"; });
 define('text!components/levelup/lvskill/lvskill.html', ['module'], function(module) { module.exports = "<template><div><input id=\"check-${model}\" type=\"checkbox\" checked.bind=\"profiency\"><label for=\"check-${model}\">${name}</label></div></template>"; });
 define('text!components/levelup/lvstat/lvstat.html', ['module'], function(module) { module.exports = "<template><div class=\"stat\"><div>${name}</div><input type=\"number\" value.bind=\"value\"></div></template>"; });
+define('text!components/levelup/traits/traits.html', ['module'], function(module) { module.exports = "<template><div class=\"traits-area\"><ul><li repeat.for=\"trait of data.character.traits\">${trait.name} <button click.delegate=\"removeTrait(trait)\">Remove</button></li></ul><div><input placeholder=\"Trait name\" type=\"text\" id=\"trait-name\" value.bind=\"newTraitText\"> <button click.delegate=\"addTrait()\">Add</button></div></div></template>"; });
+define('text!components/inventory/newitem/newItem.html', ['module'], function(module) { module.exports = "<template><div class=\"newItem-area\"><input type=\"text\" placeholder=\"Name\"></div></template>"; });
+define('text!components/inventory/newItem/newItem.html', ['module'], function(module) { module.exports = "<template><require from=\"../../../data/extra/enums\"></require><div class=\"newItem-area\"><input type=\"text\" placeholder=\"Name\" value.bind=\"name\"><div class=\"newItem-skills\"><ul><li repeat.for=\"skill of additionalSkillProfiencies\">${skill}</li></ul><select value.bind=\"selectedSkillProfiency\"><option repeat.for=\"skillEnum of SkillEnums\" model.bind=\"skillEnum\">${skillEnum}</option></select><button click.delegate=\"addSkillProfiency()\">Add skill</button></div><div class=\"newItem-profiencies\"><ul><li repeat.for=\"profiency of additionalOtherProfiencies\">${profiency.name}</li></ul><input type=\"text\" placeholder=\"New profiency name\" value.bind=\"newOtherProfiencyName\"> <button click.delegate=\"addOtherProfiency()\">Add profiency</button></div><div class=\"newItem-traits\"><ul><li repeat.for=\"trait of additionalTraits\">${trait.name}</li></ul><input type=\"text\" placeholder=\"New trait name\" value.bind=\"newTraitName\"> <button click.delegate=\"addTrait()\">Add trait</button></div><button class=\"newItem-createBtn\" click.delegate=\"createItem()\">Create item</button></div></template>"; });
 //# sourceMappingURL=app-bundle.js.map

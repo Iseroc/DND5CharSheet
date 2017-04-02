@@ -1,5 +1,7 @@
 <template>
+  <require from="./inventory.css"></require>
   <require from="./item/item"></require>
+  <require from="./newItem/newItem"></require>
 
   <h3>Equipped items</h3>
   <ul>
@@ -13,4 +15,6 @@
       <item model.bind="item"></item>
     </li>
   </ul>
+  <button class="btn-newItem">Create a new item</button>
+  <new-item></new-item>
 </template>
