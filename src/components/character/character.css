@@ -1,0 +1,74 @@
+.attribute-area {
+  padding: 0 10px;
+}
+.attribute-table {
+  border-collapse: separate;
+  border-spacing: 0 10px;
+}
+.attribute {
+  margin-top: 10px;
+}
+  .attribute .stat {
+    border: 1px solid black;
+    padding: 5px;
+  }
+    .attribute .stat .stat-header {
+      text-transform: uppercase;
+      font-size: 10px;
+      text-align: center;
+    }
+    .attribute .stat .stat-value {
+      font-size: 24px;
+      text-align: center;
+    }
+    .attribute .stat .stat-modifier {
+      font-size: 16px;
+      text-align: center;
+    }
+
+  .attribute .skills {
+    display: flex;
+    flex-wrap: wrap;
+  }
+    .attribute .skills .skill {
+      flex: 0 auto;
+      padding: 0 10px;
+      margin: auto 0 0;
+    }
+      .attribute .skills .skill .skill-header {
+        text-align: center;
+        font-size: 10px;
+        text-transform: uppercase;
+        text-align: center;
+      }
+        .attribute .skills .skill-header.proficient::after {
+          content: '*';
+        }
+      .attribute .skills .skill .skill-value {
+        text-align: center;
+        font-size: 16px;
+        text-align: center;
+      }
+.features {
+  display: flex;
+  margin-bottom: 10px;
+}
+.features > * {
+  flex: 1 auto;
+}
+
+.profiency-area {
+  padding: 0 5px 0 10px;
+}
+.traits-area {
+  padding: 0 10px 0 5px;
+}
+.profiency-area .profiency-header,
+.traits-area .traits-header {
+  margin: 0 0 10px 0;
+}
+.profiency-area .profiency-list,
+.traits-area .traits-list {
+  border: 1px solid black;
+  padding: 10px;
+}

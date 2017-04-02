@@ -1,0 +1,16 @@
+<template>
+  <require from="./item/item"></require>
+
+  <h3>Equipped items</h3>
+  <ul>
+    <li repeat.for="item of data.inventory.equipped">
+      <item model.bind="item"></item>
+    </li>
+  </ul>
+  <h3>Backpack</h3>
+  <ul>
+    <li repeat.for="item of data.inventory.backpack">
+      <item model.bind="item"></item>
+    </li>
+  </ul>
+</template>

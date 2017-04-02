@@ -1,0 +1,9 @@
+<template>
+  <require from="../../../resources/value-converters/statModifier"></require>
+
+  <div class="stat">
+    <div class="stat-header">${name}</div>
+    <div class="stat-value">${value}</div>
+    <div class="stat-modifier">${value | statModifier}</div>
+  </div>
+</template>

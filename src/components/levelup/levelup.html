@@ -1,0 +1,18 @@
+<template>
+  <require from="../../resources/value-converters/pointBuy"></require>
+  <require from="./traits/traits"></require>
+  <require from="./lvskill/lvskill"></require>
+  <require from="./lvstat/lvstat"></require>
+  <require from="../../data/extra/enums"></require>
+
+  <div class="stats">
+    <h3>Stats</h3>
+    <lvstat repeat.for="[statKey, statValue] of data.character.stats" model.bind="statKey"></lvstat>
+  </div>
+  <div class="profiencies">
+    <h3>Skill profiencies</h3>
+    <lvskill repeat.for="skillEnum of SkillEnums" model.bind="skillEnum"></lvskill>
+  </div>
+  <h3>Traits and features</h3>
+  <traits></traits>
+</template>

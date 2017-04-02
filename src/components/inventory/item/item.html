@@ -1,0 +1,12 @@
+<template>
+  ${model.name}
+  <ul>
+    <li repeat.for="prof of model.skillProfiency">
+      Grants profiency in ${prof}
+    </li>
+  </ul>
+  <template if.bind="model.equippable">
+    <button click.delegate="unequip()">Unequip</button>
+    <button click.delegate="equip()">Equip</button>
+  </template>
+</template>
