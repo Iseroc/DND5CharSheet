@@ -1,17 +1,25 @@
 <template>
   <require from="../../../data/extra/enums"></require>
+  <require from="../../../resources/value-converters/translate"></require>
 
-  <div class="newItem-area">
+  <div class="newItem-area" show.bind="state">
+    <div class="typeselect">
+      <label><input type="radio" name="typeradio" value="item" checked.bind="selectedType" />Item</label>
+      <label><input type="radio" name="typeradio" value="armor" checked.bind="selectedType" />Armor</label>
+      <label><input type="radio" name="typeradio" value="weapon" checked.bind="selectedType" />Weapon</label>
+    </div>
     <input type="text" placeholder="Name" value.bind="name"/>
+    <label><input type="checkbox" checked.bind="equippable" />Equippable</label>
+    <label><input type="checkbox" checked.bind="attunement" />Requires attunement</label>
     <div class="newItem-skills">
       <ul>
         <li repeat.for="skill of additionalSkillProfiencies">
-          ${skill}
+          ${skill | translate:data.translations:'skill' }
         </li>
       </ul>
       <select value.bind="selectedSkillProfiency">
         <option repeat.for="skillEnum of SkillEnums" model.bind="skillEnum">
-          ${skillEnum}
+          ${skillEnum | translate:data.translations:'skill' }
         </option>
       </select>
       <button click.delegate="addSkillProfiency()">Add skill</button>
@@ -35,5 +43,6 @@
       <button click.delegate="addTrait()">Add trait</button>
     </div>
     <button class="newItem-createBtn" click.delegate="createItem()">Create item</button>
+    <button class="newItem-createBtn" click.delegate="reset()">Cancel</button>
   </div>
 </template>

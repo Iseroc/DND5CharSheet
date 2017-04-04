@@ -15,6 +15,6 @@
       <item model.bind="item"></item>
     </li>
   </ul>
-  <button class="btn-newItem">Create a new item</button>
-  <new-item></new-item>
+  <button class="btn-newItem" click.delegate="startCreatingNewItem()">Create a new item</button>
+  <new-item state.two-way="creatingNewItem"></new-item>
 </template>

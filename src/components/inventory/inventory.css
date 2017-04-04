@@ -7,6 +7,7 @@
 }
 
 .newItem-area {
+  display: block;
   position: fixed;
   top: 50px;
   left: 0;
@@ -18,6 +19,9 @@
   width: 400px;
   height: 300px;
   box-shadow: 0 2px 3px #888;
+}
+.newItem-area .hide {
+  display: block;
 }
 .newItem-createBtn {
 }
