@@ -5,13 +5,24 @@
   <div class="newItem-area" show.bind="state">
     <div class="typeselect">
       <label><input type="radio" name="typeradio" value="item" checked.bind="selectedType" />Item</label>
-      <label><input type="radio" name="typeradio" value="armor" checked.bind="selectedType" />Armor</label>
-      <label><input type="radio" name="typeradio" value="weapon" checked.bind="selectedType" />Weapon</label>
+      <label><input type="radio" name="typeradio" value="armor" checked.bind="selectedType" ref="armorradio" />Armor</label>
+      <label><input type="radio" name="typeradio" value="weapon" checked.bind="selectedType" ref="weaponradio" />Weapon</label>
     </div>
     <input type="text" placeholder="Name" value.bind="name"/>
-    <label><input type="checkbox" checked.bind="equippable" />Equippable</label>
+    <label><input type="checkbox" disabled.bind="armorradio.checked || weaponradio.checked" checked.bind="equippable" />Equippable</label>
     <label><input type="checkbox" checked.bind="attunement" />Requires attunement</label>
+    <div show.bind="armorradio.checked" class="armorarea">
+      <label>Base AC and maximum dexterity bonus</label>
+      <input type="number" value.bind="baseAC" placeholder="Base AC" />
+      <input type="number" value.bind="maxDexBonus" placeholder="Max Dex bonus" />
+    </div>
+    <div show.bind="weaponradio.checked" class="weaponarea">
+      <label>Damage</label>
+      <input type="text" value.bind="damage" placeholder="1d8" />
+      <input type="text" value.bind="damageType" placeholder="Slashing" />
+    </div>
     <div class="newItem-skills">
+      <label>Granted skill profiencies</label>
       <ul>
         <li repeat.for="skill of additionalSkillProfiencies">
           ${skill | translate:data.translations:'skill' }
@@ -25,6 +36,7 @@
       <button click.delegate="addSkillProfiency()">Add skill</button>
     </div>
     <div class="newItem-profiencies">
+      <label>Granted other profiencies</label>
       <ul>
         <li repeat.for="profiency of additionalOtherProfiencies">
           ${profiency.name}
@@ -34,6 +46,7 @@
       <button click.delegate="addOtherProfiency()">Add profiency</button>
     </div>
     <div class="newItem-traits">
+      <label>Granted traits and features</label>
       <ul>
         <li repeat.for="trait of additionalTraits">
           ${trait.name}
@@ -42,7 +55,7 @@
       <input type="text" placeholder="New trait name" value.bind="newTraitName" />
       <button click.delegate="addTrait()">Add trait</button>
     </div>
-    <button class="newItem-createBtn" click.delegate="createItem()">Create item</button>
-    <button class="newItem-createBtn" click.delegate="reset()">Cancel</button>
+    <button class="createButton" disabled.bind="!name" click.delegate="createItem()">Create item</button>
+    <button class="createButton" click.delegate="reset()">Cancel</button>
   </div>
 </template>

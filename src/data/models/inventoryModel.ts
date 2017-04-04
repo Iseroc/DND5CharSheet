@@ -1,11 +1,11 @@
-import {ItemModel, Armor, Weapon} from './components/itemModel';
+import {ItemModel, ArmorModel, WeaponModel} from './components/itemModel';
 import {TraitModel} from './components/traitModel';
 import {Profiency} from './components/profiency';
 import {SkillEnums} from '../extra/enums';
 
 export class InventoryModel {
-  armor: Armor = null;
-  weapon: Weapon[] = [];
+  armor: ArmorModel = null;
+  weapon: WeaponModel[] = [];
   equipped: ItemModel[] = [];
   backpack: ItemModel[] = [];
 

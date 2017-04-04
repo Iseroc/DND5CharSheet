@@ -3,7 +3,7 @@ import {CharacterModel} from './models/characterModel';
 import {InventoryModel} from './models/inventoryModel';
 import {Translations} from './extra/translations';
 import {TraitModel} from './models/components/traitModel';
-import {ItemModel, Armor, Weapon} from './models/components/itemModel';
+import {ItemModel, ArmorModel, WeaponModel} from './models/components/itemModel';
 import {StatEnums, SkillEnums} from './extra/enums';
 import {Profiency} from './models/components/profiency';
 
@@ -47,7 +47,7 @@ export class DataAccessor {
       this.character.traits.push(new TraitModel('Keen Hearing'));
 
       // Parse inventory
-      let item = new Armor('Adamantium full plate', 18, 0);
+      let item = new ArmorModel('Adamantium full plate', 18, 0);
       item.additionalTraits.push(new TraitModel('Critical hit immunity'));
       this.inventory.equipped.push(item);
 

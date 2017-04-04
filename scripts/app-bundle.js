@@ -86,7 +86,7 @@ define('data/dataAccessor',["require", "exports", "aurelia-framework", "./models
                 this.character.profiencies.push(new profiency_1.Profiency('Druidic', 'language'));
                 this.character.traits.push(new traitModel_1.TraitModel('Darkvision 120ft'));
                 this.character.traits.push(new traitModel_1.TraitModel('Keen Hearing'));
-                let item = new itemModel_1.Armor('Adamantium full plate', 18, 0);
+                let item = new itemModel_1.ArmorModel('Adamantium full plate', 18, 0);
                 item.additionalTraits.push(new traitModel_1.TraitModel('Critical hit immunity'));
                 this.inventory.equipped.push(item);
                 let item2 = new itemModel_1.ItemModel('Torch');
@@ -640,18 +640,25 @@ define('components/inventory/newItem/newItem',["require", "exports", "aurelia-fr
             this.state = false;
             this.name = '';
             this.selectedType = 'item';
-            this.equippable = false;
+            this._equippable = false;
             this.attunement = false;
             this.baseAC = 10;
             this.bonusAC = 0;
             this.maxDexBonus = 8;
-            this.damage = '1d8 slashing';
+            this.damage = '';
+            this.damageType = '';
             this.additionalSkillProfiencies = [];
             this.selectedSkillProfiency = enums_1.SkillEnums.ACROBATICS;
             this.additionalOtherProfiencies = [];
             this.newOtherProfiencyName = '';
             this.additionalTraits = [];
             this.reset();
+        }
+        get equippable() {
+            return this.selectedType === 'armor' || this.selectedType === 'weapon' || this._equippable;
+        }
+        set equippable(val) {
+            this._equippable = val;
         }
         addSkillProfiency() {
             if (!this.additionalSkillProfiencies.includes(this.selectedSkillProfiency)) {
@@ -671,7 +678,16 @@ define('components/inventory/newItem/newItem',["require", "exports", "aurelia-fr
             }
         }
         createItem() {
-            var item = new itemModel_1.ItemModel(this.name, true);
+            var item;
+            if (this.selectedType === 'armor') {
+                item = new itemModel_1.ArmorModel(this.name, this.baseAC, this.maxDexBonus);
+            }
+            else if (this.selectedType === 'weapon') {
+                item = new itemModel_1.WeaponModel(this.name, this.damage, this.damageType);
+            }
+            else {
+                item = new itemModel_1.ItemModel(this.name, true);
+            }
             item.additionalOtherProfiencies = this.additionalOtherProfiencies;
             item.additionalSkillProfiencies = this.additionalSkillProfiencies;
             item.additionalTraits = this.additionalTraits;
@@ -844,22 +860,22 @@ define('data/models/components/itemModel',["require", "exports", "./characterMod
         }
     }
     exports.ItemModel = ItemModel;
-    class Armor extends ItemModel {
+    class ArmorModel extends ItemModel {
         constructor(name, baseAC, maxDexBonus, requiresAttunement = false) {
             super(name, true, requiresAttunement);
             this.maxDexBonus = maxDexBonus;
             this.baseAC = baseAC;
         }
     }
-    exports.Armor = Armor;
-    class Weapon extends ItemModel {
+    exports.ArmorModel = ArmorModel;
+    class WeaponModel extends ItemModel {
         constructor(name, damage, damageType, requiresAttunement = false) {
             super(name, true, requiresAttunement);
             this.damage = damage;
             this.damageType = damageType;
         }
     }
-    exports.Weapon = Weapon;
+    exports.WeaponModel = WeaponModel;
 });
 
 define('data/models/components/profiency',["require", "exports"], function (require, exports) {
@@ -903,18 +919,18 @@ define('data/models/components/traitModel',["require", "exports", "./characterMo
 
 define('text!app.html', ['module'], function(module) { module.exports = "<template><require from=\"./styles.css\"></require><nav class=\"navbar\" role=\"navigation\"><a class=\"navbar-item ${row.isActive ? 'active' : ''}\" repeat.for=\"row of router.navigation\" href.bind=\"row.href\">${row.title}</a></nav><div class=\"content\"><router-view></router-view></div></template>"; });
 define('text!styles.css', ['module'], function(module) { module.exports = "body {\n  overflow: hidden;\n  font-family: 'Roboto';\n  margin: 0;\n  padding: 0;\n}\n\ntable {\n  padding: 0;\n  margin: 0;\n  border-collapse: collapse;\n  border-spacing: 0;\n}\n\ntd {\n  padding: 0;\n  margin: 0;\n}\n\nul, ol {\n  list-style: none;\n  padding: 0;\n  margin: 0;\n}\n\n.navbar {\n  display: flex;\n  flex-direction: row;\n  position: fixed;\n  top: 0;\n  height: 50px;\n  width: 100vw;\n  background: #aaa;\n}\n  .navbar .navbar-item {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    height: 100%;\n    text-decoration: none;\n    text-transform: uppercase;\n    color: #333;\n    flex: 0 auto;\n    padding: 0 20px;\n    border-right: 1px solid black;\n  }\n  .navbar .navbar-item:hover {\n    background: #999;\n  }\n  .navbar .navbar-item.active {\n    text-decoration: underline;\n  }\n\n.content {\n  height: calc(100vh - 50px);\n  overflow: auto;\n  position: relative;\n  margin-top: 50px;\n}\n"; });
+define('text!components/character/character.html', ['module'], function(module) { module.exports = "<template><require from=\"./character.css\"></require><require from=\"./skill/skill\"></require><require from=\"./stat/stat\"></require><require from=\"../../data/extra/enums\"></require><require from=\"../../resources/value-converters/select\"></require><div class=\"attribute-area\"><table class=\"attribute-table\"><tr class=\"attribute\" repeat.for=\"[statKey, statValue] of data.character.stats\"><td><stat model.bind=\"[statKey, statValue]\"></stat></td><td><div class=\"skills\"><skill repeat.for=\"skillEnum of SkillEnums | select:statKey\" model.bind=\"skillEnum\"></skill></div></td></tr></table></div><div class=\"features\"><div class=\"profiency-area\"><h3 class=\"profiency-header\">Profiencies</h3><div class=\"profiency-list\"><ul><li repeat.for=\"prof of data.character.profiencies\">${prof.name}</li><li repeat.for=\"prof of data.inventory.profiencies\">${prof.name}</li></ul></div></div><div class=\"traits-area\"><h3 class=\"traits-header\">Features and Traits</h3><div class=\"traits-list\"><ul><li repeat.for=\"trait of data.character.traits\">${trait.name}</li><li repeat.for=\"trait of data.inventory.traits\">${trait.name}</li></ul></div></div></div></template>"; });
+define('text!components/character/character.css', ['module'], function(module) { module.exports = ".attribute-area {\n  padding: 0 10px;\n}\n.attribute-table {\n  border-collapse: separate;\n  border-spacing: 0 10px;\n}\n.attribute {\n  margin-top: 10px;\n}\n  .attribute .stat {\n    border: 1px solid black;\n    padding: 5px;\n  }\n    .attribute .stat .stat-header {\n      text-transform: uppercase;\n      font-size: 10px;\n      text-align: center;\n    }\n    .attribute .stat .stat-value {\n      font-size: 24px;\n      text-align: center;\n    }\n    .attribute .stat .stat-modifier {\n      font-size: 16px;\n      text-align: center;\n    }\n\n  .attribute .skills {\n    display: flex;\n    flex-wrap: wrap;\n  }\n    .attribute .skills .skill {\n      flex: 0 auto;\n      padding: 0 10px;\n      margin: auto 0 0;\n    }\n      .attribute .skills .skill .skill-header {\n        text-align: center;\n        font-size: 10px;\n        text-transform: uppercase;\n        text-align: center;\n      }\n        .attribute .skills .skill-header.proficient::after {\n          content: '*';\n        }\n      .attribute .skills .skill .skill-value {\n        text-align: center;\n        font-size: 16px;\n        text-align: center;\n      }\n.features {\n  display: flex;\n  margin-bottom: 10px;\n}\n.features > * {\n  flex: 1 auto;\n}\n\n.profiency-area {\n  padding: 0 5px 0 10px;\n}\n.traits-area {\n  padding: 0 10px 0 5px;\n}\n.profiency-area .profiency-header,\n.traits-area .traits-header {\n  margin: 0 0 10px 0;\n}\n.profiency-area .profiency-list,\n.traits-area .traits-list {\n  border: 1px solid black;\n  padding: 10px;\n}\n"; });
 define('text!components/combat/combat.html', ['module'], function(module) { module.exports = "<template><h1>Combat</h1></template>"; });
 define('text!components/inventory/inventory.css', ['module'], function(module) { module.exports = ".btn-newItem {\n  position: fixed;\n  top: 50px;\n  right: 0;\n  margin: 10px;\n  z-index: 100;\n}\n\n.newItem-area {\n  display: block;\n  position: fixed;\n  top: 50px;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  margin: auto;\n  background: white;\n  border: 1px solid #333;\n  width: 400px;\n  height: 300px;\n  box-shadow: 0 2px 3px #888;\n}\n.newItem-area .hide {\n  display: block;\n}\n.newItem-createBtn {\n}\n"; });
 define('text!components/inventory/inventory.html', ['module'], function(module) { module.exports = "<template><require from=\"./inventory.css\"></require><require from=\"./item/item\"></require><require from=\"./newItem/newItem\"></require><h3>Equipped items</h3><ul><li repeat.for=\"item of data.inventory.equipped\"><item model.bind=\"item\"></item></li></ul><h3>Backpack</h3><ul><li repeat.for=\"item of data.inventory.backpack\"><item model.bind=\"item\"></item></li></ul><button class=\"btn-newItem\" click.delegate=\"startCreatingNewItem()\">Create a new item</button><new-item state.two-way=\"creatingNewItem\"></new-item></template>"; });
-define('text!components/character/character.css', ['module'], function(module) { module.exports = ".attribute-area {\n  padding: 0 10px;\n}\n.attribute-table {\n  border-collapse: separate;\n  border-spacing: 0 10px;\n}\n.attribute {\n  margin-top: 10px;\n}\n  .attribute .stat {\n    border: 1px solid black;\n    padding: 5px;\n  }\n    .attribute .stat .stat-header {\n      text-transform: uppercase;\n      font-size: 10px;\n      text-align: center;\n    }\n    .attribute .stat .stat-value {\n      font-size: 24px;\n      text-align: center;\n    }\n    .attribute .stat .stat-modifier {\n      font-size: 16px;\n      text-align: center;\n    }\n\n  .attribute .skills {\n    display: flex;\n    flex-wrap: wrap;\n  }\n    .attribute .skills .skill {\n      flex: 0 auto;\n      padding: 0 10px;\n      margin: auto 0 0;\n    }\n      .attribute .skills .skill .skill-header {\n        text-align: center;\n        font-size: 10px;\n        text-transform: uppercase;\n        text-align: center;\n      }\n        .attribute .skills .skill-header.proficient::after {\n          content: '*';\n        }\n      .attribute .skills .skill .skill-value {\n        text-align: center;\n        font-size: 16px;\n        text-align: center;\n      }\n.features {\n  display: flex;\n  margin-bottom: 10px;\n}\n.features > * {\n  flex: 1 auto;\n}\n\n.profiency-area {\n  padding: 0 5px 0 10px;\n}\n.traits-area {\n  padding: 0 10px 0 5px;\n}\n.profiency-area .profiency-header,\n.traits-area .traits-header {\n  margin: 0 0 10px 0;\n}\n.profiency-area .profiency-list,\n.traits-area .traits-list {\n  border: 1px solid black;\n  padding: 10px;\n}\n"; });
-define('text!components/character/character.html', ['module'], function(module) { module.exports = "<template><require from=\"./character.css\"></require><require from=\"./skill/skill\"></require><require from=\"./stat/stat\"></require><require from=\"../../data/extra/enums\"></require><require from=\"../../resources/value-converters/select\"></require><div class=\"attribute-area\"><table class=\"attribute-table\"><tr class=\"attribute\" repeat.for=\"[statKey, statValue] of data.character.stats\"><td><stat model.bind=\"[statKey, statValue]\"></stat></td><td><div class=\"skills\"><skill repeat.for=\"skillEnum of SkillEnums | select:statKey\" model.bind=\"skillEnum\"></skill></div></td></tr></table></div><div class=\"features\"><div class=\"profiency-area\"><h3 class=\"profiency-header\">Profiencies</h3><div class=\"profiency-list\"><ul><li repeat.for=\"prof of data.character.profiencies\">${prof.name}</li><li repeat.for=\"prof of data.inventory.profiencies\">${prof.name}</li></ul></div></div><div class=\"traits-area\"><h3 class=\"traits-header\">Features and Traits</h3><div class=\"traits-list\"><ul><li repeat.for=\"trait of data.character.traits\">${trait.name}</li><li repeat.for=\"trait of data.inventory.traits\">${trait.name}</li></ul></div></div></div></template>"; });
 define('text!components/levelup/levelup.html', ['module'], function(module) { module.exports = "<template><require from=\"../../resources/value-converters/pointBuy\"></require><require from=\"./traits/traits\"></require><require from=\"./lvskill/lvskill\"></require><require from=\"./lvstat/lvstat\"></require><require from=\"../../data/extra/enums\"></require><div class=\"stats\"><h3>Stats</h3><lvstat repeat.for=\"[statKey, statValue] of data.character.stats\" model.bind=\"statKey\"></lvstat></div><div class=\"profiencies\"><h3>Skill profiencies</h3><lvskill repeat.for=\"skillEnum of SkillEnums\" model.bind=\"skillEnum\"></lvskill></div><h3>Traits and features</h3><traits></traits></template>"; });
 define('text!components/spells/spells.html', ['module'], function(module) { module.exports = "<template><h1>Spells</h1></template>"; });
-define('text!components/inventory/item/item.html', ['module'], function(module) { module.exports = "<template>${model.name}<ul><li repeat.for=\"prof of model.skillProfiency\">Grants profiency in ${prof}</li></ul><template if.bind=\"model.equippable\"><button click.delegate=\"unequip()\">Unequip</button> <button click.delegate=\"equip()\">Equip</button></template></template>"; });
-define('text!components/inventory/newItem/newItem.html', ['module'], function(module) { module.exports = "<template><require from=\"../../../data/extra/enums\"></require><require from=\"../../../resources/value-converters/translate\"></require><div class=\"newItem-area\" show.bind=\"state\"><div class=\"typeselect\"><label><input type=\"radio\" name=\"typeradio\" value=\"item\" checked.bind=\"selectedType\">Item</label><label><input type=\"radio\" name=\"typeradio\" value=\"armor\" checked.bind=\"selectedType\">Armor</label><label><input type=\"radio\" name=\"typeradio\" value=\"weapon\" checked.bind=\"selectedType\">Weapon</label></div><input type=\"text\" placeholder=\"Name\" value.bind=\"name\"><label><input type=\"checkbox\" checked.bind=\"equippable\">Equippable</label><label><input type=\"checkbox\" checked.bind=\"attunement\">Requires attunement</label><div class=\"newItem-skills\"><ul><li repeat.for=\"skill of additionalSkillProfiencies\">${skill | translate:data.translations:'skill' }</li></ul><select value.bind=\"selectedSkillProfiency\"><option repeat.for=\"skillEnum of SkillEnums\" model.bind=\"skillEnum\">${skillEnum | translate:data.translations:'skill' }</option></select><button click.delegate=\"addSkillProfiency()\">Add skill</button></div><div class=\"newItem-profiencies\"><ul><li repeat.for=\"profiency of additionalOtherProfiencies\">${profiency.name}</li></ul><input type=\"text\" placeholder=\"New profiency name\" value.bind=\"newOtherProfiencyName\"> <button click.delegate=\"addOtherProfiency()\">Add profiency</button></div><div class=\"newItem-traits\"><ul><li repeat.for=\"trait of additionalTraits\">${trait.name}</li></ul><input type=\"text\" placeholder=\"New trait name\" value.bind=\"newTraitName\"> <button click.delegate=\"addTrait()\">Add trait</button></div><button class=\"newItem-createBtn\" click.delegate=\"createItem()\">Create item</button> <button class=\"newItem-createBtn\" click.delegate=\"reset()\">Cancel</button></div></template>"; });
 define('text!components/character/skill/skill.html', ['module'], function(module) { module.exports = "<template><require from=\"../../../resources/value-converters/skillCalculator\"></require><div class=\"skill\"><div class=\"skill-header ${hasProfiency ? 'proficient' : ''}\">${name}</div><div class=\"skill-value\">${skillScore}</div></div></template>"; });
 define('text!components/character/stat/stat.html', ['module'], function(module) { module.exports = "<template><require from=\"../../../resources/value-converters/statModifier\"></require><div class=\"stat\"><div class=\"stat-header\">${name}</div><div class=\"stat-value\">${value}</div><div class=\"stat-modifier\">${value | statModifier}</div></div></template>"; });
-define('text!components/levelup/lvstat/lvstat.html', ['module'], function(module) { module.exports = "<template><div class=\"stat\"><div>${name}</div><input type=\"number\" value.bind=\"value\"></div></template>"; });
+define('text!components/inventory/item/item.html', ['module'], function(module) { module.exports = "<template>${model.name}<ul><li repeat.for=\"prof of model.skillProfiency\">Grants profiency in ${prof}</li></ul><template if.bind=\"model.equippable\"><button click.delegate=\"unequip()\">Unequip</button> <button click.delegate=\"equip()\">Equip</button></template></template>"; });
+define('text!components/inventory/newItem/newItem.html', ['module'], function(module) { module.exports = "<template><require from=\"../../../data/extra/enums\"></require><require from=\"../../../resources/value-converters/translate\"></require><div class=\"newItem-area\" show.bind=\"state\"><div class=\"typeselect\"><label><input type=\"radio\" name=\"typeradio\" value=\"item\" checked.bind=\"selectedType\">Item</label><label><input type=\"radio\" name=\"typeradio\" value=\"armor\" checked.bind=\"selectedType\" ref=\"armorradio\">Armor</label><label><input type=\"radio\" name=\"typeradio\" value=\"weapon\" checked.bind=\"selectedType\" ref=\"weaponradio\">Weapon</label></div><input type=\"text\" placeholder=\"Name\" value.bind=\"name\"><label><input type=\"checkbox\" disabled.bind=\"armorradio.checked || weaponradio.checked\" checked.bind=\"equippable\">Equippable</label><label><input type=\"checkbox\" checked.bind=\"attunement\">Requires attunement</label><div show.bind=\"armorradio.checked\" class=\"armorarea\"><label>Base AC and maximum dexterity bonus</label><input type=\"number\" value.bind=\"baseAC\" placeholder=\"Base AC\"> <input type=\"number\" value.bind=\"maxDexBonus\" placeholder=\"Max Dex bonus\"></div><div show.bind=\"weaponradio.checked\" class=\"weaponarea\"><label>Damage</label><input type=\"text\" value.bind=\"damage\" placeholder=\"1d8\"> <input type=\"text\" value.bind=\"damageType\" placeholder=\"Slashing\"></div><div class=\"newItem-skills\"><label>Granted skill profiencies</label><ul><li repeat.for=\"skill of additionalSkillProfiencies\">${skill | translate:data.translations:'skill' }</li></ul><select value.bind=\"selectedSkillProfiency\"><option repeat.for=\"skillEnum of SkillEnums\" model.bind=\"skillEnum\">${skillEnum | translate:data.translations:'skill' }</option></select><button click.delegate=\"addSkillProfiency()\">Add skill</button></div><div class=\"newItem-profiencies\"><label>Granted other profiencies</label><ul><li repeat.for=\"profiency of additionalOtherProfiencies\">${profiency.name}</li></ul><input type=\"text\" placeholder=\"New profiency name\" value.bind=\"newOtherProfiencyName\"> <button click.delegate=\"addOtherProfiency()\">Add profiency</button></div><div class=\"newItem-traits\"><label>Granted traits and features</label><ul><li repeat.for=\"trait of additionalTraits\">${trait.name}</li></ul><input type=\"text\" placeholder=\"New trait name\" value.bind=\"newTraitName\"> <button click.delegate=\"addTrait()\">Add trait</button></div><button class=\"createButton\" disabled.bind=\"!name\" click.delegate=\"createItem()\">Create item</button> <button class=\"createButton\" click.delegate=\"reset()\">Cancel</button></div></template>"; });
 define('text!components/levelup/lvskill/lvskill.html', ['module'], function(module) { module.exports = "<template><div><input id=\"check-${model}\" type=\"checkbox\" checked.bind=\"profiency\"><label for=\"check-${model}\">${name}</label></div></template>"; });
+define('text!components/levelup/lvstat/lvstat.html', ['module'], function(module) { module.exports = "<template><div class=\"stat\"><div>${name}</div><input type=\"number\" value.bind=\"value\"></div></template>"; });
 define('text!components/levelup/traits/traits.html', ['module'], function(module) { module.exports = "<template><div class=\"traits-area\"><ul><li repeat.for=\"trait of data.character.traits\">${trait.name} <button click.delegate=\"removeTrait(trait)\">Remove</button></li></ul><div><input placeholder=\"Trait name\" type=\"text\" id=\"trait-name\" value.bind=\"newTraitText\"> <button click.delegate=\"addTrait()\">Add</button></div></div></template>"; });
 //# sourceMappingURL=app-bundle.js.map

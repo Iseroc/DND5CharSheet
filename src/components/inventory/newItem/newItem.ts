@@ -1,7 +1,7 @@
 import {inject} from 'aurelia-framework';
 import {bindable, observable} from 'aurelia-framework';
 import {DataAccessor} from '../../../data/dataAccessor';
-import {ItemModel} from '../../../data/models/components/itemModel';
+import {ItemModel, WeaponModel, ArmorModel} from '../../../data/models/components/itemModel';
 import {SkillEnums} from '../../../data/extra/enums';
 import {Profiency} from '../../../data/models/components/profiency';
 import {TraitModel} from '../../../data/models/components/traitModel';
@@ -17,14 +17,22 @@ export class NewItem {
   name: string = '';
   selectedType: string = 'item';
 
-  equippable: boolean = false;
+  _equippable: boolean = false;
+  get equippable() {
+    return this.selectedType === 'armor' || this.selectedType === 'weapon' || this._equippable;
+  }
+  set equippable(val:boolean) {
+    this._equippable = val;
+  }
+
   attunement: boolean = false;
 
   baseAC: number = 10;
   bonusAC: number = 0;
   maxDexBonus: number = 8;
 
-  damage: string = '1d8 slashing';
+  damage: string = '';
+  damageType: string = '';
 
   additionalSkillProfiencies: SkillEnums[] = [];
   selectedSkillProfiency: SkillEnums = SkillEnums.ACROBATICS;
@@ -56,7 +64,16 @@ export class NewItem {
   }
 
   createItem() {
-    var item = new ItemModel(this.name, true);
+    var item;
+    if(this.selectedType === 'armor') {
+      item = new ArmorModel(this.name, this.baseAC, this.maxDexBonus);
+    }
+    else if(this.selectedType === 'weapon') {
+      item = new WeaponModel(this.name, this.damage, this.damageType);
+    }
+    else {
+      item = new ItemModel(this.name, true);
+    }
     item.additionalOtherProfiencies = this.additionalOtherProfiencies;
     item.additionalSkillProfiencies = this.additionalSkillProfiencies;
     item.additionalTraits = this.additionalTraits;

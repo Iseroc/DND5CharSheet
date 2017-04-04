@@ -6,7 +6,7 @@ export class ItemModel extends CharacterModifyingElement {
   }
 }
 
-export class Armor extends ItemModel {
+export class ArmorModel extends ItemModel {
   constructor(name: string, baseAC: number, maxDexBonus: number, requiresAttunement: boolean = false) {
     super(name, true, requiresAttunement);
     this.maxDexBonus = maxDexBonus;
@@ -14,7 +14,7 @@ export class Armor extends ItemModel {
   }
 }
 
-export class Weapon extends ItemModel {
+export class WeaponModel extends ItemModel {
   constructor(name: string, public damage: string, public damageType: string, requiresAttunement: boolean = false) {
     super(name, true, requiresAttunement);
   }
