@@ -51,6 +51,12 @@ export class DataAccessor {
       item.additionalTraits.push(new TraitModel('Critical hit immunity'));
       this.inventory.equipped.push(item);
 
+      let wep1 = new WeaponModel('Greatsword', '2d6', 'Slashing');
+      this.inventory.weapons.push(wep1);
+
+      let wep2 = new WeaponModel('Javelin', '1d6', 'Piercing');
+      this.inventory.weapons.push(wep2);
+
       let item2 = new ItemModel('Torch');
       this.inventory.backpack.push(item2);
     }

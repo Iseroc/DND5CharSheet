@@ -5,7 +5,7 @@ import {SkillEnums} from '../extra/enums';
 
 export class InventoryModel {
   armor: ArmorModel = null;
-  weapon: WeaponModel[] = [];
+  weapons: WeaponModel[] = [];
   equipped: ItemModel[] = [];
   backpack: ItemModel[] = [];
 

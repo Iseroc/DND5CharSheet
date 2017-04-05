@@ -89,6 +89,10 @@ define('data/dataAccessor',["require", "exports", "aurelia-framework", "./models
                 let item = new itemModel_1.ArmorModel('Adamantium full plate', 18, 0);
                 item.additionalTraits.push(new traitModel_1.TraitModel('Critical hit immunity'));
                 this.inventory.equipped.push(item);
+                let wep1 = new itemModel_1.WeaponModel('Greatsword', '2d6', 'Slashing');
+                this.inventory.weapons.push(wep1);
+                let wep2 = new itemModel_1.WeaponModel('Javelin', '1d6', 'Piercing');
+                this.inventory.weapons.push(wep2);
                 let item2 = new itemModel_1.ItemModel('Torch');
                 this.inventory.backpack.push(item2);
             }
@@ -109,131 +113,70 @@ define('resources/index',["require", "exports"], function (require, exports) {
     exports.configure = configure;
 });
 
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-define('components/character/character',["require", "exports", "aurelia-framework", "../../data/dataAccessor"], function (require, exports, aurelia_framework_1, dataAccessor_1) {
+define('data/models/characterModel',["require", "exports", "../extra/enums"], function (require, exports, enums_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    let Character = class Character {
-        constructor(data) {
-            this.data = data;
+    class CharacterModel {
+        constructor() {
+            this.level = 1;
+            this.stats = new Map();
+            this.skills = [];
+            this.expertises = [];
+            this.profiencies = [];
+            this.traits = [];
+            this.stats.set(enums_1.StatEnums.STR, 10);
+            this.stats.set(enums_1.StatEnums.DEX, 10);
+            this.stats.set(enums_1.StatEnums.CON, 10);
+            this.stats.set(enums_1.StatEnums.INT, 10);
+            this.stats.set(enums_1.StatEnums.WIS, 10);
+            this.stats.set(enums_1.StatEnums.CHA, 10);
         }
-    };
-    Character = __decorate([
-        aurelia_framework_1.inject(dataAccessor_1.DataAccessor),
-        __metadata("design:paramtypes", [dataAccessor_1.DataAccessor])
-    ], Character);
-    exports.Character = Character;
+        get profiencyBonus() {
+            return Math.floor((this.level - 1) / 4) + 2;
+        }
+        statModifier(statKey) {
+            if (this.stats.has(statKey)) {
+                return Math.floor((this.stats.get(statKey) - 10) / 2);
+            }
+            return -1000;
+        }
+    }
+    exports.CharacterModel = CharacterModel;
 });
 
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-define('components/combat/combat',["require", "exports", "aurelia-framework", "../../data/dataAccessor"], function (require, exports, aurelia_framework_1, dataAccessor_1) {
+define('data/models/inventoryModel',["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    let Combat = class Combat {
-        constructor(data) {
-            this.data = data;
+    class InventoryModel {
+        constructor() {
+            this.armor = null;
+            this.weapons = [];
+            this.equipped = [];
+            this.backpack = [];
         }
-    };
-    Combat = __decorate([
-        aurelia_framework_1.inject(dataAccessor_1.DataAccessor),
-        __metadata("design:paramtypes", [dataAccessor_1.DataAccessor])
-    ], Combat);
-    exports.Combat = Combat;
-});
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-define('components/inventory/inventory',["require", "exports", "aurelia-framework", "../../data/dataAccessor"], function (require, exports, aurelia_framework_1, dataAccessor_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    let Inventory = class Inventory {
-        constructor(data) {
-            this.data = data;
-            this.creatingNewItem = false;
+        get traits() {
+            let arr = [];
+            this.equipped.forEach(item => {
+                arr = arr.concat(item.additionalTraits);
+            });
+            return arr;
         }
-        startCreatingNewItem() {
-            this.creatingNewItem = true;
+        get skills() {
+            let arr = [];
+            this.equipped.forEach(item => {
+                arr = arr.concat(item.additionalSkillProfiencies);
+            });
+            return arr;
         }
-        doneCreatingNewItem() {
-            this.creatingNewItem = false;
+        get profiencies() {
+            let arr = [];
+            this.equipped.forEach(item => {
+                arr = arr.concat(item.additionalOtherProfiencies);
+            });
+            return arr;
         }
-    };
-    Inventory = __decorate([
-        aurelia_framework_1.inject(dataAccessor_1.DataAccessor),
-        __metadata("design:paramtypes", [dataAccessor_1.DataAccessor])
-    ], Inventory);
-    exports.Inventory = Inventory;
-});
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-define('components/levelup/levelup',["require", "exports", "aurelia-framework", "../../data/dataAccessor"], function (require, exports, aurelia_framework_1, dataAccessor_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    let Levelup = class Levelup {
-        constructor(data) {
-            this.data = data;
-        }
-    };
-    Levelup = __decorate([
-        aurelia_framework_1.inject(dataAccessor_1.DataAccessor),
-        __metadata("design:paramtypes", [dataAccessor_1.DataAccessor])
-    ], Levelup);
-    exports.Levelup = Levelup;
-});
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-define('components/spells/spells',["require", "exports", "aurelia-framework", "../../data/dataAccessor"], function (require, exports, aurelia_framework_1, dataAccessor_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    let Spells = class Spells {
-        constructor(data) {
-            this.data = data;
-        }
-    };
-    Spells = __decorate([
-        aurelia_framework_1.inject(dataAccessor_1.DataAccessor),
-        __metadata("design:paramtypes", [dataAccessor_1.DataAccessor])
-    ], Spells);
-    exports.Spells = Spells;
+    }
+    exports.InventoryModel = InventoryModel;
 });
 
 define('data/extra/enums',["require", "exports"], function (require, exports) {
@@ -347,70 +290,131 @@ define('data/extra/translations',["require", "exports", "./enums"], function (re
     exports.Translations = Translations;
 });
 
-define('data/models/characterModel',["require", "exports", "../extra/enums"], function (require, exports, enums_1) {
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+define('components/combat/combat',["require", "exports", "aurelia-framework", "../../data/dataAccessor"], function (require, exports, aurelia_framework_1, dataAccessor_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    class CharacterModel {
-        constructor() {
-            this.level = 1;
-            this.stats = new Map();
-            this.skills = [];
-            this.expertises = [];
-            this.profiencies = [];
-            this.traits = [];
-            this.stats.set(enums_1.StatEnums.STR, 10);
-            this.stats.set(enums_1.StatEnums.DEX, 10);
-            this.stats.set(enums_1.StatEnums.CON, 10);
-            this.stats.set(enums_1.StatEnums.INT, 10);
-            this.stats.set(enums_1.StatEnums.WIS, 10);
-            this.stats.set(enums_1.StatEnums.CHA, 10);
+    let Combat = class Combat {
+        constructor(data) {
+            this.data = data;
         }
-        get profiencyBonus() {
-            return Math.floor((this.level - 1) / 4) + 2;
-        }
-        statModifier(statKey) {
-            if (this.stats.has(statKey)) {
-                return Math.floor((this.stats.get(statKey) - 10) / 2);
-            }
-            return -1000;
-        }
-    }
-    exports.CharacterModel = CharacterModel;
+    };
+    Combat = __decorate([
+        aurelia_framework_1.inject(dataAccessor_1.DataAccessor),
+        __metadata("design:paramtypes", [dataAccessor_1.DataAccessor])
+    ], Combat);
+    exports.Combat = Combat;
 });
 
-define('data/models/inventoryModel',["require", "exports"], function (require, exports) {
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+define('components/character/character',["require", "exports", "aurelia-framework", "../../data/dataAccessor"], function (require, exports, aurelia_framework_1, dataAccessor_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    class InventoryModel {
-        constructor() {
-            this.armor = null;
-            this.weapon = [];
-            this.equipped = [];
-            this.backpack = [];
+    let Character = class Character {
+        constructor(data) {
+            this.data = data;
         }
-        get traits() {
-            let arr = [];
-            this.equipped.forEach(item => {
-                arr = arr.concat(item.additionalTraits);
-            });
-            return arr;
+    };
+    Character = __decorate([
+        aurelia_framework_1.inject(dataAccessor_1.DataAccessor),
+        __metadata("design:paramtypes", [dataAccessor_1.DataAccessor])
+    ], Character);
+    exports.Character = Character;
+});
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+define('components/inventory/inventory',["require", "exports", "aurelia-framework", "../../data/dataAccessor"], function (require, exports, aurelia_framework_1, dataAccessor_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    let Inventory = class Inventory {
+        constructor(data) {
+            this.data = data;
+            this.creatingNewItem = false;
         }
-        get skills() {
-            let arr = [];
-            this.equipped.forEach(item => {
-                arr = arr.concat(item.additionalSkillProfiencies);
-            });
-            return arr;
+        startCreatingNewItem() {
+            this.creatingNewItem = true;
         }
-        get profiencies() {
-            let arr = [];
-            this.equipped.forEach(item => {
-                arr = arr.concat(item.additionalOtherProfiencies);
-            });
-            return arr;
+        doneCreatingNewItem() {
+            this.creatingNewItem = false;
         }
-    }
-    exports.InventoryModel = InventoryModel;
+    };
+    Inventory = __decorate([
+        aurelia_framework_1.inject(dataAccessor_1.DataAccessor),
+        __metadata("design:paramtypes", [dataAccessor_1.DataAccessor])
+    ], Inventory);
+    exports.Inventory = Inventory;
+});
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+define('components/levelup/levelup',["require", "exports", "aurelia-framework", "../../data/dataAccessor"], function (require, exports, aurelia_framework_1, dataAccessor_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    let Levelup = class Levelup {
+        constructor(data) {
+            this.data = data;
+        }
+    };
+    Levelup = __decorate([
+        aurelia_framework_1.inject(dataAccessor_1.DataAccessor),
+        __metadata("design:paramtypes", [dataAccessor_1.DataAccessor])
+    ], Levelup);
+    exports.Levelup = Levelup;
+});
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+define('components/spells/spells',["require", "exports", "aurelia-framework", "../../data/dataAccessor"], function (require, exports, aurelia_framework_1, dataAccessor_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    let Spells = class Spells {
+        constructor(data) {
+            this.data = data;
+        }
+    };
+    Spells = __decorate([
+        aurelia_framework_1.inject(dataAccessor_1.DataAccessor),
+        __metadata("design:paramtypes", [dataAccessor_1.DataAccessor])
+    ], Spells);
+    exports.Spells = Spells;
 });
 
 define('resources/value-converters/pointBuy',["require", "exports"], function (require, exports) {
@@ -495,6 +499,128 @@ define('resources/value-converters/translate',["require", "exports"], function (
     exports.TranslateValueConverter = TranslateValueConverter;
 });
 
+define('data/models/components/characterModifyingElement',["require", "exports"], function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    class CharacterModifyingElement {
+        constructor() {
+            this.additionalSkillProfiencies = [];
+            this.additionalOtherProfiencies = [];
+            this.additionalTraits = [];
+        }
+    }
+    exports.CharacterModifyingElement = CharacterModifyingElement;
+});
+
+define('data/models/components/itemModel',["require", "exports", "./characterModifyingElement"], function (require, exports, characterModifyingElement_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    class ItemModel extends characterModifyingElement_1.CharacterModifyingElement {
+        constructor(name, equippable = false, requiresAttunement = false) {
+            super();
+            this.name = name;
+            this.equippable = equippable;
+            this.requiresAttunement = requiresAttunement;
+        }
+    }
+    exports.ItemModel = ItemModel;
+    class ArmorModel extends ItemModel {
+        constructor(name, baseAC, maxDexBonus, requiresAttunement = false) {
+            super(name, true, requiresAttunement);
+            this.maxDexBonus = maxDexBonus;
+            this.baseAC = baseAC;
+        }
+    }
+    exports.ArmorModel = ArmorModel;
+    class WeaponModel extends ItemModel {
+        constructor(name, damage, damageType, requiresAttunement = false) {
+            super(name, true, requiresAttunement);
+            this.damage = damage;
+            this.damageType = damageType;
+        }
+    }
+    exports.WeaponModel = WeaponModel;
+});
+
+define('data/models/components/profiency',["require", "exports"], function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    class Profiency {
+        constructor(name, type) {
+            this.name = name;
+            this.type = type;
+        }
+    }
+    exports.Profiency = Profiency;
+});
+
+define('data/models/components/skillModel',["require", "exports"], function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    class SkillModel {
+        constructor(name, key, stat, profiency = false, expertise = false) {
+            this.name = name;
+            this.key = key;
+            this.stat = stat;
+            this.profiency = profiency;
+            this.expertise = expertise;
+        }
+    }
+    exports.SkillModel = SkillModel;
+});
+
+define('data/models/components/traitModel',["require", "exports", "./characterModifyingElement"], function (require, exports, characterModifyingElement_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    class TraitModel extends characterModifyingElement_1.CharacterModifyingElement {
+        constructor(name) {
+            super();
+            this.name = name;
+        }
+    }
+    exports.TraitModel = TraitModel;
+});
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+define('components/character/stat/stat',["require", "exports", "aurelia-framework", "aurelia-framework", "../../../data/dataAccessor"], function (require, exports, aurelia_framework_1, aurelia_framework_2, dataAccessor_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    let Stat = class Stat {
+        constructor(data) {
+            this.data = data;
+        }
+        get name() {
+            if (this.model) {
+                return this.data.translations.translateStat(this.model[0]);
+            }
+            return "N/A";
+        }
+        get value() {
+            if (this.model) {
+                return this.model[1];
+            }
+            return -1000;
+        }
+    };
+    __decorate([
+        aurelia_framework_1.bindable,
+        __metadata("design:type", Array)
+    ], Stat.prototype, "model", void 0);
+    Stat = __decorate([
+        aurelia_framework_2.inject(dataAccessor_1.DataAccessor),
+        __metadata("design:paramtypes", [dataAccessor_1.DataAccessor])
+    ], Stat);
+    exports.Stat = Stat;
+});
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -540,46 +666,6 @@ define('components/character/skill/skill',["require", "exports", "aurelia-framew
         __metadata("design:paramtypes", [dataAccessor_1.DataAccessor])
     ], Skill);
     exports.Skill = Skill;
-});
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-define('components/character/stat/stat',["require", "exports", "aurelia-framework", "aurelia-framework", "../../../data/dataAccessor"], function (require, exports, aurelia_framework_1, aurelia_framework_2, dataAccessor_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    let Stat = class Stat {
-        constructor(data) {
-            this.data = data;
-        }
-        get name() {
-            if (this.model) {
-                return this.data.translations.translateStat(this.model[0]);
-            }
-            return "N/A";
-        }
-        get value() {
-            if (this.model) {
-                return this.model[1];
-            }
-            return -1000;
-        }
-    };
-    __decorate([
-        aurelia_framework_1.bindable,
-        __metadata("design:type", Array)
-    ], Stat.prototype, "model", void 0);
-    Stat = __decorate([
-        aurelia_framework_2.inject(dataAccessor_1.DataAccessor),
-        __metadata("design:paramtypes", [dataAccessor_1.DataAccessor])
-    ], Stat);
-    exports.Stat = Stat;
 });
 
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -835,94 +921,12 @@ define('components/levelup/traits/traits',["require", "exports", "aurelia-framew
     exports.Traits = Traits;
 });
 
-define('data/models/components/characterModifyingElement',["require", "exports"], function (require, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    class CharacterModifyingElement {
-        constructor() {
-            this.additionalSkillProfiencies = [];
-            this.additionalOtherProfiencies = [];
-            this.additionalTraits = [];
-        }
-    }
-    exports.CharacterModifyingElement = CharacterModifyingElement;
-});
-
-define('data/models/components/itemModel',["require", "exports", "./characterModifyingElement"], function (require, exports, characterModifyingElement_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    class ItemModel extends characterModifyingElement_1.CharacterModifyingElement {
-        constructor(name, equippable = false, requiresAttunement = false) {
-            super();
-            this.name = name;
-            this.equippable = equippable;
-            this.requiresAttunement = requiresAttunement;
-        }
-    }
-    exports.ItemModel = ItemModel;
-    class ArmorModel extends ItemModel {
-        constructor(name, baseAC, maxDexBonus, requiresAttunement = false) {
-            super(name, true, requiresAttunement);
-            this.maxDexBonus = maxDexBonus;
-            this.baseAC = baseAC;
-        }
-    }
-    exports.ArmorModel = ArmorModel;
-    class WeaponModel extends ItemModel {
-        constructor(name, damage, damageType, requiresAttunement = false) {
-            super(name, true, requiresAttunement);
-            this.damage = damage;
-            this.damageType = damageType;
-        }
-    }
-    exports.WeaponModel = WeaponModel;
-});
-
-define('data/models/components/profiency',["require", "exports"], function (require, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    class Profiency {
-        constructor(name, type) {
-            this.name = name;
-            this.type = type;
-        }
-    }
-    exports.Profiency = Profiency;
-});
-
-define('data/models/components/skillModel',["require", "exports"], function (require, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    class SkillModel {
-        constructor(name, key, stat, profiency = false, expertise = false) {
-            this.name = name;
-            this.key = key;
-            this.stat = stat;
-            this.profiency = profiency;
-            this.expertise = expertise;
-        }
-    }
-    exports.SkillModel = SkillModel;
-});
-
-define('data/models/components/traitModel',["require", "exports", "./characterModifyingElement"], function (require, exports, characterModifyingElement_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    class TraitModel extends characterModifyingElement_1.CharacterModifyingElement {
-        constructor(name) {
-            super();
-            this.name = name;
-        }
-    }
-    exports.TraitModel = TraitModel;
-});
-
-define('text!app.html', ['module'], function(module) { module.exports = "<template><require from=\"./styles.css\"></require><nav class=\"navbar\" role=\"navigation\"><a class=\"navbar-item ${row.isActive ? 'active' : ''}\" repeat.for=\"row of router.navigation\" href.bind=\"row.href\">${row.title}</a></nav><div class=\"content\"><router-view></router-view></div></template>"; });
 define('text!styles.css', ['module'], function(module) { module.exports = "body {\n  overflow: hidden;\n  font-family: 'Roboto';\n  margin: 0;\n  padding: 0;\n}\n\ntable {\n  padding: 0;\n  margin: 0;\n  border-collapse: collapse;\n  border-spacing: 0;\n}\n\ntd {\n  padding: 0;\n  margin: 0;\n}\n\nul, ol {\n  list-style: none;\n  padding: 0;\n  margin: 0;\n}\n\n.navbar {\n  display: flex;\n  flex-direction: row;\n  position: fixed;\n  top: 0;\n  height: 50px;\n  width: 100vw;\n  background: #aaa;\n}\n  .navbar .navbar-item {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    height: 100%;\n    text-decoration: none;\n    text-transform: uppercase;\n    color: #333;\n    flex: 0 auto;\n    padding: 0 20px;\n    border-right: 1px solid black;\n  }\n  .navbar .navbar-item:hover {\n    background: #999;\n  }\n  .navbar .navbar-item.active {\n    text-decoration: underline;\n  }\n\n.content {\n  height: calc(100vh - 50px);\n  overflow: auto;\n  position: relative;\n  margin-top: 50px;\n}\n"; });
-define('text!components/character/character.html', ['module'], function(module) { module.exports = "<template><require from=\"./character.css\"></require><require from=\"./skill/skill\"></require><require from=\"./stat/stat\"></require><require from=\"../../data/extra/enums\"></require><require from=\"../../resources/value-converters/select\"></require><div class=\"attribute-area\"><table class=\"attribute-table\"><tr class=\"attribute\" repeat.for=\"[statKey, statValue] of data.character.stats\"><td><stat model.bind=\"[statKey, statValue]\"></stat></td><td><div class=\"skills\"><skill repeat.for=\"skillEnum of SkillEnums | select:statKey\" model.bind=\"skillEnum\"></skill></div></td></tr></table></div><div class=\"features\"><div class=\"profiency-area\"><h3 class=\"profiency-header\">Profiencies</h3><div class=\"profiency-list\"><ul><li repeat.for=\"prof of data.character.profiencies\">${prof.name}</li><li repeat.for=\"prof of data.inventory.profiencies\">${prof.name}</li></ul></div></div><div class=\"traits-area\"><h3 class=\"traits-header\">Features and Traits</h3><div class=\"traits-list\"><ul><li repeat.for=\"trait of data.character.traits\">${trait.name}</li><li repeat.for=\"trait of data.inventory.traits\">${trait.name}</li></ul></div></div></div></template>"; });
+define('text!app.html', ['module'], function(module) { module.exports = "<template><require from=\"./styles.css\"></require><nav class=\"navbar\" role=\"navigation\"><a class=\"navbar-item ${row.isActive ? 'active' : ''}\" repeat.for=\"row of router.navigation\" href.bind=\"row.href\">${row.title}</a></nav><div class=\"content\"><router-view></router-view></div></template>"; });
 define('text!components/character/character.css', ['module'], function(module) { module.exports = ".attribute-area {\n  padding: 0 10px;\n}\n.attribute-table {\n  border-collapse: separate;\n  border-spacing: 0 10px;\n}\n.attribute {\n  margin-top: 10px;\n}\n  .attribute .stat {\n    border: 1px solid black;\n    padding: 5px;\n  }\n    .attribute .stat .stat-header {\n      text-transform: uppercase;\n      font-size: 10px;\n      text-align: center;\n    }\n    .attribute .stat .stat-value {\n      font-size: 24px;\n      text-align: center;\n    }\n    .attribute .stat .stat-modifier {\n      font-size: 16px;\n      text-align: center;\n    }\n\n  .attribute .skills {\n    display: flex;\n    flex-wrap: wrap;\n  }\n    .attribute .skills .skill {\n      flex: 0 auto;\n      padding: 0 10px;\n      margin: auto 0 0;\n    }\n      .attribute .skills .skill .skill-header {\n        text-align: center;\n        font-size: 10px;\n        text-transform: uppercase;\n        text-align: center;\n      }\n        .attribute .skills .skill-header.proficient::after {\n          content: '*';\n        }\n      .attribute .skills .skill .skill-value {\n        text-align: center;\n        font-size: 16px;\n        text-align: center;\n      }\n.features {\n  display: flex;\n  margin-bottom: 10px;\n}\n.features > * {\n  flex: 1 auto;\n}\n\n.profiency-area {\n  padding: 0 5px 0 10px;\n}\n.traits-area {\n  padding: 0 10px 0 5px;\n}\n.profiency-area .profiency-header,\n.traits-area .traits-header {\n  margin: 0 0 10px 0;\n}\n.profiency-area .profiency-list,\n.traits-area .traits-list {\n  border: 1px solid black;\n  padding: 10px;\n}\n"; });
-define('text!components/combat/combat.html', ['module'], function(module) { module.exports = "<template><h1>Combat</h1></template>"; });
+define('text!components/character/character.html', ['module'], function(module) { module.exports = "<template><require from=\"./character.css\"></require><require from=\"./skill/skill\"></require><require from=\"./stat/stat\"></require><require from=\"../../data/extra/enums\"></require><require from=\"../../resources/value-converters/select\"></require><div class=\"attribute-area\"><table class=\"attribute-table\"><tr class=\"attribute\" repeat.for=\"[statKey, statValue] of data.character.stats\"><td><stat model.bind=\"[statKey, statValue]\"></stat></td><td><div class=\"skills\"><skill repeat.for=\"skillEnum of SkillEnums | select:statKey\" model.bind=\"skillEnum\"></skill></div></td></tr></table></div><div class=\"features\"><div class=\"profiency-area\"><h3 class=\"profiency-header\">Profiencies</h3><div class=\"profiency-list\"><ul><li repeat.for=\"prof of data.character.profiencies\">${prof.name}</li><li repeat.for=\"prof of data.inventory.profiencies\">${prof.name}</li></ul></div></div><div class=\"traits-area\"><h3 class=\"traits-header\">Features and Traits</h3><div class=\"traits-list\"><ul><li repeat.for=\"trait of data.character.traits\">${trait.name}</li><li repeat.for=\"trait of data.inventory.traits\">${trait.name}</li></ul></div></div></div></template>"; });
 define('text!components/inventory/inventory.css', ['module'], function(module) { module.exports = ".btn-newItem {\n  position: fixed;\n  top: 50px;\n  right: 0;\n  margin: 10px;\n  z-index: 100;\n}\n\n.newItem-area {\n  display: block;\n  position: fixed;\n  top: 50px;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  margin: auto;\n  background: white;\n  border: 1px solid #333;\n  width: 400px;\n  height: 300px;\n  box-shadow: 0 2px 3px #888;\n}\n.newItem-area .hide {\n  display: block;\n}\n.newItem-createBtn {\n}\n"; });
+define('text!components/combat/combat.html', ['module'], function(module) { module.exports = "<template><div class=\"combat\"><table class=\"weapons\"><tr repeat.for=\"weapon of data.inventory.weapons\"><td>${weapon.name}</td><td>${data.character.profiencyBonus}</td><td>${weapon.damage} ${weapon.damageType}</td></tr></table></div></template>"; });
 define('text!components/inventory/inventory.html', ['module'], function(module) { module.exports = "<template><require from=\"./inventory.css\"></require><require from=\"./item/item\"></require><require from=\"./newItem/newItem\"></require><h3>Equipped items</h3><ul><li repeat.for=\"item of data.inventory.equipped\"><item model.bind=\"item\"></item></li></ul><h3>Backpack</h3><ul><li repeat.for=\"item of data.inventory.backpack\"><item model.bind=\"item\"></item></li></ul><button class=\"btn-newItem\" click.delegate=\"startCreatingNewItem()\">Create a new item</button><new-item state.two-way=\"creatingNewItem\"></new-item></template>"; });
 define('text!components/levelup/levelup.html', ['module'], function(module) { module.exports = "<template><require from=\"../../resources/value-converters/pointBuy\"></require><require from=\"./traits/traits\"></require><require from=\"./lvskill/lvskill\"></require><require from=\"./lvstat/lvstat\"></require><require from=\"../../data/extra/enums\"></require><div class=\"stats\"><h3>Stats</h3><lvstat repeat.for=\"[statKey, statValue] of data.character.stats\" model.bind=\"statKey\"></lvstat></div><div class=\"profiencies\"><h3>Skill profiencies</h3><lvskill repeat.for=\"skillEnum of SkillEnums\" model.bind=\"skillEnum\"></lvskill></div><h3>Traits and features</h3><traits></traits></template>"; });
 define('text!components/spells/spells.html', ['module'], function(module) { module.exports = "<template><h1>Spells</h1></template>"; });
