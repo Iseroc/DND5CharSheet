@@ -1,4 +1,4 @@
-import {Translations} from '../../data/extra/translations'
+import {Translations} from '../../data/extra/translations';
 
 export class TranslateValueConverter {
   toView(valueToTranslate, translations: Translations, type: string) {

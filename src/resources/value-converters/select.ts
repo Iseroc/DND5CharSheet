@@ -1,4 +1,4 @@
-import {SkillStats} from '../../data/extra/enums'
+import {SkillStats} from '../../data/extra/enums';
 
 export class SelectValueConverter {
   toView(array, filterValue) {

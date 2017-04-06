@@ -11,16 +11,10 @@ export class Item {
   model: ItemModel;
 
   unequip() {
-    if(this.data.inventory.equipped.includes(this.model)) {
-      this.data.inventory.equipped.splice(this.data.inventory.equipped.indexOf(this.model), 1);
-      this.data.inventory.backpack.push(this.model);
-    }
+    this.data.inventory.moveToBackpack(this.model);
   }
 
   equip() {
-    if(this.data.inventory.backpack.includes(this.model)) {
-      this.data.inventory.backpack.splice(this.data.inventory.backpack.indexOf(this.model), 1);
-      this.data.inventory.equipped.push(this.model);
-    }
+    this.data.inventory.equip(this.model);
   }
 }

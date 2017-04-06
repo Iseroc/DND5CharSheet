@@ -13,10 +13,27 @@ export class CharacterModel {
     this.stats.set(StatEnums.CHA, 10);
   }
 
-  level: number = 1;
+  levels: LevelModel[] = [];
+
+  get totalLevel() {
+    return Math.max(this.levels.length, 1);
+  }
 
   get profiencyBonus() {
-    return Math.floor((this.level - 1) / 4) + 2;
+    return Math.floor((this.totalLevel - 1) / 4) + 2;
+  }
+
+  get maxHP() {
+    let hp = 0;
+
+    if(this.levels.length > 0) {
+      hp = this.levels[0].hd / 2 - 1;
+      for(let level of this.levels) {
+        hp += level.hd / 2 + 1 + this.statModifier(StatEnums.CON);
+      }
+    }
+
+    return hp;
   }
 
   stats = new Map<StatEnums, number>();
@@ -37,4 +54,8 @@ export class CharacterModel {
 
   // traits and features list
   traits: TraitModel[] = [];
+}
+
+export class LevelModel {
+  constructor(public characterClass: string, public hd: number) { }
 }

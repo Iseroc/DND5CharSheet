@@ -1,9 +1,9 @@
 import {inject} from 'aurelia-framework';
-import {CharacterModel} from './models/characterModel';
+import {CharacterModel, LevelModel} from './models/characterModel';
 import {InventoryModel} from './models/inventoryModel';
 import {Translations} from './extra/translations';
 import {TraitModel} from './models/components/traitModel';
-import {ItemModel, ArmorModel, WeaponModel} from './models/components/itemModel';
+import {ItemModel, ArmorModel, WeaponModel, ArmorType} from './models/components/itemModel';
 import {StatEnums, SkillEnums} from './extra/enums';
 import {Profiency} from './models/components/profiency';
 
@@ -16,7 +16,9 @@ export class DataAccessor {
   public openCharacter(charName:string) {
     if(charName === 'Galadin') {
       // Parse level
-      this.character.level = 16;
+      for(let i = 0; i < 16; i++) {
+        this.character.levels.push(new LevelModel('Paladin', 10));
+      }
 
       // Parse stats
       this.character.stats.set(StatEnums.STR, 18);
@@ -47,18 +49,20 @@ export class DataAccessor {
       this.character.traits.push(new TraitModel('Keen Hearing'));
 
       // Parse inventory
-      let item = new ArmorModel('Adamantium full plate', 18, 0);
-      item.additionalTraits.push(new TraitModel('Critical hit immunity'));
-      this.inventory.equipped.push(item);
+      let arm1 = new ArmorModel('Adamantium full plate', ArmorType.Heavy, 18, 0);
+      arm1.additionalTraits.push(new TraitModel('Critical hit immunity'));
+      this.inventory.equip(arm1);
 
-      let wep1 = new WeaponModel('Greatsword', '2d6', 'Slashing');
-      this.inventory.weapons.push(wep1);
+      let wep1 = new WeaponModel('Greatsword +2', '2d6+2', 'Slashing');
+      wep1.bonusAB = 2;
+      this.inventory.equip(wep1);
 
       let wep2 = new WeaponModel('Javelin', '1d6', 'Piercing');
-      this.inventory.weapons.push(wep2);
+      this.inventory.equip(wep2);
 
       let item2 = new ItemModel('Torch');
-      this.inventory.backpack.push(item2);
+      this.inventory.moveToBackpack(item2);
+
     }
   }
 }

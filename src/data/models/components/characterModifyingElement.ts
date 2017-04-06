@@ -10,5 +10,6 @@ export class CharacterModifyingElement {
   additionalTraits: TraitModel[] = [];
   baseAC: number;
   maxDexBonus: number;
-  additionalAC: number;
+  bonusAC: number;
+  bonusAB: number;
 }
