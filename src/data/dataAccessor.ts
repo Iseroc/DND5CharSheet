@@ -15,6 +15,8 @@ export class DataAccessor {
 
   public openCharacter(charName:string) {
     if(charName === 'Galadin') {
+      this.character.name = 'Galadin';
+
       // Parse level
       for(let i = 0; i < 16; i++) {
         this.character.levels.push(new LevelModel('Paladin', 10));

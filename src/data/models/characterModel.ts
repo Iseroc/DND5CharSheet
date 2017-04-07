@@ -13,6 +13,7 @@ export class CharacterModel {
     this.stats.set(StatEnums.CHA, 10);
   }
 
+  name: string = '';
   levels: LevelModel[] = [];
 
   get totalLevel() {

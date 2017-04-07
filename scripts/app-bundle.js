@@ -1,19 +1,35 @@
-define('app',["require", "exports"], function (require, exports) {
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+define('app',["require", "exports", "aurelia-framework", "./data/dataAccessor"], function (require, exports, aurelia_framework_1, dataAccessor_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    class App {
+    let App = class App {
+        constructor(data) {
+            this.data = data;
+        }
         configureRouter(config, router) {
             config.title = 'Contacts';
             config.map([
-                { route: '', moduleId: 'components/character/character', title: 'character', nav: true },
-                { route: 'inventory', moduleId: 'components/inventory/inventory', title: 'inventory', nav: true },
-                { route: 'combat', moduleId: 'components/combat/combat', title: 'combat', nav: true },
-                { route: 'spells', moduleId: 'components/spells/spells', title: 'spells', nav: true },
-                { route: 'levelup', moduleId: 'components/levelup/levelup', title: 'levelup', nav: true }
+                { route: '', moduleId: 'components/character/character', title: 'CHA', nav: true },
+                { route: 'inventory', moduleId: 'components/inventory/inventory', title: 'INV', nav: true },
+                { route: 'combat', moduleId: 'components/combat/combat', title: 'COM', nav: true },
+                { route: 'spells', moduleId: 'components/spells/spells', title: 'SPE', nav: true },
+                { route: 'levelup', moduleId: 'components/levelup/levelup', title: 'LVL', nav: true }
             ]);
             this.router = router;
         }
-    }
+    };
+    App = __decorate([
+        aurelia_framework_1.inject(dataAccessor_1.DataAccessor),
+        __metadata("design:paramtypes", [dataAccessor_1.DataAccessor])
+    ], App);
     exports.App = App;
 });
 
@@ -65,6 +81,7 @@ define('data/dataAccessor',["require", "exports", "aurelia-framework", "./models
         }
         openCharacter(charName) {
             if (charName === 'Galadin') {
+                this.character.name = 'Galadin';
                 for (let i = 0; i < 16; i++) {
                     this.character.levels.push(new characterModel_1.LevelModel('Paladin', 10));
                 }
@@ -131,6 +148,10 @@ define('components/character/character',["require", "exports", "aurelia-framewor
     let Character = class Character {
         constructor(data) {
             this.data = data;
+            this.editMode = false;
+        }
+        toggleEditMode() {
+            this.editMode = !this.editMode;
         }
     };
     Character = __decorate([
@@ -260,122 +281,12 @@ define('components/spells/spells',["require", "exports", "aurelia-framework", ".
     exports.Spells = Spells;
 });
 
-define('data/extra/enums',["require", "exports"], function (require, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var StatEnums;
-    (function (StatEnums) {
-        StatEnums[StatEnums["STR"] = 0] = "STR";
-        StatEnums[StatEnums["DEX"] = 1] = "DEX";
-        StatEnums[StatEnums["CON"] = 2] = "CON";
-        StatEnums[StatEnums["INT"] = 3] = "INT";
-        StatEnums[StatEnums["WIS"] = 4] = "WIS";
-        StatEnums[StatEnums["CHA"] = 5] = "CHA";
-    })(StatEnums = exports.StatEnums || (exports.StatEnums = {}));
-    var SkillEnums;
-    (function (SkillEnums) {
-        SkillEnums[SkillEnums["ACROBATICS"] = 0] = "ACROBATICS";
-        SkillEnums[SkillEnums["ANIMALHANDLING"] = 1] = "ANIMALHANDLING";
-        SkillEnums[SkillEnums["ARCANA"] = 2] = "ARCANA";
-        SkillEnums[SkillEnums["ATHLETICS"] = 3] = "ATHLETICS";
-        SkillEnums[SkillEnums["DECEPTION"] = 4] = "DECEPTION";
-        SkillEnums[SkillEnums["HISTORY"] = 5] = "HISTORY";
-        SkillEnums[SkillEnums["INSIGHT"] = 6] = "INSIGHT";
-        SkillEnums[SkillEnums["INTIMIDATION"] = 7] = "INTIMIDATION";
-        SkillEnums[SkillEnums["INVESTIGATION"] = 8] = "INVESTIGATION";
-        SkillEnums[SkillEnums["MEDICINE"] = 9] = "MEDICINE";
-        SkillEnums[SkillEnums["NATURE"] = 10] = "NATURE";
-        SkillEnums[SkillEnums["PERCEPTION"] = 11] = "PERCEPTION";
-        SkillEnums[SkillEnums["PERFORMANCE"] = 12] = "PERFORMANCE";
-        SkillEnums[SkillEnums["PERSUASION"] = 13] = "PERSUASION";
-        SkillEnums[SkillEnums["RELIGION"] = 14] = "RELIGION";
-        SkillEnums[SkillEnums["SLEIGHTOFHAND"] = 15] = "SLEIGHTOFHAND";
-        SkillEnums[SkillEnums["STEALTH"] = 16] = "STEALTH";
-        SkillEnums[SkillEnums["SURVIVAL"] = 17] = "SURVIVAL";
-    })(SkillEnums = exports.SkillEnums || (exports.SkillEnums = {}));
-    class CountryViewEngineHooks {
-        beforeBind(view) {
-            view.overrideContext.SkillEnums = Object.keys(SkillEnums).map(k => SkillEnums[k]).filter(v => typeof v === "number");
-        }
-    }
-    exports.CountryViewEngineHooks = CountryViewEngineHooks;
-    exports.SkillStats = new Map();
-    exports.SkillStats.set(SkillEnums.ACROBATICS, StatEnums.DEX);
-    exports.SkillStats.set(SkillEnums.ANIMALHANDLING, StatEnums.WIS);
-    exports.SkillStats.set(SkillEnums.ARCANA, StatEnums.INT);
-    exports.SkillStats.set(SkillEnums.ATHLETICS, StatEnums.STR);
-    exports.SkillStats.set(SkillEnums.DECEPTION, StatEnums.CHA);
-    exports.SkillStats.set(SkillEnums.HISTORY, StatEnums.INT);
-    exports.SkillStats.set(SkillEnums.INSIGHT, StatEnums.WIS);
-    exports.SkillStats.set(SkillEnums.INTIMIDATION, StatEnums.CHA);
-    exports.SkillStats.set(SkillEnums.INVESTIGATION, StatEnums.INT);
-    exports.SkillStats.set(SkillEnums.MEDICINE, StatEnums.WIS);
-    exports.SkillStats.set(SkillEnums.NATURE, StatEnums.INT);
-    exports.SkillStats.set(SkillEnums.PERCEPTION, StatEnums.WIS);
-    exports.SkillStats.set(SkillEnums.PERFORMANCE, StatEnums.CHA);
-    exports.SkillStats.set(SkillEnums.PERSUASION, StatEnums.CHA);
-    exports.SkillStats.set(SkillEnums.RELIGION, StatEnums.INT);
-    exports.SkillStats.set(SkillEnums.SLEIGHTOFHAND, StatEnums.DEX);
-    exports.SkillStats.set(SkillEnums.STEALTH, StatEnums.DEX);
-    exports.SkillStats.set(SkillEnums.SURVIVAL, StatEnums.WIS);
-});
-
-define('data/extra/translations',["require", "exports", "./enums"], function (require, exports, enums_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    class Translations {
-        constructor() {
-            this.statStrings = new Map();
-            this.skillStrings = new Map();
-            this.init();
-        }
-        init() {
-            this.initStatStrings();
-            this.initSkillStrings();
-        }
-        initStatStrings() {
-            this.statStrings.set(enums_1.StatEnums.STR, 'Strength');
-            this.statStrings.set(enums_1.StatEnums.DEX, 'Dexterity');
-            this.statStrings.set(enums_1.StatEnums.CON, 'Constitution');
-            this.statStrings.set(enums_1.StatEnums.INT, 'Intelligence');
-            this.statStrings.set(enums_1.StatEnums.WIS, 'Wisdom');
-            this.statStrings.set(enums_1.StatEnums.CHA, 'Charisma');
-        }
-        initSkillStrings() {
-            this.skillStrings.set(enums_1.SkillEnums.ACROBATICS, 'Acrobatics');
-            this.skillStrings.set(enums_1.SkillEnums.ANIMALHANDLING, 'Animal Handling');
-            this.skillStrings.set(enums_1.SkillEnums.ARCANA, 'Arcana');
-            this.skillStrings.set(enums_1.SkillEnums.ATHLETICS, 'Athletics');
-            this.skillStrings.set(enums_1.SkillEnums.DECEPTION, 'Deception');
-            this.skillStrings.set(enums_1.SkillEnums.HISTORY, 'History');
-            this.skillStrings.set(enums_1.SkillEnums.INSIGHT, 'Insight');
-            this.skillStrings.set(enums_1.SkillEnums.INTIMIDATION, 'Intimidation');
-            this.skillStrings.set(enums_1.SkillEnums.INVESTIGATION, 'Investigation');
-            this.skillStrings.set(enums_1.SkillEnums.MEDICINE, 'Medicine');
-            this.skillStrings.set(enums_1.SkillEnums.NATURE, 'Nature');
-            this.skillStrings.set(enums_1.SkillEnums.PERCEPTION, 'Perception');
-            this.skillStrings.set(enums_1.SkillEnums.PERFORMANCE, 'Performance');
-            this.skillStrings.set(enums_1.SkillEnums.PERSUASION, 'Persuasion');
-            this.skillStrings.set(enums_1.SkillEnums.RELIGION, 'Religion');
-            this.skillStrings.set(enums_1.SkillEnums.SLEIGHTOFHAND, 'Sleight of Hand');
-            this.skillStrings.set(enums_1.SkillEnums.STEALTH, 'Stealth');
-            this.skillStrings.set(enums_1.SkillEnums.SURVIVAL, 'Survival');
-        }
-        translateStat(stat) {
-            return this.statStrings.get(stat);
-        }
-        translateSkill(skill) {
-            return this.skillStrings.get(skill);
-        }
-    }
-    exports.Translations = Translations;
-});
-
 define('data/models/characterModel',["require", "exports", "../extra/enums"], function (require, exports, enums_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     class CharacterModel {
         constructor() {
+            this.name = '';
             this.levels = [];
             this.stats = new Map();
             this.skills = [];
@@ -491,6 +402,117 @@ define('data/models/inventoryModel',["require", "exports", "./components/itemMod
         }
     }
     exports.InventoryModel = InventoryModel;
+});
+
+define('data/extra/enums',["require", "exports"], function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var StatEnums;
+    (function (StatEnums) {
+        StatEnums[StatEnums["STR"] = 0] = "STR";
+        StatEnums[StatEnums["DEX"] = 1] = "DEX";
+        StatEnums[StatEnums["CON"] = 2] = "CON";
+        StatEnums[StatEnums["INT"] = 3] = "INT";
+        StatEnums[StatEnums["WIS"] = 4] = "WIS";
+        StatEnums[StatEnums["CHA"] = 5] = "CHA";
+    })(StatEnums = exports.StatEnums || (exports.StatEnums = {}));
+    var SkillEnums;
+    (function (SkillEnums) {
+        SkillEnums[SkillEnums["ACROBATICS"] = 0] = "ACROBATICS";
+        SkillEnums[SkillEnums["ANIMALHANDLING"] = 1] = "ANIMALHANDLING";
+        SkillEnums[SkillEnums["ARCANA"] = 2] = "ARCANA";
+        SkillEnums[SkillEnums["ATHLETICS"] = 3] = "ATHLETICS";
+        SkillEnums[SkillEnums["DECEPTION"] = 4] = "DECEPTION";
+        SkillEnums[SkillEnums["HISTORY"] = 5] = "HISTORY";
+        SkillEnums[SkillEnums["INSIGHT"] = 6] = "INSIGHT";
+        SkillEnums[SkillEnums["INTIMIDATION"] = 7] = "INTIMIDATION";
+        SkillEnums[SkillEnums["INVESTIGATION"] = 8] = "INVESTIGATION";
+        SkillEnums[SkillEnums["MEDICINE"] = 9] = "MEDICINE";
+        SkillEnums[SkillEnums["NATURE"] = 10] = "NATURE";
+        SkillEnums[SkillEnums["PERCEPTION"] = 11] = "PERCEPTION";
+        SkillEnums[SkillEnums["PERFORMANCE"] = 12] = "PERFORMANCE";
+        SkillEnums[SkillEnums["PERSUASION"] = 13] = "PERSUASION";
+        SkillEnums[SkillEnums["RELIGION"] = 14] = "RELIGION";
+        SkillEnums[SkillEnums["SLEIGHTOFHAND"] = 15] = "SLEIGHTOFHAND";
+        SkillEnums[SkillEnums["STEALTH"] = 16] = "STEALTH";
+        SkillEnums[SkillEnums["SURVIVAL"] = 17] = "SURVIVAL";
+    })(SkillEnums = exports.SkillEnums || (exports.SkillEnums = {}));
+    class CountryViewEngineHooks {
+        beforeBind(view) {
+            view.overrideContext.SkillEnums = Object.keys(SkillEnums).map(k => SkillEnums[k]).filter(v => typeof v === "number");
+        }
+    }
+    exports.CountryViewEngineHooks = CountryViewEngineHooks;
+    exports.SkillStats = new Map();
+    exports.SkillStats.set(SkillEnums.ACROBATICS, StatEnums.DEX);
+    exports.SkillStats.set(SkillEnums.ANIMALHANDLING, StatEnums.WIS);
+    exports.SkillStats.set(SkillEnums.ARCANA, StatEnums.INT);
+    exports.SkillStats.set(SkillEnums.ATHLETICS, StatEnums.STR);
+    exports.SkillStats.set(SkillEnums.DECEPTION, StatEnums.CHA);
+    exports.SkillStats.set(SkillEnums.HISTORY, StatEnums.INT);
+    exports.SkillStats.set(SkillEnums.INSIGHT, StatEnums.WIS);
+    exports.SkillStats.set(SkillEnums.INTIMIDATION, StatEnums.CHA);
+    exports.SkillStats.set(SkillEnums.INVESTIGATION, StatEnums.INT);
+    exports.SkillStats.set(SkillEnums.MEDICINE, StatEnums.WIS);
+    exports.SkillStats.set(SkillEnums.NATURE, StatEnums.INT);
+    exports.SkillStats.set(SkillEnums.PERCEPTION, StatEnums.WIS);
+    exports.SkillStats.set(SkillEnums.PERFORMANCE, StatEnums.CHA);
+    exports.SkillStats.set(SkillEnums.PERSUASION, StatEnums.CHA);
+    exports.SkillStats.set(SkillEnums.RELIGION, StatEnums.INT);
+    exports.SkillStats.set(SkillEnums.SLEIGHTOFHAND, StatEnums.DEX);
+    exports.SkillStats.set(SkillEnums.STEALTH, StatEnums.DEX);
+    exports.SkillStats.set(SkillEnums.SURVIVAL, StatEnums.WIS);
+});
+
+define('data/extra/translations',["require", "exports", "./enums"], function (require, exports, enums_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    class Translations {
+        constructor() {
+            this.statStrings = new Map();
+            this.skillStrings = new Map();
+            this.init();
+        }
+        init() {
+            this.initStatStrings();
+            this.initSkillStrings();
+        }
+        initStatStrings() {
+            this.statStrings.set(enums_1.StatEnums.STR, 'Strength');
+            this.statStrings.set(enums_1.StatEnums.DEX, 'Dexterity');
+            this.statStrings.set(enums_1.StatEnums.CON, 'Constitution');
+            this.statStrings.set(enums_1.StatEnums.INT, 'Intelligence');
+            this.statStrings.set(enums_1.StatEnums.WIS, 'Wisdom');
+            this.statStrings.set(enums_1.StatEnums.CHA, 'Charisma');
+        }
+        initSkillStrings() {
+            this.skillStrings.set(enums_1.SkillEnums.ACROBATICS, 'Acrobatics');
+            this.skillStrings.set(enums_1.SkillEnums.ANIMALHANDLING, 'Animal Handling');
+            this.skillStrings.set(enums_1.SkillEnums.ARCANA, 'Arcana');
+            this.skillStrings.set(enums_1.SkillEnums.ATHLETICS, 'Athletics');
+            this.skillStrings.set(enums_1.SkillEnums.DECEPTION, 'Deception');
+            this.skillStrings.set(enums_1.SkillEnums.HISTORY, 'History');
+            this.skillStrings.set(enums_1.SkillEnums.INSIGHT, 'Insight');
+            this.skillStrings.set(enums_1.SkillEnums.INTIMIDATION, 'Intimidation');
+            this.skillStrings.set(enums_1.SkillEnums.INVESTIGATION, 'Investigation');
+            this.skillStrings.set(enums_1.SkillEnums.MEDICINE, 'Medicine');
+            this.skillStrings.set(enums_1.SkillEnums.NATURE, 'Nature');
+            this.skillStrings.set(enums_1.SkillEnums.PERCEPTION, 'Perception');
+            this.skillStrings.set(enums_1.SkillEnums.PERFORMANCE, 'Performance');
+            this.skillStrings.set(enums_1.SkillEnums.PERSUASION, 'Persuasion');
+            this.skillStrings.set(enums_1.SkillEnums.RELIGION, 'Religion');
+            this.skillStrings.set(enums_1.SkillEnums.SLEIGHTOFHAND, 'Sleight of Hand');
+            this.skillStrings.set(enums_1.SkillEnums.STEALTH, 'Stealth');
+            this.skillStrings.set(enums_1.SkillEnums.SURVIVAL, 'Survival');
+        }
+        translateStat(stat) {
+            return this.statStrings.get(stat);
+        }
+        translateSkill(skill) {
+            return this.skillStrings.get(skill);
+        }
+    }
+    exports.Translations = Translations;
 });
 
 define('resources/value-converters/attackBonus',["require", "exports", "../../data/models/components/itemModel", "../../data/extra/enums"], function (require, exports, itemModel_1, enums_1) {
@@ -1063,20 +1085,20 @@ define('data/models/components/traitModel',["require", "exports", "./characterMo
     exports.TraitModel = TraitModel;
 });
 
-define('text!app.html', ['module'], function(module) { module.exports = "<template><require from=\"./styles.css\"></require><nav class=\"navbar\" role=\"navigation\"><a class=\"navbar-item ${row.isActive ? 'active' : ''}\" repeat.for=\"row of router.navigation\" href.bind=\"row.href\">${row.title}</a></nav><div class=\"content\"><router-view></router-view></div></template>"; });
-define('text!styles.css', ['module'], function(module) { module.exports = "body {\n  overflow: hidden;\n  font-family: 'Roboto';\n  margin: 0;\n  padding: 0;\n}\n\ntable {\n  padding: 0;\n  margin: 0;\n  border-collapse: collapse;\n  border-spacing: 0;\n}\n\ntd {\n  padding: 0;\n  margin: 0;\n}\n\nul, ol {\n  list-style: none;\n  padding: 0;\n  margin: 0;\n}\n\n.navbar {\n  display: flex;\n  flex-direction: row;\n  position: fixed;\n  top: 0;\n  height: 50px;\n  width: 100vw;\n  background: #aaa;\n}\n  .navbar .navbar-item {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    height: 100%;\n    text-decoration: none;\n    text-transform: uppercase;\n    color: #333;\n    flex: 0 auto;\n    padding: 0 20px;\n    border-right: 1px solid black;\n  }\n  .navbar .navbar-item:hover {\n    background: #999;\n  }\n  .navbar .navbar-item.active {\n    text-decoration: underline;\n  }\n\n.content {\n  height: calc(100vh - 50px);\n  overflow: auto;\n  position: relative;\n  margin-top: 50px;\n}\n"; });
-define('text!components/character/character.html', ['module'], function(module) { module.exports = "<template><require from=\"./character.css\"></require><require from=\"./skill/skill\"></require><require from=\"./stat/stat\"></require><require from=\"../../data/extra/enums\"></require><require from=\"../../resources/value-converters/select\"></require><div class=\"attribute-area\"><table class=\"attribute-table\"><tr class=\"attribute\" repeat.for=\"[statKey, statValue] of data.character.stats\"><td><stat model.bind=\"[statKey, statValue]\"></stat></td><td><div class=\"skills\"><skill repeat.for=\"skillEnum of SkillEnums | select:statKey\" model.bind=\"skillEnum\"></skill></div></td></tr></table></div><div class=\"features\"><div class=\"profiency-area\"><h3 class=\"profiency-header\">Profiencies</h3><div class=\"profiency-list\"><ul><li repeat.for=\"prof of data.character.profiencies\">${prof.name}</li><li repeat.for=\"prof of data.inventory.profiencies\">${prof.name}</li></ul></div></div><div class=\"traits-area\"><h3 class=\"traits-header\">Features and Traits</h3><div class=\"traits-list\"><ul><li repeat.for=\"trait of data.character.traits\">${trait.name}</li><li repeat.for=\"trait of data.inventory.traits\">${trait.name}</li></ul></div></div></div></template>"; });
-define('text!components/character/character.css', ['module'], function(module) { module.exports = ".attribute-area {\n  padding: 0 10px;\n}\n.attribute-table {\n  border-collapse: separate;\n  border-spacing: 0 10px;\n}\n.attribute {\n  margin-top: 10px;\n}\n  .attribute .stat {\n    border: 1px solid black;\n    padding: 5px;\n  }\n    .attribute .stat .stat-header {\n      text-transform: uppercase;\n      font-size: 10px;\n      text-align: center;\n    }\n    .attribute .stat .stat-value {\n      font-size: 24px;\n      text-align: center;\n    }\n    .attribute .stat .stat-modifier {\n      font-size: 16px;\n      text-align: center;\n    }\n\n  .attribute .skills {\n    display: flex;\n    flex-wrap: wrap;\n  }\n    .attribute .skills .skill {\n      flex: 0 auto;\n      padding: 0 10px;\n      margin: auto 0 0;\n    }\n      .attribute .skills .skill .skill-header {\n        text-align: center;\n        font-size: 10px;\n        text-transform: uppercase;\n        text-align: center;\n      }\n        .attribute .skills .skill-header.proficient::after {\n          content: '*';\n        }\n      .attribute .skills .skill .skill-value {\n        text-align: center;\n        font-size: 16px;\n        text-align: center;\n      }\n.features {\n  display: flex;\n  margin-bottom: 10px;\n}\n.features > * {\n  flex: 1 auto;\n}\n\n.profiency-area {\n  padding: 0 5px 0 10px;\n}\n.traits-area {\n  padding: 0 10px 0 5px;\n}\n.profiency-area .profiency-header,\n.traits-area .traits-header {\n  margin: 0 0 10px 0;\n}\n.profiency-area .profiency-list,\n.traits-area .traits-list {\n  border: 1px solid black;\n  padding: 10px;\n}\n"; });
-define('text!components/combat/combat.html', ['module'], function(module) { module.exports = "<template><require from=\"../../resources/value-converters/attackBonus\"></require><require from=\"./weapon/weapon\"></require><div class=\"combat\"><table class=\"weapons\"><tr repeat.for=\"weapon of data.inventory.weapons\"><td>${weapon.name}</td><td>${weapon | attackBonus:data}</td><td>${weapon.damage} ${weapon.damageType}</td></tr></table><div class=\"armor\">AC: ${armorClass}</div><div class=\"initiative\">Initiative: ${initiative}</div><div class=\"hitpoints\">HP: ${currentHP}/${data.character.maxHP}</div></div></template>"; });
+define('text!app.html', ['module'], function(module) { module.exports = "<template><require from=\"./styles.css\"></require><nav class=\"navbar\" role=\"navigation\"><div class=\"navbar-placeholder\"></div><a class=\"navbar-item ${row.isActive ? 'active' : ''}\" repeat.for=\"row of router.navigation\" href.bind=\"row.href\">${row.title}</a></nav><div class=\"generalinfo\"><h1>${data.character.name}</h1></div><div class=\"content\"><router-view></router-view></div></template>"; });
+define('text!styles.css', ['module'], function(module) { module.exports = "body {\n  overflow: hidden;\n  font-family: 'Roboto Condensed';\n  color: #333;\n  margin: 0;\n  padding: 0;\n}\n\n* {\n  box-sizing: border-box;\n}\n\ntable {\n  padding: 0;\n  margin: 0;\n  border-collapse: collapse;\n  border-spacing: 0;\n}\n\ntd {\n  padding: 0;\n  margin: 0;\n}\n\nul, ol {\n  list-style: none;\n  padding: 0;\n  margin: 0;\n}\n\nh1 {\n  margin: 0px;\n  padding: 0px;\n  font-size: 24px;\n  letter-spacing: 0;\n  font-weight: normal;\n}\n\nh2 {\n  font-size: 20px;\n  letter-spacing: 0;\n  font-weight: normal;\n}\n\n.navbar {\n  display: flex;\n  flex-direction: column;\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 50px;\n  height: 100vh;\n  background: #EEEEEE;\n  border-right: 1px solid #979797;\n}\n  .navbar .navbar-placeholder {\n    flex: 0 50px;\n    border-bottom: 1px solid #979797;\n  }\n  .navbar .navbar-item {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    text-decoration: none;\n    text-transform: uppercase;\n    color: #333;\n    flex: 0 50px;\n    padding: 0 5px;\n    border-bottom: 1px solid #979797;\n  }\n  .navbar .navbar-item:hover {\n    background: #999;\n  }\n  .navbar .navbar-item.active {\n    text-decoration: underline;\n  }\n\n.generalinfo {\n  position: fixed;\n  top: 0;\n  left: 50px;\n  line-height: 50px;\n  width: calc(100vw - 50px);\n  height: 50px;\n  border-bottom: 1px solid #979797;\n  padding-left: 10px;\n}\n\n.content {\n  height: calc(100vh - 50px);\n  width: calc(100vw - 50px);\n  overflow: auto;\n  position: relative;\n  margin-left: 50px;\n  margin-top: 50px;\n}\n"; });
+define('text!components/character/character.css', ['module'], function(module) { module.exports = ".character {\n  display: flex;\n}\n.character .editbutton {\n  position: fixed;\n  top: 50px;\n  right: 0;\n  margin: 10px;\n}\n.character .attribute-area {\n  flex: 1 auto;\n  padding: 0 10px;\n}\n.character .attribute-table {\n  border-collapse: separate;\n  border-spacing: 0 10px;\n}\n.character .attribute {\n  margin-top: 10px;\n}\n  .character .attribute .stat {\n    display: flex;\n    flex-direction: column;\n    border: 1px solid black;\n    padding: 5px;\n  }\n    .character .attribute .stat .stat-header {\n      flex: 0 auto;\n      text-transform: uppercase;\n      font-size: 10px;\n      text-align: center;\n    }\n    .character .attribute .stat .stat-value {\n      flex: 1 auto;\n      font-size: 24px;\n      vertical-align: middle;\n      text-align: center;\n    }\n    .character .attribute .stat .stat-modifier {\n      flex: 0 auto;\n      font-size: 16px;\n      text-align: center;\n    }\n\n  .character .attribute .skills {\n    display: flex;\n    max-height: 60px;\n    flex-direction: column;\n    rows: 3;\n    flex-wrap: wrap;\n  }\n    .character .attribute .skills .skill {\n      flex: 0 auto;\n      padding: 0 10px;\n      margin: auto 0 0;\n    }\n      .character .attribute .skills .skill .skill-header {\n        display: inline-block;\n        font-size: 10px;\n        text-transform: uppercase;\n        vertical-align: middle;\n      }\n        .character .attribute .skills .skill-header.proficient::after {\n          content: '*';\n        }\n      .character .attribute .skills .skill .skill-value {\n        display: inline-block;\n        font-size: 16px;\n        margin-left: 5px;\n        vertical-align: middle;\n      }\n.character .features-area {\n  flex: 1 auto;\n  padding: 0 10px 10px 0;\n}\n  .character .features {\n    display: flex;\n    margin-bottom: 10px;\n    flex-direction: column;\n  }\n  .character .features > * {\n    flex: 1 auto;\n  }\n  .character .profiency-area {\n    padding: 0;\n  }\n  .character .traits-area {\n    padding: 0;\n  }\n  .character .profiency-area .profiency-header,\n  .character .traits-area .traits-header {\n    margin: 10px 0;\n  }\n  .character .profiency-area .profiency-list,\n  .character .traits-area .traits-list {\n    border: 1px solid black;\n    padding: 10px;\n  }\n"; });
+define('text!components/character/character.html', ['module'], function(module) { module.exports = "<template><require from=\"./character.css\"></require><require from=\"./skill/skill\"></require><require from=\"./stat/stat\"></require><require from=\"../../data/extra/enums\"></require><require from=\"../../resources/value-converters/select\"></require><div class=\"character\"><div class=\"attribute-area\"><table class=\"attribute-table\"><tr class=\"attribute\" repeat.for=\"[statKey, statValue] of data.character.stats\"><td><stat model.bind=\"[statKey, statValue]\"></stat></td><td><div class=\"skills\"><skill class=\"skill\" repeat.for=\"skillEnum of SkillEnums | select:statKey\" model.bind=\"skillEnum\"></skill></div></td></tr></table></div><div class=\"features-area\"><div class=\"features\"><div class=\"profiency-area\"><h3 class=\"profiency-header\">Profiencies</h3><div class=\"profiency-list\"><ul><li repeat.for=\"prof of data.character.profiencies\">${prof.name}</li><li repeat.for=\"prof of data.inventory.profiencies\">${prof.name}</li></ul></div></div><div class=\"traits-area\"><h3 class=\"traits-header\">Features and Traits</h3><div class=\"traits-list\"><ul><li repeat.for=\"trait of data.character.traits\">${trait.name}</li><li repeat.for=\"trait of data.inventory.traits\">${trait.name}</li></ul></div></div></div></div><button class=\"editbutton\" click.delegate=\"toggleEditMode()\">Edit: ${editMode}</button></div></template>"; });
 define('text!components/inventory/inventory.css', ['module'], function(module) { module.exports = ".btn-newItem {\n  position: fixed;\n  top: 50px;\n  right: 0;\n  margin: 10px;\n  z-index: 100;\n}\n\n.newItem-area {\n  display: block;\n  position: fixed;\n  top: 50px;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  margin: auto;\n  background: white;\n  border: 1px solid #333;\n  width: 400px;\n  height: 300px;\n  box-shadow: 0 2px 3px #888;\n}\n.newItem-area .hide {\n  display: block;\n}\n.newItem-createBtn {\n}\n"; });
+define('text!components/combat/combat.html', ['module'], function(module) { module.exports = "<template><require from=\"../../resources/value-converters/attackBonus\"></require><div class=\"combat\"><table class=\"weapons\"><tr repeat.for=\"weapon of data.inventory.weapons\"><td>${weapon.name}</td><td>${weapon | attackBonus:data}</td><td>${weapon.damage} ${weapon.damageType}</td></tr></table><div class=\"armor\">AC: ${armorClass}</div><div class=\"initiative\">Initiative: ${initiative}</div><div class=\"hitpoints\">HP: ${currentHP}/${data.character.maxHP}</div></div></template>"; });
 define('text!components/inventory/inventory.html', ['module'], function(module) { module.exports = "<template><require from=\"./inventory.css\"></require><require from=\"./item/item\"></require><require from=\"./newItem/newItem\"></require><h3>Equipped items</h3><ul><li repeat.for=\"item of data.inventory.equipped\"><item model.bind=\"item\"></item></li></ul><h3>Backpack</h3><ul><li repeat.for=\"item of data.inventory.backpack\"><item model.bind=\"item\"></item></li></ul><button class=\"btn-newItem\" click.delegate=\"startCreatingNewItem()\">Create a new item</button><new-item state.two-way=\"creatingNewItem\"></new-item></template>"; });
 define('text!components/levelup/levelup.html', ['module'], function(module) { module.exports = "<template><require from=\"../../resources/value-converters/pointBuy\"></require><require from=\"./traits/traits\"></require><require from=\"./lvskill/lvskill\"></require><require from=\"./lvstat/lvstat\"></require><require from=\"../../data/extra/enums\"></require><div class=\"stats\"><h3>Stats</h3><lvstat repeat.for=\"[statKey, statValue] of data.character.stats\" model.bind=\"statKey\"></lvstat></div><div class=\"profiencies\"><h3>Skill profiencies</h3><lvskill repeat.for=\"skillEnum of SkillEnums\" model.bind=\"skillEnum\"></lvskill></div><h3>Traits and features</h3><traits></traits></template>"; });
 define('text!components/spells/spells.html', ['module'], function(module) { module.exports = "<template><h1>Spells</h1></template>"; });
-define('text!components/character/skill/skill.html', ['module'], function(module) { module.exports = "<template><require from=\"../../../resources/value-converters/skillCalculator\"></require><div class=\"skill\"><div class=\"skill-header ${hasProfiency ? 'proficient' : ''}\">${name}</div><div class=\"skill-value\">${skillScore}</div></div></template>"; });
 define('text!components/character/stat/stat.html', ['module'], function(module) { module.exports = "<template><require from=\"../../../resources/value-converters/statModifier\"></require><div class=\"stat\"><div class=\"stat-header\">${name}</div><div class=\"stat-value\">${value}</div><div class=\"stat-modifier\">${value | statModifier}</div></div></template>"; });
+define('text!components/character/skill/skill.html', ['module'], function(module) { module.exports = "<template><require from=\"../../../resources/value-converters/skillCalculator\"></require><div class=\"skill-header ${hasProfiency ? 'proficient' : ''}\">${name}</div><div class=\"skill-value\">${skillScore}</div></template>"; });
 define('text!components/inventory/item/item.html', ['module'], function(module) { module.exports = "<template>${model.name}<ul><li repeat.for=\"prof of model.skillProfiency\">Grants profiency in ${prof}</li></ul><template if.bind=\"model.equippable\"><button click.delegate=\"unequip()\">Unequip</button> <button click.delegate=\"equip()\">Equip</button></template></template>"; });
 define('text!components/inventory/newItem/newItem.html', ['module'], function(module) { module.exports = "<template><require from=\"../../../data/extra/enums\"></require><require from=\"../../../resources/value-converters/translate\"></require><div class=\"newItem-area\" show.bind=\"state\"><div class=\"typeselect\"><label><input type=\"radio\" name=\"typeradio\" value=\"item\" checked.bind=\"selectedType\">Item</label><label><input type=\"radio\" name=\"typeradio\" value=\"armor\" checked.bind=\"selectedType\" ref=\"armorradio\">Armor</label><label><input type=\"radio\" name=\"typeradio\" value=\"weapon\" checked.bind=\"selectedType\" ref=\"weaponradio\">Weapon</label></div><input type=\"text\" placeholder=\"Name\" value.bind=\"name\"><label><input type=\"checkbox\" disabled.bind=\"armorradio.checked || weaponradio.checked\" checked.bind=\"equippable\">Equippable</label><label><input type=\"checkbox\" checked.bind=\"attunement\">Requires attunement</label><div show.bind=\"armorradio.checked\" class=\"armorarea\"><label>Base AC and maximum dexterity bonus</label><input type=\"number\" value.bind=\"baseAC\" placeholder=\"Base AC\"> <input type=\"number\" value.bind=\"maxDexBonus\" placeholder=\"Max Dex bonus\"></div><div show.bind=\"weaponradio.checked\" class=\"weaponarea\"><label>Damage</label><input type=\"text\" value.bind=\"damage\" placeholder=\"1d8\"> <input type=\"text\" value.bind=\"damageType\" placeholder=\"Slashing\"></div><div class=\"newItem-skills\"><label>Granted skill profiencies</label><ul><li repeat.for=\"skill of additionalSkillProfiencies\">${skill | translate:data.translations:'skill' }</li></ul><select value.bind=\"selectedSkillProfiency\"><option repeat.for=\"skillEnum of SkillEnums\" model.bind=\"skillEnum\">${skillEnum | translate:data.translations:'skill' }</option></select><button click.delegate=\"addSkillProfiency()\">Add skill</button></div><div class=\"newItem-profiencies\"><label>Granted other profiencies</label><ul><li repeat.for=\"profiency of additionalOtherProfiencies\">${profiency.name}</li></ul><input type=\"text\" placeholder=\"New profiency name\" value.bind=\"newOtherProfiencyName\"> <button click.delegate=\"addOtherProfiency()\">Add profiency</button></div><div class=\"newItem-traits\"><label>Granted traits and features</label><ul><li repeat.for=\"trait of additionalTraits\">${trait.name}</li></ul><input type=\"text\" placeholder=\"New trait name\" value.bind=\"newTraitName\"> <button click.delegate=\"addTrait()\">Add trait</button></div><button class=\"createButton\" disabled.bind=\"!name\" click.delegate=\"createItem()\">Create item</button> <button class=\"createButton\" click.delegate=\"reset()\">Cancel</button></div></template>"; });
 define('text!components/levelup/lvskill/lvskill.html', ['module'], function(module) { module.exports = "<template><div><input id=\"check-${model}\" type=\"checkbox\" checked.bind=\"profiency\"><label for=\"check-${model}\">${name}</label></div></template>"; });
-define('text!components/levelup/lvstat/lvstat.html', ['module'], function(module) { module.exports = "<template><div class=\"stat\"><div>${name}</div><input type=\"number\" value.bind=\"value\"></div></template>"; });
 define('text!components/levelup/traits/traits.html', ['module'], function(module) { module.exports = "<template><div class=\"traits-area\"><ul><li repeat.for=\"trait of data.character.traits\">${trait.name} <button click.delegate=\"removeTrait(trait)\">Remove</button></li></ul><div><input placeholder=\"Trait name\" type=\"text\" id=\"trait-name\" value.bind=\"newTraitText\"> <button click.delegate=\"addTrait()\">Add</button></div></div></template>"; });
+define('text!components/levelup/lvstat/lvstat.html', ['module'], function(module) { module.exports = "<template><div class=\"stat\"><div>${name}</div><input type=\"number\" value.bind=\"value\"></div></template>"; });
 //# sourceMappingURL=app-bundle.js.map

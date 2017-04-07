@@ -3,8 +3,13 @@
   <require from="./styles.css"></require>
 
   <nav class="navbar" role="navigation">
+    <div class="navbar-placeholder"></div>
     <a class="navbar-item ${row.isActive ? 'active' : ''}" repeat.for="row of router.navigation" href.bind="row.href">${row.title}</a>
   </nav>
+
+  <div class="generalinfo">
+    <h1>${data.character.name}</h1>
+  </div>
 
   <div class="content">
     <router-view></router-view>
