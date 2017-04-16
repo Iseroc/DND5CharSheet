@@ -64,10 +64,16 @@
           content: '*';
         }
       .character .attribute .skills .skill .skill-value {
+        width: 20px;
         display: inline-block;
         font-size: 16px;
         margin-left: 5px;
         vertical-align: middle;
+      }
+      .character .attribute .skills .skill .skill-edit {
+        width: 20px;
+        margin-left: 5px;
+        display: inline-block;
       }
 .character .features-area {
   flex: 1 auto;

@@ -15,7 +15,7 @@
           <td>
             <div class="skills">
               <!--skill repeat.for="skillRow of data.character.skills | select:statKey" model.bind="skillRow"></skill-->
-              <skill class="skill" repeat.for="skillEnum of SkillEnums | select:statKey" model.bind="skillEnum"></skill>
+              <skill class="skill" repeat.for="skillEnum of SkillEnums | select:statKey" model.bind="skillEnum" edit-mode.bind="editMode"></skill>
             </div>
           </td>
         </tr>

@@ -13,6 +13,38 @@ export class DataAccessor {
     this.openCharacter('Galadin');
   }
 
+  textFile = null;
+
+  save() {
+    var json_data = JSON.stringify(this.character);
+    var json_data = JSON.stringify(this.inventory);
+
+    var data = new Blob(['testi'], {type: 'text/plain'});
+
+    // If we are replacing a previously generated file we need to
+    // manually revoke the object URL to avoid memory leaks.
+    if (this.textFile !== null) {
+      window.URL.revokeObjectURL(this.textFile);
+    }
+    this.textFile = window.URL.createObjectURL(data);
+
+    var link = document.createElement('a');
+    link.setAttribute('download', 'info.txt');
+    link.href = this.textFile;
+    document.body.appendChild(link);
+
+    // wait for the link to be added to the document
+    window.requestAnimationFrame(function () {
+      var event = new MouseEvent('click');
+      link.dispatchEvent(event);
+      document.body.removeChild(link);
+    });
+  }
+
+  load() {
+    console.log('loaded');
+  }
+
   public openCharacter(charName:string) {
     if(charName === 'Galadin') {
       this.character.name = 'Galadin';

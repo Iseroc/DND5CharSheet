@@ -8,6 +8,9 @@ export class Skill {
   constructor(private data: DataAccessor) { }
 
   @bindable
+  editMode: boolean = false;
+
+  @bindable
   model: SkillEnums;
 
   get name(): string {
@@ -29,6 +32,14 @@ export class Skill {
 
   get hasProfiency(): boolean {
     return this.data.character.skills.includes(this.model) || this.data.inventory.skills.includes(this.model);
+  }
+  set hasProfiency(value: boolean) {
+    if(!value){
+      this.data.character.removeSkill(this.model);
+    }
+    else {
+      this.data.character.addSkill(this.model);
+    }
   }
 
   get hasExpertise(): boolean {

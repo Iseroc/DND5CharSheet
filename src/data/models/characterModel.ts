@@ -55,6 +55,17 @@ export class CharacterModel {
 
   // traits and features list
   traits: TraitModel[] = [];
+
+  addSkill(skill:SkillEnums) {
+    if(!this.skills.includes(skill)) {
+      this.skills.push(skill);
+    }
+  }
+  removeSkill(skill:SkillEnums) {
+    if(this.skills.includes(skill)) {
+      this.skills.splice(this.skills.indexOf(skill), 1);
+    }
+  }
 }
 
 export class LevelModel {
