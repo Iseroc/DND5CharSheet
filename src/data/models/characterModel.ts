@@ -38,6 +38,12 @@ export class CharacterModel {
   }
 
   stats = new Map<StatEnums, number>();
+  getStat(stat:StatEnums): number {
+    return this.stats.get(stat);
+  }
+  setStat(stat:StatEnums, value:number) {
+    this.stats.set(stat, value);
+  }
 
   statModifier(statKey: StatEnums): number {
     if(this.stats.has(statKey)) {
@@ -45,7 +51,7 @@ export class CharacterModel {
     }
     return -1000;
   }
-
+  
   // skill profiencies list
   skills: SkillEnums[] = [];
   expertises: SkillEnums[] = [];

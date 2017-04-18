@@ -8,19 +8,27 @@ export class Stat {
   constructor(private data: DataAccessor) { }
 
   @bindable
-  model: [StatEnums, number];
+  editMode: boolean = false;
+
+  @bindable
+  model: StatEnums;
 
   get name(): string {
     if(this.model) {
-      return this.data.translations.translateStat(this.model[0]);
+      return this.data.translations.translateStat(this.model);
     }
     return "N/A";
   }
 
   get value(): number {
     if(this.model) {
-      return this.model[1];
+      return this.data.character.getStat(this.model);
     }
     return -1000;
+  }
+  set value(value:number) {
+    if(this.model) {
+      this.data.character.setStat(this.model, value);
+    }
   }
 }

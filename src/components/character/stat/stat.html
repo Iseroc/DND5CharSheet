@@ -3,7 +3,10 @@
 
   <div class="stat">
     <div class="stat-header">${name}</div>
-    <div class="stat-value">${value}</div>
+    <div class="stat-value">
+      <span show.bind="!editMode">${value}</span>
+      <input show.bind="editMode" type="number" value.bind="value" />
+    </div>
     <div class="stat-modifier">${value | statModifier}</div>
   </div>
 </template>

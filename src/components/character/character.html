@@ -10,7 +10,7 @@
       <table class="attribute-table">
         <tr class="attribute" repeat.for="[statKey, statValue] of data.character.stats">
           <td>
-            <stat model.bind="[statKey, statValue]"></stat>
+            <stat model.bind="statKey" edit-mode.bind="editMode"></stat>
           </td>
           <td>
             <div class="skills">
