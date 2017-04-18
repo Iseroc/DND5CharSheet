@@ -27,13 +27,18 @@
           <h3 class="profiency-header">Profiencies</h3>
           <div class="profiency-list">
             <ul>
-              <li repeat.for="prof of data.character.profiencies">
-                ${prof.name}
+              <li class="flex-container" repeat.for="prof of data.character.profiencies">
+                <span class="flex-normal">${prof.name}</span>
+                <button show.bind="editMode" class="fa-button red flex-fixed" click.delegate="removeProfiency(prof)"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
               </li>
               <li repeat.for="prof of data.inventory.profiencies">
                 ${prof.name}
               </li>
             </ul>
+            <div class="flex-container" show.bind="editMode">
+              <input class="flex-normal" type="text" value.bind="newProfiency"/>
+              <button class="add-button flex-fixed" click.delegate="addProfiency()">Add</button>
+            </div>
           </div>
         </div>
 
@@ -41,13 +46,19 @@
           <h3 class="traits-header">Features and Traits</h3>
           <div class="traits-list">
             <ul>
-              <li repeat.for="trait of data.character.traits">
-                ${trait.name}
+              <li class="flex-container" repeat.for="trait of data.character.traits">
+                <span class="flex-normal">${trait.name}</span>
+                <button show.bind="editMode" class="fa-button red flex-fixed" click.delegate="removeTrait(trait)""><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
               </li>
-              <li repeat.for="trait of data.inventory.traits">
-                ${trait.name}
+              <li class="flex-container" repeat.for="trait of data.inventory.traits">
+                <span class="flex-normal">${trait.name}</span>
+                <span class="flex-fixed item-placeholder" show.bind="editMode">ITEM</span>
               </li>
             </ul>
+            <div class="flex-container" show.bind="editMode">
+              <input class="flex-normal" type="text" value.bind="newTrait"/>
+              <button class="add-button flex-fixed" click.delegate="addTrait()">Add</button>
+            </div>
           </div>
         </div>
       </div>

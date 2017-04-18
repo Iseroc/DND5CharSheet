@@ -1,7 +1,7 @@
 <template>
   <require from="../../../resources/value-converters/skillCalculator"></require>
 
-  <div class="skill-header ${hasProfiency ? 'proficient' : ''}">${name}</div>
-  <div class="skill-value" show.bind="!editMode">${skillScore}</div>
+  <div class="skill-header">${name}</div>
+  <div class="skill-value ${hasProfiency ? 'proficient' : ''}" show.bind="!editMode">${skillScore}</div>
   <div class="skill-edit" show.bind="editMode"><input type="checkbox" checked.bind="hasProfiency" /></div>
 </template>

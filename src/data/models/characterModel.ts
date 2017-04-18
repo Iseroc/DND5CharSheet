@@ -50,12 +50,6 @@ export class CharacterModel {
   skills: SkillEnums[] = [];
   expertises: SkillEnums[] = [];
 
-  // other profiencies list
-  profiencies: Profiency[] = [];
-
-  // traits and features list
-  traits: TraitModel[] = [];
-
   addSkill(skill:SkillEnums) {
     if(!this.skills.includes(skill)) {
       this.skills.push(skill);
@@ -64,6 +58,34 @@ export class CharacterModel {
   removeSkill(skill:SkillEnums) {
     if(this.skills.includes(skill)) {
       this.skills.splice(this.skills.indexOf(skill), 1);
+    }
+  }
+
+  // other profiencies list
+  profiencies: Profiency[] = [];
+
+  addProfiency(prof: Profiency) {
+    if(!this.profiencies.includes(prof)) {
+      this.profiencies.push(prof);
+    }
+  }
+  removeProfiency(prof: Profiency) {
+    if(this.profiencies.includes(prof)) {
+      this.profiencies.splice(this.profiencies.indexOf(prof), 1);
+    }
+  }
+
+  // traits and features list
+  traits: TraitModel[] = [];
+
+  addTrait(trait:TraitModel) {
+    if(!this.traits.includes(trait)) {
+      this.traits.push(trait);
+    }
+  }
+  removeTrait(trait:TraitModel) {
+    if(this.traits.includes(trait)) {
+      this.traits.splice(this.traits.indexOf(trait), 1);
     }
   }
 }

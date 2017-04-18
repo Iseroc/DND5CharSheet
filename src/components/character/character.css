@@ -1,5 +1,6 @@
 .character {
   display: flex;
+  flex-flow: wrap;
 }
 .character .editbutton {
   position: fixed;
@@ -8,7 +9,7 @@
   margin: 10px;
 }
 .character .attribute-area {
-  flex: 1 auto;
+  flex: 1 60%;
   padding: 0 10px;
 }
 .character .attribute-table {
@@ -59,10 +60,8 @@
         font-size: 10px;
         text-transform: uppercase;
         vertical-align: middle;
+        line-height: 19px;
       }
-        .character .attribute .skills .skill-header.proficient::after {
-          content: '*';
-        }
       .character .attribute .skills .skill .skill-value {
         width: 20px;
         display: inline-block;
@@ -70,14 +69,18 @@
         margin-left: 5px;
         vertical-align: middle;
       }
+        .character .attribute .skills .skill-value.proficient {
+          font-weight: bold;
+        }
       .character .attribute .skills .skill .skill-edit {
         width: 20px;
         margin-left: 5px;
         display: inline-block;
       }
 .character .features-area {
-  flex: 1 auto;
-  padding: 0 10px 10px 0;
+  flex: 1 40%;
+  padding: 0 10px 10px;
+  min-width: 185px;
 }
   .character .features {
     display: flex;
@@ -101,4 +104,13 @@
   .character .traits-area .traits-list {
     border: 1px solid black;
     padding: 10px;
+  }
+  .traits-area .add-button,
+  .profiency-area .add-button {
+    margin-left: 5px;
+  }
+  .traits-area .item-placeholder {
+    color:grey;
+    font-size:10px;
+    line-height:19px;
   }

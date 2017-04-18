@@ -94,3 +94,39 @@ h2 {
   margin-left: 50px;
   margin-top: 50px;
 }
+
+.fa-button {
+  background: none;
+  border: none;
+  font-size: 13px;
+  padding: 0;
+  margin: 0;
+  height: auto;
+}
+  .fa-button.red {
+    color: red;
+  }
+  .fa-button > i {
+    line-height: 18px;
+  }
+
+button {
+  border-radius: 0;
+  height: 20px;
+  background: lightblue;
+  border: 1px solid #888;
+}
+
+input[type='text'] {
+  min-width: 0;
+}
+
+.flex-container {
+  display: flex;
+}
+  .flex-container .flex-normal {
+    flex: 1 auto;
+  }
+  .flex-container .flex-fixed {
+    flex: 0 auto;
+  }
