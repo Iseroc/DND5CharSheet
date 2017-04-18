@@ -1,7 +1,7 @@
 import {inject} from 'aurelia-framework';
 import {bindable, observable} from 'aurelia-framework';
 import {DataAccessor} from '../../../data/dataAccessor';
-import {ItemModel, WeaponModel, ArmorModel} from '../../../data/models/components/itemModel';
+import {ItemModel, WeaponModel, ArmorModel, ArmorType} from '../../../data/models/components/itemModel';
 import {SkillEnums} from '../../../data/extra/enums';
 import {Profiency} from '../../../data/models/components/profiency';
 import {TraitModel} from '../../../data/models/components/traitModel';
@@ -66,7 +66,7 @@ export class NewItem {
   createItem() {
     var item;
     if(this.selectedType === 'armor') {
-      item = new ArmorModel(this.name, this.baseAC, this.maxDexBonus);
+      item = new ArmorModel(this.name, ArmorType.Medium, this.baseAC, this.maxDexBonus);
     }
     else if(this.selectedType === 'weapon') {
       item = new WeaponModel(this.name, this.damage, this.damageType);

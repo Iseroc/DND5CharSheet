@@ -14,7 +14,6 @@ export class App {
       { route: 'inventory', moduleId: 'components/inventory/inventory', title: 'INV', nav: true},
       { route: 'combat',    moduleId: 'components/combat/combat',       title: 'COM', nav: true},
       { route: 'spells',    moduleId: 'components/spells/spells',       title: 'SPE', nav: true},
-      { route: 'levelup',   moduleId: 'components/levelup/levelup',     title: 'LVL', nav: true}
     ]);
 
     this.router = router;
