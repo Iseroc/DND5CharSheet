@@ -117,8 +117,9 @@ h2 {
 button {
   border-radius: 0;
   height: 20px;
-  background: lightblue;
-  border: 1px solid #888;
+  background: dodgerblue;
+  border: 1px solid #333;
+  cursor: pointer;
 }
 
 input[type='text'] {

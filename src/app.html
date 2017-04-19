@@ -13,7 +13,8 @@
     <h1>${data.character.name}</h1>
     <div style="position:fixed;top:0;right:0;margin:0 10px;">
       <button click.delegate="data.save()">Save</button>
-      <button click.delegate="data.load()">Load</button>
+      <input type="file" ref="fileinput" change.delegate="data.loadFile(fileinput)" />
+      <button click.delegate="data.load(fileinput)">Load</button>
     </div>
   </div>
 

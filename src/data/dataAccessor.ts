@@ -7,6 +7,7 @@ import {TraitModel} from './models/components/traitModel';
 import {ItemModel, ArmorModel, WeaponModel, ArmorType} from './models/components/itemModel';
 import {StatEnums, SkillEnums} from './extra/enums';
 import {ProfiencyModel} from './models/components/profiencyModel';
+//import {FileSaver} from 'file-saver';
 
 @inject(CharacterAccessor, InventoryAccessor, Translations)
 export class DataAccessor {
@@ -17,11 +18,13 @@ export class DataAccessor {
   textFile = null;
 
   save() {
+    var FileSaver = require('file-saver');
+
     var char_data = JSON.stringify(this.character.model);
-    var inv_data = JSON.stringify(this.inventory);
+    var inv_data = JSON.stringify(this.inventory.model);
 
-    var data = new Blob([char_data, inv_data], {type: 'text/plain'});
-
+    var data = new Blob([char_data, '<&/>', inv_data], {type: 'text/plain'});
+/*
     // If we are replacing a previously generated file we need to
     // manually revoke the object URL to avoid memory leaks.
     if (this.textFile !== null) {
@@ -40,15 +43,33 @@ export class DataAccessor {
       link.dispatchEvent(event);
       document.body.removeChild(link);
     });
+*/
+    FileSaver.saveAs(data, "hello world.txt");
   }
 
-  load() {
-    console.log("stringying...");
-    var char_data = JSON.stringify(this.character.model);
-    console.log("data stringied. parsing...");
-    console.log(char_data);
-    this.character.model = JSON.parse(char_data);
-    console.log("data parsed");
+  load(input) {
+    var event = new MouseEvent('click');
+    input.dispatchEvent(event);
+  }
+
+  loadFile(input) {
+    var files = input.files;
+
+    let file = files.item(0);
+    if(file) {
+      let reader = new FileReader();
+
+      //make a reader and set up a trigger on the "read" event
+      reader.onload = () => {
+        var resArr = reader.result.split('<&/>');
+        this.character.model = JSON.parse(resArr[0]);
+        this.inventory.model = JSON.parse(resArr[1]);
+        input.value = '';
+      };
+
+      //read the file
+      reader.readAsText(file);
+    }
   }
 
   public openCharacter(charName:string) {
@@ -105,4 +126,13 @@ export class DataAccessor {
 
     }
   }
+}
+
+interface FileReaderEventTarget extends EventTarget {
+    result:string
+}
+
+interface FileReaderEvent extends Event {
+    target: FileReaderEventTarget;
+    getMessage():string;
 }
