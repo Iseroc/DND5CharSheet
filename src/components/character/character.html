@@ -8,19 +8,19 @@
   <div class="character">
     <div class="attribute-area">
       <table class="attribute-table">
-        <tr class="attribute" repeat.for="[statKey, statValue] of data.character.stats">
+        <tr class="attribute" repeat.for="stat of data.character.stats">
           <td>
-            <stat model.bind="statKey" edit-mode.bind="editMode"></stat>
+            <stat model.bind="stat.key" edit-mode.bind="editMode"></stat>
           </td>
           <td>
             <div class="skills">
-              <!--skill repeat.for="skillRow of data.character.skills | select:statKey" model.bind="skillRow"></skill-->
-              <skill class="skill" repeat.for="skillEnum of SkillEnums | select:statKey" model.bind="skillEnum" edit-mode.bind="editMode"></skill>
+              <skill class="skill" repeat.for="skillEnum of SkillEnums | select:stat.key" model.bind="skillEnum" edit-mode.bind="editMode"></skill>
             </div>
           </td>
         </tr>
       </table>
     </div>
+    
     <div class="features-area">
       <div class="features">
         <div class="profiency-area">
@@ -48,7 +48,7 @@
             <ul>
               <li class="flex-container" repeat.for="trait of data.character.traits">
                 <span class="flex-normal">${trait.name}</span>
-                <button show.bind="editMode" class="fa-button red flex-fixed" click.delegate="removeTrait(trait)""><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
+                <button show.bind="editMode" class="fa-button red flex-fixed" click.delegate="removeTrait(trait)"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
               </li>
               <li class="flex-container" repeat.for="trait of data.inventory.traits">
                 <span class="flex-normal">${trait.name}</span>

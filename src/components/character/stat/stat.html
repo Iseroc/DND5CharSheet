@@ -3,9 +3,10 @@
 
   <div class="stat">
     <div class="stat-header">${name}</div>
-    <div class="stat-value">
-      <span show.bind="!editMode">${value}</span>
-      <input show.bind="editMode" type="number" value.bind="value" />
+    <div class="stat-value flex-container flex-justify-center">
+      <button show.bind="editMode" class="fa-button blue flex-fixed stat-editButton left" click.delegate="subtract()"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
+      <span class="flex-fixeds">${value}</span>
+      <button show.bind="editMode" class="fa-button blue flex-fixed stat-editButton right" click.delegate="add()"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
     </div>
     <div class="stat-modifier">${value | statModifier}</div>
   </div>

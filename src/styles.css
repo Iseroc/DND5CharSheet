@@ -102,9 +102,13 @@ h2 {
   padding: 0;
   margin: 0;
   height: auto;
+  cursor: pointer;
 }
   .fa-button.red {
     color: red;
+  }
+  .fa-button.blue {
+    color: dodgerblue;
   }
   .fa-button > i {
     line-height: 18px;
@@ -124,8 +128,11 @@ input[type='text'] {
 .flex-container {
   display: flex;
 }
-  .flex-container .flex-normal {
-    flex: 1 auto;
+.flex-container > * {
+  flex: 1 auto;
+}
+  .flex-container.flex-justify-center {
+    justify-content: center;
   }
   .flex-container .flex-fixed {
     flex: 0 auto;

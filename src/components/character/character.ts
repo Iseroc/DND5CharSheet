@@ -1,6 +1,6 @@
 import {inject} from 'aurelia-framework';
 import {DataAccessor} from '../../data/dataAccessor';
-import {Profiency} from '../../data/models/components/profiency'
+import {ProfiencyModel} from '../../data/models/components/profiencyModel'
 import {TraitModel} from '../../data/models/components/traitModel'
 
 @inject(DataAccessor)
@@ -15,7 +15,7 @@ export class Character {
 
   newProfiency: string = '';
   addProfiency() {
-    let prof: Profiency = new Profiency(this.newProfiency);
+    let prof: ProfiencyModel = new ProfiencyModel(this.newProfiency);
     this.data.character.addProfiency(prof);
     this.newProfiency = '';
   }

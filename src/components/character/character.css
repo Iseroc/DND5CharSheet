@@ -37,6 +37,12 @@
       vertical-align: middle;
       text-align: center;
     }
+      .character .attribute .stat .stat-value .stat-editButton.left {
+        margin-left: 5px;
+      }
+      .character .attribute .stat .stat-value .stat-editButton.right {
+        margin-right: 5px;
+      }
     .character .attribute .stat .stat-modifier {
       flex: 0 auto;
       font-size: 16px;

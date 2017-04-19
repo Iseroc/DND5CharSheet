@@ -1,25 +1,26 @@
 import {inject} from 'aurelia-framework';
-import {CharacterModel, LevelModel} from './models/characterModel';
-import {InventoryModel} from './models/inventoryModel';
+import {CharacterAccessor} from './models/characterAccessor';
+import {LevelModel} from './models/components/levelModel';
+import {InventoryAccessor} from './models/inventoryAccessor';
 import {Translations} from './extra/translations';
 import {TraitModel} from './models/components/traitModel';
 import {ItemModel, ArmorModel, WeaponModel, ArmorType} from './models/components/itemModel';
 import {StatEnums, SkillEnums} from './extra/enums';
-import {Profiency} from './models/components/profiency';
+import {ProfiencyModel} from './models/components/profiencyModel';
 
-@inject(CharacterModel, InventoryModel, Translations)
+@inject(CharacterAccessor, InventoryAccessor, Translations)
 export class DataAccessor {
-  constructor(public character: CharacterModel, public inventory: InventoryModel, public translations: Translations) {
+  constructor(public character: CharacterAccessor, public inventory: InventoryAccessor, public translations: Translations) {
     this.openCharacter('Galadin');
   }
 
   textFile = null;
 
   save() {
-    var json_data = JSON.stringify(this.character);
-    var json_data = JSON.stringify(this.inventory);
+    var char_data = JSON.stringify(this.character.model);
+    var inv_data = JSON.stringify(this.inventory);
 
-    var data = new Blob(['testi'], {type: 'text/plain'});
+    var data = new Blob([char_data, inv_data], {type: 'text/plain'});
 
     // If we are replacing a previously generated file we need to
     // manually revoke the object URL to avoid memory leaks.
@@ -42,45 +43,50 @@ export class DataAccessor {
   }
 
   load() {
-    console.log('loaded');
+    console.log("stringying...");
+    var char_data = JSON.stringify(this.character.model);
+    console.log("data stringied. parsing...");
+    console.log(char_data);
+    this.character.model = JSON.parse(char_data);
+    console.log("data parsed");
   }
 
   public openCharacter(charName:string) {
     if(charName === 'Galadin') {
-      this.character.name = 'Galadin';
+      this.character.model.name = 'Galadin';
 
       // Parse level
       for(let i = 0; i < 16; i++) {
-        this.character.levels.push(new LevelModel('Paladin', 10));
+        this.character.model.levels.push(new LevelModel('Paladin', 10));
       }
 
       // Parse stats
-      this.character.stats.set(StatEnums.STR, 18);
-      this.character.stats.set(StatEnums.DEX, 8);
-      this.character.stats.set(StatEnums.CON, 16);
-      this.character.stats.set(StatEnums.INT, 8);
-      this.character.stats.set(StatEnums.WIS, 12);
-      this.character.stats.set(StatEnums.CHA, 18);
+      this.character.setStat(StatEnums.STR, 18);
+      this.character.setStat(StatEnums.DEX, 8);
+      this.character.setStat(StatEnums.CON, 16);
+      this.character.setStat(StatEnums.INT, 8);
+      this.character.setStat(StatEnums.WIS, 12);
+      this.character.setStat(StatEnums.CHA, 18);
 
       // Parse skill profiencies
-      this.character.skills.push(SkillEnums.ATHLETICS);
+      this.character.addSkill(SkillEnums.ATHLETICS);
 
       // Parse all other profiencies
-      this.character.profiencies.push(new Profiency('Simple weapons', 'equipment'));
-      this.character.profiencies.push(new Profiency('Martial weapons', 'equipment'));
-      this.character.profiencies.push(new Profiency('Desert weapons', 'equipment'));
-      this.character.profiencies.push(new Profiency('Light armor', 'equipment'));
-      this.character.profiencies.push(new Profiency('Medium armor', 'equipment'));
-      this.character.profiencies.push(new Profiency('Heavy armor', 'equipment'));
-      this.character.profiencies.push(new Profiency('Shields', 'equipment'));
-      this.character.profiencies.push(new Profiency('Sami drum', 'instrument'));
-      this.character.profiencies.push(new Profiency('Nubian (elven)', 'language'));
-      this.character.profiencies.push(new Profiency('Trade common', 'language'));
-      this.character.profiencies.push(new Profiency('Druidic', 'language'));
+      this.character.addProfiency(new ProfiencyModel('Simple weapons', 'equipment'));
+      this.character.addProfiency(new ProfiencyModel('Martial weapons', 'equipment'));
+      this.character.addProfiency(new ProfiencyModel('Desert weapons', 'equipment'));
+      this.character.addProfiency(new ProfiencyModel('Light armor', 'equipment'));
+      this.character.addProfiency(new ProfiencyModel('Medium armor', 'equipment'));
+      this.character.addProfiency(new ProfiencyModel('Heavy armor', 'equipment'));
+      this.character.addProfiency(new ProfiencyModel('Shields', 'equipment'));
+      this.character.addProfiency(new ProfiencyModel('Sami drum', 'instrument'));
+      this.character.addProfiency(new ProfiencyModel('Nubian (elven)', 'language'));
+      this.character.addProfiency(new ProfiencyModel('Trade common', 'language'));
+      this.character.addProfiency(new ProfiencyModel('Druidic', 'language'));
 
       // Parse all traits
-      this.character.traits.push(new TraitModel('Darkvision 120ft'));
-      this.character.traits.push(new TraitModel('Keen Hearing'));
+      this.character.addTrait(new TraitModel('Darkvision 120ft'));
+      this.character.addTrait(new TraitModel('Keen Hearing'));
 
       // Parse inventory
       let arm1 = new ArmorModel('Adamantium full plate', ArmorType.Heavy, 18, 0);

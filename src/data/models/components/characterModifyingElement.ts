@@ -1,12 +1,12 @@
 import {TraitModel} from '../components/traitModel';
-import {Profiency} from './profiency';
+import {ProfiencyModel} from './profiencyModel';
 import {SkillEnums} from '../../extra/enums';
 
 export class CharacterModifyingElement {
   constructor() { }
 
   additionalSkillProfiencies: SkillEnums[] = [];
-  additionalOtherProfiencies: Profiency[] = [];
+  additionalOtherProfiencies: ProfiencyModel[] = [];
   additionalTraits: TraitModel[] = [];
   baseAC: number;
   maxDexBonus: number;

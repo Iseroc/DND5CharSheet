@@ -3,7 +3,7 @@ import {bindable, observable} from 'aurelia-framework';
 import {DataAccessor} from '../../../data/dataAccessor';
 import {ItemModel, WeaponModel, ArmorModel, ArmorType} from '../../../data/models/components/itemModel';
 import {SkillEnums} from '../../../data/extra/enums';
-import {Profiency} from '../../../data/models/components/profiency';
+import {ProfiencyModel} from '../../../data/models/components/profiencyModel';
 import {TraitModel} from '../../../data/models/components/traitModel';
 
 @inject(DataAccessor)
@@ -43,12 +43,12 @@ export class NewItem {
     }
   }
 
-  additionalOtherProfiencies: Profiency[] = [];
+  additionalOtherProfiencies: ProfiencyModel[] = [];
   newOtherProfiencyName: string = '';
 
   addOtherProfiency() {
     if(this.newOtherProfiencyName) {
-      this.additionalOtherProfiencies.push(new Profiency(this.newOtherProfiencyName, 'other'));
+      this.additionalOtherProfiencies.push(new ProfiencyModel(this.newOtherProfiencyName, 'other'));
       this.newOtherProfiencyName = '';
     }
   }

@@ -31,4 +31,11 @@ export class Stat {
       this.data.character.setStat(this.model, value);
     }
   }
+
+  add() {
+    this.value += 1;
+  }
+  subtract() {
+    this.value -= 1;
+  }
 }
