@@ -15,26 +15,19 @@ export class DataAccessor {
     this.openCharacter('Galadin');
   }
 
-  textFile = null;
-
   save() {
-    //var FileSaver = require('file-saver');
-
     var char_data = JSON.stringify(this.character.model);
     var inv_data = JSON.stringify(this.inventory.model);
 
     var data = new Blob([char_data, '<&/>', inv_data], {type: 'text/plain'});
-/*
+
     // If we are replacing a previously generated file we need to
     // manually revoke the object URL to avoid memory leaks.
-    if (this.textFile !== null) {
-      window.URL.revokeObjectURL(this.textFile);
-    }
-    this.textFile = window.URL.createObjectURL(data);
+    let textFile = window.URL.createObjectURL(data);
 
     var link = document.createElement('a');
-    link.setAttribute('download', 'info.txt');
-    link.href = this.textFile;
+    link.setAttribute('download', this.character.model.name + '.json');
+    link.href = textFile;
     document.body.appendChild(link);
 
     // wait for the link to be added to the document
@@ -42,9 +35,8 @@ export class DataAccessor {
       var event = new MouseEvent('click');
       link.dispatchEvent(event);
       document.body.removeChild(link);
+      window.URL.revokeObjectURL(textFile);
     });
-*/
-    //FileSaver.saveAs(data, "hello world.txt");
   }
 
   load(input) {

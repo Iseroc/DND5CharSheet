@@ -20,7 +20,7 @@
         </tr>
       </table>
     </div>
-    
+
     <div class="features-area">
       <div class="features">
         <div class="profiency-area">
@@ -31,8 +31,9 @@
                 <span class="flex-normal">${prof.name}</span>
                 <button show.bind="editMode" class="fa-button red flex-fixed" click.delegate="removeProfiency(prof)"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
               </li>
-              <li repeat.for="prof of data.inventory.profiencies">
-                ${prof.name}
+              <li class="flex-container" repeat.for="prof of data.inventory.profiencies">
+                <span class="flex-normal">${prof.name}</span>
+                <span class="flex-fixed item-placeholder" show.bind="editMode">ITEM</span>
               </li>
             </ul>
             <div class="flex-container" show.bind="editMode">

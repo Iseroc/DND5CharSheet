@@ -115,6 +115,7 @@
   .profiency-area .add-button {
     margin-left: 5px;
   }
+  .profiency-area .item-placeholder,
   .traits-area .item-placeholder {
     color:grey;
     font-size:10px;

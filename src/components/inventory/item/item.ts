@@ -10,6 +10,9 @@ export class Item {
   @bindable
   model: ItemModel;
 
+  @bindable
+  editPopup: Function;
+
   unequip() {
     this.data.inventory.moveToBackpack(this.model);
   }

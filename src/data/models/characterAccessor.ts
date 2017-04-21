@@ -18,6 +18,10 @@ export class CharacterAccessor {
 
   model: CharacterModel = new CharacterModel();
 
+  get name() {
+    return this.model.name;
+  }
+
   get totalLevel() {
     return Math.max(this.model.levels.length, 1);
   }
