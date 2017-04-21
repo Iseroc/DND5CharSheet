@@ -18,7 +18,7 @@ export class DataAccessor {
   textFile = null;
 
   save() {
-    var FileSaver = require('file-saver');
+    //var FileSaver = require('file-saver');
 
     var char_data = JSON.stringify(this.character.model);
     var inv_data = JSON.stringify(this.inventory.model);
@@ -44,7 +44,7 @@ export class DataAccessor {
       document.body.removeChild(link);
     });
 */
-    FileSaver.saveAs(data, "hello world.txt");
+    //FileSaver.saveAs(data, "hello world.txt");
   }
 
   load(input) {
