@@ -29,6 +29,12 @@
     "fileExtension": ".css",
     "source": "src/**/*.css"
   },
+  "sassProcessor": {
+    "id": "none",
+    "displayName": "None",
+    "fileExtension": ".scss",
+    "source": "src/**/*.scss"
+  },
   "editor": {
     "id": "vscode",
     "displayName": "Visual Studio Code"

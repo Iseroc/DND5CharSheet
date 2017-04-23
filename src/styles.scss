@@ -52,12 +52,12 @@ h2 {
   height: 100vh;
   background: #EEEEEE;
   border-right: 1px solid #979797;
-}
-  .navbar .navbar-placeholder {
+
+  .navbar-placeholder {
     flex: 0 50px;
     border-bottom: 1px solid #979797;
   }
-  .navbar .navbar-item {
+  .navbar-item {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -67,13 +67,15 @@ h2 {
     flex: 0 50px;
     padding: 0 5px;
     border-bottom: 1px solid #979797;
+
+    &:hover {
+      background: #999;
+    }
+    &.active {
+      text-decoration: underline;
+    }
   }
-  .navbar .navbar-item:hover {
-    background: #999;
-  }
-  .navbar .navbar-item.active {
-    text-decoration: underline;
-  }
+}
 
 .generalinfo {
   position: fixed;
@@ -103,16 +105,17 @@ h2 {
   margin: 0;
   height: auto;
   cursor: pointer;
-}
-  .fa-button.red {
+
+  &.red {
     color: red;
   }
-  .fa-button.blue {
+  &.blue {
     color: dodgerblue;
   }
-  .fa-button > i {
+  > i {
     line-height: 18px;
   }
+}
 
 button {
   border-radius: 0;
@@ -128,13 +131,14 @@ input[type='text'] {
 
 .flex-container {
   display: flex;
-}
-.flex-container > * {
-  flex: 1 auto;
-}
-  .flex-container.flex-justify-center {
+
+  &.flex-justify-center {
     justify-content: center;
   }
-  .flex-container .flex-fixed {
+  > * {
+    flex: 1 auto;
+  }
+  .flex-fixed {
     flex: 0 auto;
   }
+}

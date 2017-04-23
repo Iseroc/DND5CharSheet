@@ -49,6 +49,7 @@ let watch = function(refreshCb, onChangeCb) {
     gulp.watch(project.transpiler.source, refreshCb).on('change', onChangeCb);
     gulp.watch(project.markupProcessor.source, refreshCb).on('change', onChangeCb);
     gulp.watch(project.cssProcessor.source, refreshCb).on('change', onChangeCb);
+    gulp.watch(project.sassProcessor.source, refreshCb).on('change', onChangeCb);
 
     //see if there are static files to be watched
     if (typeof project.build.copyFiles === 'object') {
@@ -70,4 +71,3 @@ if (CLIOptions.hasFlag('watch')) {
 }
 
 export { run as default, watch };
-
