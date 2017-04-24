@@ -435,3 +435,47 @@ textarea:focus,
 button:focus {
   outline: none;
 }
+
+/*
+ *  Custom normalize classes
+ */
+
+ * {
+   box-sizing: border-box;
+ }
+
+ table {
+   padding: 0;
+   margin: 0;
+   border-collapse: collapse;
+   border-spacing: 0;
+ }
+
+ td {
+   padding: 0;
+   margin: 0;
+ }
+
+ ul, ol {
+   list-style: none;
+   padding: 0;
+   margin: 0;
+ }
+
+ h1 {
+   margin: 0px;
+   padding: 0px;
+   font-size: 24px;
+   letter-spacing: 0;
+   font-weight: normal;
+ }
+
+ h2 {
+   font-size: 20px;
+   letter-spacing: 0;
+   font-weight: normal;
+ }
+
+ input[type='text'] {
+   min-width: 0;
+ }

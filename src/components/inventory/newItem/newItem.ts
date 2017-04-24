@@ -74,6 +74,7 @@ export class NewItem {
     else {
       item = new ItemModel(this.name, true);
     }
+    item.equippable = this.equippable;
     item.additionalOtherProfiencies = this.additionalOtherProfiencies;
     item.additionalSkillProfiencies = this.additionalSkillProfiencies;
     item.additionalTraits = this.additionalTraits;

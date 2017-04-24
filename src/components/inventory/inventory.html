@@ -1,20 +1,53 @@
 <template>
   <require from="./inventory.css"></require>
-  <require from="./item/item"></require>
   <require from="./newItem/newItem"></require>
 
-  <h3>Equipped items</h3>
-  <ul>
-    <li repeat.for="item of data.inventory.equipped">
-      <item model.bind="item"></item>
-    </li>
-  </ul>
-  <h3>Backpack</h3>
-  <ul>
-    <li repeat.for="item of data.inventory.backpack">
-      <item model.bind="item"></item>
-    </li>
-  </ul>
-  <button class="btn-newItem" click.delegate="startCreatingNewItem()">Create a new item</button>
+  <div class="itemArea">
+    <table class="itemTable">
+      <tr>
+        <th>
+          Equipped
+        </th>
+        <th>
+          Attuned
+        </th>
+        <th>
+          Quantity
+        </th>
+      </tr>
+      <tr repeat.for="item of data.inventory.equipped">
+        <td>
+          <span class="itemName">${item.name}</span>
+        </td>
+        <td>
+          -
+        </td>
+        <td>
+          -
+        </td>
+        <td>
+          <div if.bind="item.equippable">
+            <button click.delegate="unequip(item)">Unequip</button>
+            <button click.delegate="editItem(item)">Edit</button>
+          </div>
+        </td>
+      </li>
+    </ul>
+  </div>
+  <div class="itemArea">
+    <h3>Backpack</h3>
+    <ul>
+      <li repeat.for="item of data.inventory.backpack">
+        ${item.name}
+        <div if.bind="item.equippable">
+          <button click.delegate="equip(item)">Equip</button>
+          <button click.delegate="editItem(item)">Edit</button>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="functionsArea">
+    <button class="btn-newItem" click.delegate="startCreatingNewItem()">Create a new item</button>
+  </div>
   <new-item state.two-way="creatingNewItem"></new-item>
 </template>

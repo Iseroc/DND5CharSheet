@@ -1,0 +1,49 @@
+$areaBorderColor: #979797;
+$areaBackgroundColor: #eee;
+$areaHighlightColor: #ddd;
+$buttonBackgroundColor: dodgerblue;
+$buttonBorderColor: #333;
+$fontColor: #333;
+$shadowColor: #aaa;
+
+$modalBoxShadow: 0 2px 3px $shadowColor;
+
+$areaSize_functions: 50px;
+
+// ******
+// Generic classes
+// ******
+
+.fa-button {
+  background: none;
+  border: none;
+  font-size: 13px;
+  padding: 0;
+  margin: 0;
+  height: auto;
+  cursor: pointer;
+
+  &.red {
+    color: red;
+  }
+  &.blue {
+    color: dodgerblue;
+  }
+  > i {
+    line-height: 18px;
+  }
+}
+
+.flex-container {
+  display: flex;
+
+  &.flex-justify-center {
+    justify-content: center;
+  }
+  > * {
+    flex: 1 auto;
+  }
+  .flex-fixed {
+    flex: 0 auto;
+  }
+}

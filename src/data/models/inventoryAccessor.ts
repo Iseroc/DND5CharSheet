@@ -84,33 +84,50 @@ export class InventoryAccessor {
   //   Functions                                 //
   // ------------------------------------------- //
 
-  equip(item: ItemModel) {
-    if(item instanceof ArmorModel) {
-      // unequip old armor
-      for(let equip of this.equipped) {
-        if(equip instanceof ArmorModel) {
-          this.model.equipped.splice(this.equipped.indexOf(equip), 1);
-          this.model.backpack.push(equip);
-          break;
+  equip(item: ItemModel): boolean {
+    if(!this.isEquipped(item)) {
+      if(item instanceof ArmorModel) {
+        // unequip old armor
+        for(let equippedArmor of this.equipped) {
+          if(equippedArmor instanceof ArmorModel) {
+            this.model.equipped.splice(this.equipped.indexOf(equippedArmor), 1);
+            this.model.backpack.push(equippedArmor);
+            break;
+          }
         }
+        // equip new armor
+        this.model.backpack.splice(this.equipped.indexOf(item), 1);
+        this.model.equipped.push(item);
       }
-      // equip new armor
-      this.model.equipped.push(item);
-    }
-    else {
-      // if this item is in the backpack, move it out of the backpack
-      if(this.model.backpack.includes(item)) {
-        this.model.backpack.splice(this.backpack.indexOf(item), 1);
+      else {
+        // if this item is in the backpack, move it out of the backpack
+        if(this.model.backpack.includes(item)) {
+          this.model.backpack.splice(this.backpack.indexOf(item), 1);
+        }
+        this.model.equipped.push(item);
       }
-      this.model.equipped.push(item);
+      return true;
     }
+    return false;
   }
 
-  moveToBackpack(item: ItemModel) {
-    // if this item is currently equipped, unequip it
-    if(this.model.equipped.includes(item)) {
-      this.model.equipped.splice(this.equipped.indexOf(item), 1);
+  moveToBackpack(item: ItemModel): boolean {
+    if(!this.isInBackpack(item)) {
+      // if this item is currently equipped, unequip it
+      if(this.model.equipped.includes(item)) {
+        this.model.equipped.splice(this.equipped.indexOf(item), 1);
+      }
+      this.model.backpack.push(item);
+      return true;
     }
-    this.model.backpack.push(item);
+    return false;
+  }
+
+  isEquipped(item: ItemModel): boolean {
+    return this.model.equipped.includes(item);
+  }
+
+  isInBackpack(item: ItemModel): boolean {
+    return this.model.backpack.includes(item);
   }
 }

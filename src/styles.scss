@@ -1,45 +1,19 @@
+@import "variables";
+
 body {
   overflow: hidden;
   font-family: 'Roboto Condensed';
-  color: #333;
+  color: $fontColor;
   margin: 0;
   padding: 0;
 }
 
-* {
-  box-sizing: border-box;
-}
-
-table {
-  padding: 0;
-  margin: 0;
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
-td {
-  padding: 0;
-  margin: 0;
-}
-
-ul, ol {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-h1 {
-  margin: 0px;
-  padding: 0px;
-  font-size: 24px;
-  letter-spacing: 0;
-  font-weight: normal;
-}
-
-h2 {
-  font-size: 20px;
-  letter-spacing: 0;
-  font-weight: normal;
+button {
+  border-radius: 0;
+  height: 20px;
+  background: $buttonBackgroundColor;
+  border: 1px solid $buttonBorderColor;
+  cursor: pointer;
 }
 
 .navbar {
@@ -48,14 +22,14 @@ h2 {
   position: fixed;
   top: 0;
   left: 0;
-  width: 50px;
+  width: $areaSize_functions;
   height: 100vh;
-  background: #EEEEEE;
-  border-right: 1px solid #979797;
+  background: $areaBackgroundColor;
+  border-right: 1px solid $areaBorderColor;
 
   .navbar-placeholder {
-    flex: 0 50px;
-    border-bottom: 1px solid #979797;
+    flex: 0 $areaSize_functions;
+    border-bottom: 1px solid $areaBorderColor;
   }
   .navbar-item {
     display: flex;
@@ -64,12 +38,12 @@ h2 {
     text-decoration: none;
     text-transform: uppercase;
     color: #333;
-    flex: 0 50px;
+    flex: 0 $areaSize_functions;
     padding: 0 5px;
-    border-bottom: 1px solid #979797;
+    border-bottom: 1px solid $areaBorderColor;
 
     &:hover {
-      background: #999;
+      background: $areaHighlightColor;
     }
     &.active {
       text-decoration: underline;
@@ -80,65 +54,26 @@ h2 {
 .generalinfo {
   position: fixed;
   top: 0;
-  left: 50px;
-  line-height: 50px;
-  width: calc(100vw - 50px);
-  height: 50px;
-  border-bottom: 1px solid #979797;
+  left: $areaSize_functions;
+  line-height: $areaSize_functions;
+  width: calc(100vw - #{$areaSize_functions});
+  height: $areaSize_functions;
+  border-bottom: 1px solid $areaBorderColor;
   padding-left: 10px;
+
+  .saveAndLoadButtons {
+    position:fixed;
+    top:0;
+    right:0;
+    margin:0 10px;
+  }
 }
 
 .content {
-  height: calc(100vh - 50px);
-  width: calc(100vw - 50px);
+  height: calc(100vh - #{$areaSize_functions});
+  width: calc(100vw - #{$areaSize_functions});
   overflow: auto;
   position: relative;
-  margin-left: 50px;
-  margin-top: 50px;
-}
-
-.fa-button {
-  background: none;
-  border: none;
-  font-size: 13px;
-  padding: 0;
-  margin: 0;
-  height: auto;
-  cursor: pointer;
-
-  &.red {
-    color: red;
-  }
-  &.blue {
-    color: dodgerblue;
-  }
-  > i {
-    line-height: 18px;
-  }
-}
-
-button {
-  border-radius: 0;
-  height: 20px;
-  background: dodgerblue;
-  border: 1px solid #333;
-  cursor: pointer;
-}
-
-input[type='text'] {
-  min-width: 0;
-}
-
-.flex-container {
-  display: flex;
-
-  &.flex-justify-center {
-    justify-content: center;
-  }
-  > * {
-    flex: 1 auto;
-  }
-  .flex-fixed {
-    flex: 0 auto;
-  }
+  margin-left: $areaSize_functions;
+  margin-top: $areaSize_functions;
 }

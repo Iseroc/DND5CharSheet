@@ -1,24 +1,52 @@
-.btn-newItem {
-  position: fixed;
-  top: 50px;
+@import "../../variables";
+
+.functionsArea {
+  position: absolute;
+  bottom: 0;
   right: 0;
-  margin: 10px;
-  z-index: 100;
+  left: 0;
+  height: $areaSize_functions;
+  background: $areaBackgroundColor;
+  border-top: 1px solid $areaBorderColor;
+
+  .btn-newItems {
+    position: fixed;
+    top: 50px;
+    right: 0;
+    margin: 10px;
+    z-index: 100;
+  }
+}
+
+.itemArea {
+  padding: 10px 10px 0 10px;
+
+  .itemTable {
+    width: 100%;
+
+    th {
+      text-align: left;
+      padding-right: 10px;
+    }
+    .itemName {
+      padding-right: 10px;
+    }
+  }
 }
 
 .newItem-area {
   display: block;
   position: fixed;
-  top: 50px;
+  top: $areaSize_functions;
   left: 0;
   right: 0;
   bottom: 0;
   margin: auto;
-  background: white;
-  border: 1px solid #333;
+  background: $areaBackgroundColor;
+  border: 1px solid $areaBorderColor;
   width: 400px;
   height: 300px;
-  box-shadow: 0 2px 3px #888;
+  box-shadow: $modalBoxShadow;
 
   .hide {
     display: block;

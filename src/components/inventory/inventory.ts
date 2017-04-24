@@ -7,11 +7,22 @@ export class Inventory {
 
   creatingNewItem: boolean = false;
 
+  equip(item) {
+    this.data.inventory.equip(item);
+  }
+  unequip(item) {
+    this.data.inventory.moveToBackpack(item);
+  }
+
   startCreatingNewItem() {
     this.creatingNewItem = true;
   }
 
-  public doneCreatingNewItem() {
+  doneCreatingNewItem() {
     this.creatingNewItem = false;
+  }
+
+  editItem(item) {
+    console.log(item);
   }
 }
