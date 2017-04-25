@@ -4,66 +4,72 @@
   <require from="./stat/stat"></require>
   <require from="../../data/extra/enums"></require>
   <require from="../../resources/value-converters/select"></require>
+  <div class="contentArea">
+    <div class="character">
+      <div class="attribute-area">
+        <table class="attribute-table">
+          <tr class="attribute" repeat.for="stat of data.character.stats">
+            <td>
+              <stat model.bind="stat.key" edit-mode.bind="editMode"></stat>
+            </td>
+            <td>
+              <div class="skills">
+                <skill class="skill" repeat.for="skillEnum of SkillEnums | select:stat.key" model.bind="skillEnum" edit-mode.bind="editMode"></skill>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
 
-  <div class="character">
-    <div class="attribute-area">
-      <table class="attribute-table">
-        <tr class="attribute" repeat.for="stat of data.character.stats">
-          <td>
-            <stat model.bind="stat.key" edit-mode.bind="editMode"></stat>
-          </td>
-          <td>
-            <div class="skills">
-              <skill class="skill" repeat.for="skillEnum of SkillEnums | select:stat.key" model.bind="skillEnum" edit-mode.bind="editMode"></skill>
-            </div>
-          </td>
-        </tr>
-      </table>
-    </div>
-
-    <div class="features-area">
-      <div class="features">
-        <div class="profiency-area">
-          <h3 class="profiency-header">Profiencies</h3>
-          <div class="profiency-list">
-            <ul>
-              <li class="flex-container" repeat.for="prof of data.character.profiencies">
-                <span class="flex-normal">${prof.name}</span>
-                <button show.bind="editMode" class="fa-button red flex-fixed" click.delegate="removeProfiency(prof)"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
-              </li>
-              <li class="flex-container" repeat.for="prof of data.inventory.profiencies">
-                <span class="flex-normal">${prof.name}</span>
-                <span class="flex-fixed item-placeholder" show.bind="editMode">ITEM</span>
-              </li>
-            </ul>
-            <div class="flex-container" show.bind="editMode">
-              <input class="flex-normal" type="text" value.bind="newProfiency"/>
-              <button class="add-button flex-fixed" click.delegate="addProfiency()">Add</button>
+      <div class="features-area">
+        <div class="features">
+          <div class="profiency-area">
+            <h3 class="profiency-header">Profiencies</h3>
+            <div class="profiency-list">
+              <ul>
+                <li class="flex-container" repeat.for="prof of data.character.profiencies">
+                  <span class="flex-normal">${prof.name}</span>
+                  <button show.bind="editMode" class="fa-button red flex-fixed" click.delegate="removeProfiency(prof)"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
+                </li>
+                <li class="flex-container" repeat.for="prof of data.inventory.profiencies">
+                  <span class="flex-normal">${prof.name}</span>
+                  <span class="flex-fixed item-placeholder" show.bind="editMode">ITEM</span>
+                </li>
+              </ul>
+              <div class="flex-container" show.bind="editMode">
+                <input class="flex-normal" type="text" value.bind="newProfiency"/>
+                <button class="add-button flex-fixed" click.delegate="addProfiency()">Add</button>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="traits-area">
-          <h3 class="traits-header">Features and Traits</h3>
-          <div class="traits-list">
-            <ul>
-              <li class="flex-container" repeat.for="trait of data.character.traits">
-                <span class="flex-normal">${trait.name}</span>
-                <button show.bind="editMode" class="fa-button red flex-fixed" click.delegate="removeTrait(trait)"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
-              </li>
-              <li class="flex-container" repeat.for="trait of data.inventory.traits">
-                <span class="flex-normal">${trait.name}</span>
-                <span class="flex-fixed item-placeholder" show.bind="editMode">ITEM</span>
-              </li>
-            </ul>
-            <div class="flex-container" show.bind="editMode">
-              <input class="flex-normal" type="text" value.bind="newTrait"/>
-              <button class="add-button flex-fixed" click.delegate="addTrait()">Add</button>
+          <div class="traits-area">
+            <h3 class="traits-header">Features and Traits</h3>
+            <div class="traits-list">
+              <ul>
+                <li class="flex-container" repeat.for="trait of data.character.traits">
+                  <span class="flex-normal">${trait.name}</span>
+                  <button show.bind="editMode" class="fa-button red flex-fixed" click.delegate="removeTrait(trait)"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
+                </li>
+                <li class="flex-container" repeat.for="trait of data.inventory.traits">
+                  <span class="flex-normal">${trait.name}</span>
+                  <span class="flex-fixed item-placeholder" show.bind="editMode">ITEM</span>
+                </li>
+              </ul>
+              <div class="flex-container" show.bind="editMode">
+                <input class="flex-normal" type="text" value.bind="newTrait"/>
+                <button class="add-button flex-fixed" click.delegate="addTrait()">Add</button>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <button class="editbutton" click.delegate="toggleEditMode()">Edit: ${editMode}</button>
+    <div class="functionsArea">
+      <button class="functionButton" click.delegate="toggleEditMode()">
+        <span if.bind="!editMode">Edit</span>
+        <span if.bind="editMode">Save</span>
+      </button>
+    </div>
   </div>
 </template>

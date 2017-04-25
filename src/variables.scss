@@ -40,6 +40,9 @@ $areaSize_functions: 50px;
   &.flex-justify-center {
     justify-content: center;
   }
+  .flex-center {
+    text-align: center;
+  }
   > * {
     flex: 1 auto;
   }

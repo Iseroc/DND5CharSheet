@@ -2,52 +2,70 @@
   <require from="./inventory.css"></require>
   <require from="./newItem/newItem"></require>
 
-  <div class="itemArea">
-    <table class="itemTable">
-      <tr>
-        <th>
-          Equipped
-        </th>
-        <th>
-          Attuned
-        </th>
-        <th>
-          Quantity
-        </th>
-      </tr>
-      <tr repeat.for="item of data.inventory.equipped">
-        <td>
-          <span class="itemName">${item.name}</span>
-        </td>
-        <td>
-          -
-        </td>
-        <td>
-          -
-        </td>
-        <td>
-          <div if.bind="item.equippable">
-            <button click.delegate="unequip(item)">Unequip</button>
-            <button click.delegate="editItem(item)">Edit</button>
-          </div>
-        </td>
-      </li>
-    </ul>
-  </div>
-  <div class="itemArea">
-    <h3>Backpack</h3>
-    <ul>
-      <li repeat.for="item of data.inventory.backpack">
-        ${item.name}
-        <div if.bind="item.equippable">
-          <button click.delegate="equip(item)">Equip</button>
-          <button click.delegate="editItem(item)">Edit</button>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <div class="functionsArea">
-    <button class="btn-newItem" click.delegate="startCreatingNewItem()">Create a new item</button>
+  <div class="contentArea">
+    <div class="itemArea">
+      <table class="itemTable">
+        <tr>
+          <th>
+            Equipped
+          </th>
+          <th>
+            Attuned
+          </th>
+          <th>
+            Quantity
+          </th>
+        </tr>
+        <tr repeat.for="item of data.inventory.equipped">
+          <td>
+            <span class="itemName">${item.name}</span>
+          </td>
+          <td>
+            -
+          </td>
+          <td>
+            -
+          </td>
+          <td class="min-size">
+            <div if.bind="item.equippable">
+              <button click.delegate="unequip(item)">Unequip</button>
+              <button click.delegate="editItem(item)">Edit</button>
+            </div>
+          </td>
+        </tr>
+        <tr class="secondTable">
+          <th>
+            Backpack
+          </th>
+          <th>
+            Attunable
+          </th>
+          <th>
+            Quantity
+          </th>
+        </tr>
+        <tr repeat.for="item of data.inventory.backpack">
+          <td>
+            <span class="itemName">${item.name}</span>
+          </td>
+          <td>
+            -
+          </td>
+          <td>
+            -
+          </td>
+          <td class="min-size">
+            <div show.bind="item.equippable">
+              <button click.delegate="equip(item)">Equip</button>
+              <button click.delegate="editItem(item)">Edit</button>
+            </div>
+          </td>
+        </li>
+      </ul>
+    </div>
+    <div class="functionsArea">
+      <button class="functionButton" click.delegate="startCreatingNewItem()">Create a new item</button>
+    </div>
   </div>
   <new-item state.two-way="creatingNewItem"></new-item>
 </template>

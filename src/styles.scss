@@ -1,11 +1,15 @@
 @import "variables";
 
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;}
+
 body {
   overflow: hidden;
   font-family: 'Roboto Condensed';
   color: $fontColor;
-  margin: 0;
-  padding: 0;
 }
 
 button {
@@ -14,6 +18,14 @@ button {
   background: $buttonBackgroundColor;
   border: 1px solid $buttonBorderColor;
   cursor: pointer;
+}
+
+select {
+  height: 20px;
+}
+
+input[type="text"] {
+  height: 20px;
 }
 
 .navbar {

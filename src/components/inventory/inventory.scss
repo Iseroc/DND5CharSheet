@@ -1,22 +1,5 @@
 @import "../../variables";
-
-.functionsArea {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  height: $areaSize_functions;
-  background: $areaBackgroundColor;
-  border-top: 1px solid $areaBorderColor;
-
-  .btn-newItems {
-    position: fixed;
-    top: 50px;
-    right: 0;
-    margin: 10px;
-    z-index: 100;
-  }
-}
+@import "../functionsArea";
 
 .itemArea {
   padding: 10px 10px 0 10px;
@@ -24,6 +7,15 @@
   .itemTable {
     width: 100%;
 
+    tr.secondTable {
+      > th {
+        padding-top: 10px;
+      }
+    }
+    td.min-size {
+      width: 1px;
+      white-space: nowrap;
+    }
     th {
       text-align: left;
       padding-right: 10px;
@@ -34,21 +26,109 @@
   }
 }
 
-.newItem-area {
-  display: block;
+.newItemArea {
+  display: flex;
+  flex-direction: column;
+  margin-right: 1px;
   position: fixed;
-  top: $areaSize_functions;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   background: $areaBackgroundColor;
   border: 1px solid $areaBorderColor;
-  width: 400px;
-  height: 300px;
   box-shadow: $modalBoxShadow;
+  max-height: 90vh;
 
-  .hide {
-    display: block;
+  /* Generic styles */
+  .labelCheckBox {
+    margin-right: 5px;
+  }
+  .textInput {
+    > label {
+      display: block;
+      text-transform: uppercase;
+      font-size: 9px;
+      margin-bottom: 2px;
+    }
+    > input[type="number"],
+    > input[type="text"] {
+      padding: 3px;
+    }
+  }
+
+  /* Area styles */
+  .itemName {
+    margin: 10px;
+    padding: 3px;
+  }
+  .typeSelectArea {
+    border-top: 1px solid $areaBorderColor;
+    border-bottom: 1px solid $areaBorderColor;
+
+    .typeTabs {
+      display: flex;
+      flex-direction: row;
+
+      > label {
+        flex: 1 auto;
+        padding: 5px;
+        border-right: 1px solid $areaBorderColor;
+        border-bottom: 1px solid $areaBorderColor;
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 12px;
+
+        &:hover {
+          background-color: $areaHighlightColor;
+        }
+        > input {
+          display: none;
+        }
+      }
+      > label:last-child {
+        border-right: 0;
+      }
+    }
+  }
+  .itemContentArea {
+    margin: 10px;
+
+    .itemEquippable {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-left: 10px;
+    }
+  }
+  .flexArea {
+    overflow-y: auto;
+    margin-right: 1px;
+    margin-bottom: 1px;
+    flex: 1 auto;
+    .profiencyArea,
+    .traitArea,
+    .skillArea {
+      margin: 0 10px 10px 10px;
+
+      .header {
+        font-size: 12px;
+        text-transform: uppercase;
+        margin: 10px 0;
+      }
+      .addButton {
+        margin-left: 5px;
+      }
+    }
+  }
+  .buttonArea {
+    padding: 10px;
+    display: flex;
+    flex-direction: row-reverse;
+    border-top: 1px solid $areaBorderColor;
+
+    .createButton {
+      flex: 0 auto;
+      margin-left: 10px;
+    }
   }
 }
