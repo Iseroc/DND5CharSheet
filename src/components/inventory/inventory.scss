@@ -12,8 +12,9 @@
         padding-top: 10px;
       }
     }
-    td.min-size {
+    td.buttonArea {
       width: 1px;
+      text-align: right;
       white-space: nowrap;
     }
     th {
@@ -22,113 +23,6 @@
     }
     .itemName {
       padding-right: 10px;
-    }
-  }
-}
-
-.newItemArea {
-  display: flex;
-  flex-direction: column;
-  margin-right: 1px;
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  background: $areaBackgroundColor;
-  border: 1px solid $areaBorderColor;
-  box-shadow: $modalBoxShadow;
-  max-height: 90vh;
-
-  /* Generic styles */
-  .labelCheckBox {
-    margin-right: 5px;
-  }
-  .textInput {
-    > label {
-      display: block;
-      text-transform: uppercase;
-      font-size: 9px;
-      margin-bottom: 2px;
-    }
-    > input[type="number"],
-    > input[type="text"] {
-      padding: 3px;
-    }
-  }
-
-  /* Area styles */
-  .itemName {
-    margin: 10px;
-    padding: 3px;
-  }
-  .typeSelectArea {
-    border-top: 1px solid $areaBorderColor;
-    border-bottom: 1px solid $areaBorderColor;
-
-    .typeTabs {
-      display: flex;
-      flex-direction: row;
-
-      > label {
-        flex: 1 auto;
-        padding: 5px;
-        border-right: 1px solid $areaBorderColor;
-        border-bottom: 1px solid $areaBorderColor;
-        text-align: center;
-        text-transform: uppercase;
-        font-size: 12px;
-
-        &:hover {
-          background-color: $areaHighlightColor;
-        }
-        > input {
-          display: none;
-        }
-      }
-      > label:last-child {
-        border-right: 0;
-      }
-    }
-  }
-  .itemContentArea {
-    margin: 10px;
-
-    .itemEquippable {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      margin-left: 10px;
-    }
-  }
-  .flexArea {
-    overflow-y: auto;
-    margin-right: 1px;
-    margin-bottom: 1px;
-    flex: 1 auto;
-    .profiencyArea,
-    .traitArea,
-    .skillArea {
-      margin: 0 10px 10px 10px;
-
-      .header {
-        font-size: 12px;
-        text-transform: uppercase;
-        margin: 10px 0;
-      }
-      .addButton {
-        margin-left: 5px;
-      }
-    }
-  }
-  .buttonArea {
-    padding: 10px;
-    display: flex;
-    flex-direction: row-reverse;
-    border-top: 1px solid $areaBorderColor;
-
-    .createButton {
-      flex: 0 auto;
-      margin-left: 10px;
     }
   }
 }

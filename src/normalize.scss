@@ -1,3 +1,5 @@
+@import "variables";
+
 /*! normalize.css v6.0.0 | MIT License | github.com/necolas/normalize.css */
 
 /* Document
@@ -465,15 +467,21 @@ button:focus {
  h1 {
    margin: 0px;
    padding: 0px;
-   font-size: 24px;
+   font-size: $fontSizeGargantuan;
    letter-spacing: 0;
    font-weight: normal;
  }
 
  h2 {
-   font-size: 20px;
+   font-size: $fontSizeHuge;
    letter-spacing: 0;
    font-weight: normal;
+ }
+
+ h3 {
+   font-size: $fontSizeLarge;
+   letter-spacing: 0;
+   font-weight: bold;
  }
 
  input[type='text'] {

@@ -16,7 +16,7 @@ export class DataAccessor {
   }
 
   save() {
-    var char_data = JSON.stringify(this.character.model);
+    var char_data = this.character.getCharacterDataJSON;
     var inv_data = JSON.stringify(this.inventory.model);
 
     var data = new Blob([char_data, '<&/>', inv_data], {type: 'text/plain'});
@@ -26,7 +26,7 @@ export class DataAccessor {
     let textFile = window.URL.createObjectURL(data);
 
     var link = document.createElement('a');
-    link.setAttribute('download', this.character.model.name + '.json');
+    link.setAttribute('download', this.character.name + '.json');
     link.href = textFile;
     document.body.appendChild(link);
 
@@ -54,7 +54,7 @@ export class DataAccessor {
       //make a reader and set up a trigger on the "read" event
       reader.onload = () => {
         var resArr = reader.result.split('<&/>');
-        this.character.model = JSON.parse(resArr[0]);
+        this.character.setCharacterDataFromJSON(resArr[0]);
         this.inventory.model = JSON.parse(resArr[1]);
         input.value = '';
       };
@@ -66,11 +66,13 @@ export class DataAccessor {
 
   public openCharacter(charName:string) {
     if(charName === 'Galadin') {
-      this.character.model.name = 'Galadin';
+      this.character.name = 'Galadin';
+
+      this.character.currentHP = 99;
 
       // Parse level
       for(let i = 0; i < 16; i++) {
-        this.character.model.levels.push(new LevelModel('Paladin', 10));
+        this.character.addLevel(new LevelModel('Paladin', 10));
       }
 
       // Parse stats

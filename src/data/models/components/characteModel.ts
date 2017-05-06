@@ -6,6 +6,7 @@ import {StatModel} from './statModel';
 
 export class CharacterModel {
     name: string = '';
+    speed: number = 30;
     levels: LevelModel[] = [];
 
     stats: StatModel[] = [];
@@ -13,4 +14,6 @@ export class CharacterModel {
     expertises: SkillEnums[] = [];
     profiencies: ProfiencyModel[] = [];
     traits: TraitModel[] = [];
+
+    currentHP: number = 0;
 }

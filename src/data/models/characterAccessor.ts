@@ -16,14 +16,29 @@ export class CharacterAccessor {
     this.setStat(StatEnums.CHA, 10);
   }
 
-  model: CharacterModel = new CharacterModel();
+  private model: CharacterModel = new CharacterModel();
+
+  getCharacterDataJSON(): string {
+    return JSON.stringify(this.model)
+  }
+  setCharacterDataFromJSON(json): boolean {
+    JSON.parse(json);
+    return true;
+  }
 
   get name() {
     return this.model.name;
   }
+  set name(value: string) {
+    this.model.name = value;
+  }
 
   get totalLevel() {
     return Math.max(this.model.levels.length, 1);
+  }
+
+  get speed() {
+    return this.model.speed;
   }
 
   get profiencyBonus() {
@@ -41,6 +56,12 @@ export class CharacterAccessor {
     }
 
     return hp;
+  }
+  get currentHP(): number {
+    return this.model.currentHP;
+  }
+  set currentHP(value: number) {
+    this.model.currentHP = value;
   }
 
   get stats() {
@@ -120,5 +141,9 @@ export class CharacterAccessor {
     if(this.model.traits.includes(trait)) {
       this.model.traits.splice(this.model.traits.indexOf(trait), 1);
     }
+  }
+
+  addLevel(level: LevelModel) {
+    this.model.levels.push(level);
   }
 }

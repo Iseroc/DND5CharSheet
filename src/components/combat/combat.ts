@@ -28,5 +28,14 @@ export class Combat {
     return this.data.character.statModifier(StatEnums.DEX);
   }
 
-  currentHP: number = 100;
+  get speed() {
+    return this.data.character.speed;
+  }
+
+  get currentHP() {
+    return this.data.character.currentHP;
+  }
+  set currentHP(value: number) {
+    this.data.character.currentHP = value;
+  }
 }

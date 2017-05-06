@@ -4,6 +4,7 @@
 .character {
   display: flex;
   flex-flow: wrap;
+  height: calc(100% - 90px);
 
   .editbutton {
     position: fixed;
@@ -31,12 +32,12 @@
       .stat-header {
         flex: 0 auto;
         text-transform: uppercase;
-        font-size: 10px;
+        font-size: $fontSizeSmall;
         text-align: center;
       }
       .stat-value {
         flex: 1 auto;
-        font-size: 24px;
+        font-size: $fontSizeGargantuan;
         vertical-align: middle;
         text-align: center;
 
@@ -51,7 +52,7 @@
       }
       .stat-modifier {
         flex: 0 auto;
-        font-size: 16px;
+        font-size: $fontSizeLarge;
         text-align: center;
       }
     }
@@ -69,15 +70,15 @@
 
         .skill-header {
           display: inline-block;
-          font-size: 10px;
+          font-size: $fontSizeSmall;
           text-transform: uppercase;
           vertical-align: middle;
-          line-height: 19px;
+          line-height: $lineHeightLarge;
         }
         .skill-value {
           width: 20px;
           display: inline-block;
-          font-size: 16px;
+          font-size: $fontSizeLarge;
           margin-left: 5px;
           vertical-align: middle;
 
@@ -118,14 +119,6 @@
       border: 1px solid black;
       padding: 10px;
     }
-    .add-button {
-      margin-left: 5px;
-    }
-    .item-placeholder {
-      color:grey;
-      font-size:10px;
-      line-height:19px;
-    }
   }
   .traits-area {
     padding: 0;
@@ -137,13 +130,16 @@
       border: 1px solid black;
       padding: 10px;
     }
+  }
+  .profiency-area,
+  .traits-area {
     .add-button {
       margin-left: 5px;
     }
     .item-placeholder {
-      color:grey;
-      font-size:10px;
-      line-height:19px;
+      color: $placeholderColor;
+      font-size: $fontSizeSmall;
+      line-height: $lineHeight;
     }
   }
 }

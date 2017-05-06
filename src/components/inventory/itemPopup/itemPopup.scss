@@ -1,0 +1,114 @@
+@import "../../../variables";
+
+.newItemArea {
+  display: flex;
+  flex-direction: column;
+  margin-right: 1px;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: $areaBackgroundColor;
+  border: 1px solid $areaBorderColor;
+  box-shadow: $modalBoxShadow;
+  max-height: 90vh;
+
+  /* Generic styles */
+  .labelCheckBox {
+    margin-right: 5px;
+  }
+  .textInput {
+    > label {
+      display: block;
+      text-transform: uppercase;
+      font-size: $fontSizeTiny;
+      margin-bottom: 2px;
+    }
+  }
+
+  /* Area styles */
+  .itemName {
+    margin: 10px;
+    padding: 3px;
+  }
+  .typeSelectArea {
+    border-top: 1px solid $areaBorderColor;
+    border-bottom: 1px solid $areaBorderColor;
+
+    .typeTabs {
+      display: flex;
+      flex-direction: row;
+
+      > div {
+        flex: 1 auto;
+        border-right: 1px solid $areaBorderColor;
+        border-bottom: 1px solid $areaBorderColor;
+
+        &:last-child {
+          border-right: none;
+        }
+        > input {
+        display: none;
+        }
+        > label {
+          display: inline-block;
+          width: 100%;
+          padding: 5px;
+          text-align: center;
+          text-transform: uppercase;
+          font-size: $fontSizeMedium;
+        }
+        input:not([disabled]) + label:hover {
+          background-color: $areaHighlightColor;
+        }
+        input[disabled] + label {
+          color: grey;
+        }
+      }
+    }
+  }
+  .itemContentArea {
+    margin: 10px;
+
+    .itemEquippable {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-left: 10px;
+    }
+  }
+  .flexArea {
+    overflow-y: auto;
+    margin-right: 1px;
+    margin-bottom: 1px;
+    flex: 1 auto;
+    .profiencyArea,
+    .traitArea,
+    .skillArea {
+      margin: 0 10px 10px 10px;
+
+      .header {
+        font-size: $fontSizeMedium;
+        text-transform: uppercase;
+        margin: 10px 0;
+      }
+      .listItem {
+        font-size: $fontSize;
+      }
+      .addButton {
+        margin-left: 5px;
+      }
+    }
+  }
+  .buttonArea {
+    padding: 10px;
+    display: flex;
+    flex-direction: row-reverse;
+    border-top: 1px solid $areaBorderColor;
+
+    .createButton {
+      flex: 0 auto;
+      margin-left: 10px;
+    }
+  }
+}

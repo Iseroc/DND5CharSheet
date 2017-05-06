@@ -5,48 +5,21 @@ $buttonBackgroundColor: dodgerblue;
 $buttonBorderColor: #333;
 $fontColor: #333;
 $shadowColor: #aaa;
+$placeholderColor: #aaa;
 
 $modalBoxShadow: 0 2px 3px $shadowColor;
 
+$elementHeight: 21px;
+
 $areaSize_functions: 50px;
 
-// ******
-// Generic classes
-// ******
+$fontSize: 14px;
+$fontSizeGargantuan: $fontSize + 10;
+$fontSizeHuge: $fontSize + 6;
+$fontSizeLarge: $fontSize + 2;
+$fontSizeMedium: $fontSize - 2;
+$fontSizeSmall: $fontSize - 4;
+$fontSizeTiny: $fontSize - 5;
 
-.fa-button {
-  background: none;
-  border: none;
-  font-size: 13px;
-  padding: 0;
-  margin: 0;
-  height: auto;
-  cursor: pointer;
-
-  &.red {
-    color: red;
-  }
-  &.blue {
-    color: dodgerblue;
-  }
-  > i {
-    line-height: 18px;
-  }
-}
-
-.flex-container {
-  display: flex;
-
-  &.flex-justify-center {
-    justify-content: center;
-  }
-  .flex-center {
-    text-align: center;
-  }
-  > * {
-    flex: 1 auto;
-  }
-  .flex-fixed {
-    flex: 0 auto;
-  }
-}
+$lineHeight: $fontSize + 2;
+$lineHeightLarge: $fontSizeLarge + 2;

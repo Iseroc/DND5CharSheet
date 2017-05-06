@@ -1,29 +1,62 @@
 <template>
+  <require from="./combat.css"></require>
   <require from="../../resources/value-converters/attackBonus"></require>
 
   <div class="combat">
-    <table class="weapons">
-      <!--weapon repeat.for="weapon of data.inventory.weapons" model.bind="weapon"></weapon-->
-      <tr repeat.for="weapon of data.inventory.weapons">
-        <td>
-          ${weapon.name}
-        </td>
-        <td>
-          ${weapon | attackBonus:data}
-        </td>
-        <td>
-          ${weapon.damage} ${weapon.damageType}
-        </td>
-      </tr>
-    </table>
-    <div class="armor">
-      AC: ${armorClass}
+    <div class="column">
+      <div class="infoArea">
+        <div class="infoRow">
+          <div class="infoSquare">
+            <span class="header">AC</span>
+            <span class="value">${armorClass}</span>
+          </div>
+          <div class="infoSquare">
+            <span class="header">Initiative</span>
+            <span class="value">${initiative}</span>
+          </div>
+          <div class="infoSquare">
+            <span class="header">Speed</span>
+            <span class="value">${speed}</span>
+          </div>
+        </div>
+        <div class="infoRow">
+          <div class="infoSquare full">
+            <span class="header">HP</span>
+            <div class="value">
+              <input class="hpInput" type="number" value.bind="currentHP" />/${data.character.maxHP}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="weaponArea">
+        <table class="weaponTable">
+          <tr>
+            <th>
+              Weapon
+            </th>
+            <th>
+              AB
+            </th>
+            <th>
+              Damage
+            </th>
+          </tr>
+          <tr repeat.for="weapon of data.inventory.weapons">
+            <td>
+              ${weapon.name}
+            </td>
+            <td>
+              ${weapon | attackBonus:data}
+            </td>
+            <td>
+              ${weapon.damage} ${weapon.damageType}
+            </td>
+          </tr>
+        </table>
+      </div>
     </div>
-    <div class="initiative">
-      Initiative: ${initiative}
-    </div>
-    <div class="hitpoints">
-      HP: ${currentHP}/${data.character.maxHP}
+    <div class="column consumablesArea">
+      Consumables
     </div>
   </div>
 </template>

@@ -1,14 +1,21 @@
 <template>
+  <require from="./itemPopup.css"></require>
   <require from="../../../data/extra/enums"></require>
   <require from="../../../resources/value-converters/translate"></require>
 
-  <div class="newItemArea" show.bind="state">
+  <div class="newItemArea">
     <input class="itemName" type="text" placeholder="Name" value.bind="name"/>
     <div class="typeSelectArea">
       <div class="typeTabs">
-        <label><input type="radio" name="typeradio" value="item" checked.bind="selectedType" ref="itemradio"/>Item</label>
-        <label><input type="radio" name="typeradio" value="armor" checked.bind="selectedType" ref="armorradio" />Armor</label>
-        <label><input type="radio" name="typeradio" value="weapon" checked.bind="selectedType" ref="weaponradio" />Weapon</label>
+        <div>
+          <input type="radio" name="typeradio" value="item" checked.bind="selectedType" id="itemradio" ref="itemradio" disabled/><label for="itemradio">Item</label>
+        </div>
+        <div>
+          <input type="radio" name="typeradio" value="armor" checked.bind="selectedType" id="armorradio" ref="armorradio" disabled/><label for="armorradio">Armor</label>
+        </div>
+        <div>
+          <input type="radio" name="typeradio" value="weapon" checked.bind="selectedType" id="weaponradio" ref="weaponradio" disabled/><label for="weaponradio">Weapon</label>
+        </div>
       </div>
       <div class="itemContentArea">
         <!-- ITEM SPECIFIC VARIABLES -->
@@ -50,14 +57,14 @@
     <div class="flexArea">
       <!-- ATTUNEMENT -->
       <div class="itemContentArea">
-        <label><input type="checkbox" checked.bind="attunement" />Requires attunement</label>
+        <label><input type="checkbox" class="labelCheckBox" checked.bind="attunement" />Requires attunement</label>
       </div>
 
       <!-- SKILLS -->
       <div class="skillArea">
         <span class="header">Skills</span>
         <ul>
-          <li repeat.for="skill of additionalSkillProfiencies">
+          <li class="listItem" repeat.for="skill of additionalSkillProfiencies">
             ${skill | translate:data.translations:'skill' }
           </li>
         </ul>
@@ -75,30 +82,34 @@
       <div class="profiencyArea">
         <span class="header">Other profiencies</span>
         <ul>
-          <li repeat.for="profiency of additionalOtherProfiencies">
+          <li class="listItem" repeat.for="profiency of additionalOtherProfiencies">
             ${profiency.name}
           </li>
         </ul>
-        <input type="text" placeholder="New profiency name" value.bind="newOtherProfiencyName" />
-        <button click.delegate="addOtherProfiency()">Add</button>
+        <div class="flex-container">
+          <input type="text" placeholder="New profiency name" value.bind="newOtherProfiencyName" />
+          <button class="flex-fixed addButton" click.delegate="addOtherProfiency()">Add</button>
+        </div>
       </div>
 
       <!-- TRAITS -->
       <div class="traitArea">
         <span class="header">Traits</span>
         <ul>
-          <li repeat.for="trait of additionalTraits">
+          <li class="listItem" repeat.for="trait of additionalTraits">
             ${trait.name}
           </li>
         </ul>
-        <input type="text" placeholder="New trait name" value.bind="newTraitName" />
-        <button click.delegate="addTrait()">Add</button>
+        <div class="flex-container">
+          <input type="text" placeholder="New trait name" value.bind="newTraitName" />
+          <button class="flex-fixed addButton" click.delegate="addTrait()">Add</button>
+        </div>
       </div>
     </div>
 
     <div class="buttonArea">
       <button class="createButton" click.delegate="reset()">Cancel</button>
-      <button class="createButton" disabled.bind="!name" click.delegate="createItem()">Create item</button>
+      <button class="createButton" disabled.bind="!name" click.delegate="saveItem()">Save item</button>
     </div>
   </div>
 </template>

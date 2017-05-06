@@ -96,7 +96,7 @@ export class InventoryAccessor {
           }
         }
         // equip new armor
-        this.model.backpack.splice(this.equipped.indexOf(item), 1);
+        this.model.backpack.splice(this.backpack.indexOf(item), 1);
         this.model.equipped.push(item);
       }
       else {
@@ -114,7 +114,7 @@ export class InventoryAccessor {
   moveToBackpack(item: ItemModel): boolean {
     if(!this.isInBackpack(item)) {
       // if this item is currently equipped, unequip it
-      if(this.model.equipped.includes(item)) {
+      if(this.isEquipped(item)) {
         this.model.equipped.splice(this.equipped.indexOf(item), 1);
       }
       this.model.backpack.push(item);
@@ -129,5 +129,17 @@ export class InventoryAccessor {
 
   isInBackpack(item: ItemModel): boolean {
     return this.model.backpack.includes(item);
+  }
+
+  deleteItem(item: ItemModel): boolean {
+    if(this.isInBackpack(item)) {
+      this.model.backpack.splice(this.backpack.indexOf(item), 1);
+      return true;
+    }
+    else if(this.isEquipped(item)) {
+      this.model.equipped.splice(this.equipped.indexOf(item), 1);
+      return true;
+    }
+    return false;
   }
 }

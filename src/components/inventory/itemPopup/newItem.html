@@ -1,0 +1,115 @@
+<template>
+  <require from="./itemPopup.css"></require>
+  <require from="../../../data/extra/enums"></require>
+  <require from="../../../resources/value-converters/translate"></require>
+
+  <div class="newItemArea">
+    <input class="itemName" type="text" placeholder="Name" value.bind="name"/>
+    <div class="typeSelectArea">
+      <div class="typeTabs">
+        <div>
+          <input type="radio" name="typeradio" value="item" checked.bind="selectedType" id="itemradio" ref="itemradio"/><label for="itemradio">Item</label>
+        </div>
+        <div>
+          <input type="radio" name="typeradio" value="armor" checked.bind="selectedType" id="armorradio" ref="armorradio"/><label for="armorradio">Armor</label>
+        </div>
+        <div>
+          <input type="radio" name="typeradio" value="weapon" checked.bind="selectedType" id="weaponradio" ref="weaponradio"/><label for="weaponradio">Weapon</label>
+        </div>
+      </div>
+      <div class="itemContentArea">
+        <!-- ITEM SPECIFIC VARIABLES -->
+        <div show.bind="itemradio.checked" class="flex-container">
+          <div class="textInput flex-center">
+            <label>Quantity</label>
+            <input type="number" value.bind="quantity" placeholder="Quantity" />
+          </div>
+          <div class="flex-center itemEquippable">
+            <label><input type="checkbox" class="labelCheckBox" checked.bind="equippable" />Equippable</label>
+          </div>
+        </div>
+
+        <!-- ARMOR SPECIFIC VARIABLES -->
+        <div show.bind="armorradio.checked" class="flex-container">
+          <div class="textInput flex-center">
+            <label>Base AC</label>
+            <input type="number" value.bind="baseAC" placeholder="Base AC" />
+          </div>
+          <div class="textInput flex-center">
+            <label>Max Dex bonus</label>
+            <input type="number" value.bind="maxDexBonus" placeholder="Max Dex bonus" />
+          </div>
+        </div>
+
+        <!-- WEAPON SPECIFIC VARIABLES -->
+        <div show.bind="weaponradio.checked" class="flex-container">
+          <div class="textInput flex-center">
+            <label>Damage</label>
+            <input type="text" value.bind="damage" placeholder="1d8" />
+          </div>
+          <div class="textInput flex-center">
+            <label>Type</label>
+            <input type="text" value.bind="damageType" placeholder="Slashing" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flexArea">
+      <!-- ATTUNEMENT -->
+      <div class="itemContentArea">
+        <label><input type="checkbox" class="labelCheckBox" checked.bind="attunement" />Requires attunement</label>
+      </div>
+
+      <!-- SKILLS -->
+      <div class="skillArea">
+        <span class="header">Skills</span>
+        <ul>
+          <li class="listItem" repeat.for="skill of additionalSkillProfiencies">
+            ${skill | translate:data.translations:'skill' }
+          </li>
+        </ul>
+        <div class="flex-container">
+          <select value.bind="selectedSkillProfiency">
+            <option repeat.for="skillEnum of SkillEnums" model.bind="skillEnum">
+              ${skillEnum | translate:data.translations:'skill' }
+            </option>
+          </select>
+          <button class="flex-fixed addButton" click.delegate="addSkillProfiency()">Add</button>
+        </div>
+      </div>
+
+      <!-- PROFIENCIES -->
+      <div class="profiencyArea">
+        <span class="header">Other profiencies</span>
+        <ul>
+          <li class="listItem" repeat.for="profiency of additionalOtherProfiencies">
+            ${profiency.name}
+          </li>
+        </ul>
+        <div class="flex-container">
+          <input type="text" placeholder="New profiency name" value.bind="newOtherProfiencyName" />
+          <button class="flex-fixed addButton" click.delegate="addOtherProfiency()">Add</button>
+        </div>
+      </div>
+
+      <!-- TRAITS -->
+      <div class="traitArea">
+        <span class="header">Traits</span>
+        <ul>
+          <li class="listItem" repeat.for="trait of additionalTraits">
+            ${trait.name}
+          </li>
+        </ul>
+        <div class="flex-container">
+          <input type="text" placeholder="New trait name" value.bind="newTraitName" />
+          <button class="flex-fixed addButton" click.delegate="addTrait()">Add</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="buttonArea">
+      <button class="createButton" click.delegate="reset()">Cancel</button>
+      <button class="createButton" disabled.bind="!name" click.delegate="createItemInternal()">Create</button>
+    </div>
+  </div>
+</template>

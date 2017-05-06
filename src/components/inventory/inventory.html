@@ -1,6 +1,7 @@
 <template>
   <require from="./inventory.css"></require>
-  <require from="./newItem/newItem"></require>
+  <require from="./itemPopup/newItem"></require>
+  <require from="./itemPopup/editItem"></require>
 
   <div class="contentArea">
     <div class="itemArea">
@@ -26,10 +27,11 @@
           <td>
             -
           </td>
-          <td class="min-size">
-            <div if.bind="item.equippable">
+          <td class="buttonArea">
+            <div>
               <button click.delegate="unequip(item)">Unequip</button>
               <button click.delegate="editItem(item)">Edit</button>
+              <button click.delegate="deleteItem(item)">Discard</button>
             </div>
           </td>
         </tr>
@@ -54,10 +56,11 @@
           <td>
             -
           </td>
-          <td class="min-size">
-            <div show.bind="item.equippable">
-              <button click.delegate="equip(item)">Equip</button>
+          <td class="buttonArea">
+            <div>
+              <button show.bind="item.equippable" click.delegate="equip(item)">Equip</button>
               <button click.delegate="editItem(item)">Edit</button>
+              <button click.delegate="deleteItem(item)">Discard</button>
             </div>
           </td>
         </li>
@@ -67,5 +70,6 @@
       <button class="functionButton" click.delegate="startCreatingNewItem()">Create a new item</button>
     </div>
   </div>
-  <new-item state.two-way="creatingNewItem"></new-item>
+  <new-item show.bind="showItemPopup" create-item.call="createItem(item)" cancel-item.call="cancelCreatingNewItem()"></new-item>
+  <edit-item show.bind="showEditPopup" item-to-edit.bind="itemToEdit" cancel-item.call="cancelEditItem()"></edit-item>
 </template>

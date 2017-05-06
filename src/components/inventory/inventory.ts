@@ -5,7 +5,9 @@ import {DataAccessor} from '../../data/dataAccessor';
 export class Inventory {
   constructor(private data: DataAccessor) { }
 
-  creatingNewItem: boolean = false;
+  showItemPopup: boolean = false;
+  showEditPopup: boolean = false;
+  itemToEdit = null;
 
   equip(item) {
     this.data.inventory.equip(item);
@@ -15,14 +17,25 @@ export class Inventory {
   }
 
   startCreatingNewItem() {
-    this.creatingNewItem = true;
+    this.showItemPopup = true;
   }
-
-  doneCreatingNewItem() {
-    this.creatingNewItem = false;
+  cancelCreatingNewItem() {
+    this.showItemPopup = false;
+  }
+  createItem(item) {
+    this.data.inventory.backpack.push(item);
   }
 
   editItem(item) {
-    console.log(item);
+    this.showEditPopup = true;
+    this.itemToEdit = item;
+  }
+  cancelEditItem() {
+    this.showEditPopup = false;
+    this.itemToEdit = null;
+  }
+
+  deleteItem(item) {
+    this.data.inventory.deleteItem(item);
   }
 }

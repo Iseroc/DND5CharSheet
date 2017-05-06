@@ -1,0 +1,74 @@
+@import "../../variables";
+
+.combat {
+  display: flex;
+  flex-wrap: wrap;
+
+  .column {
+    flex: 1 50%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .weaponArea {
+    flex: 1 auto;
+
+    .weaponTable {
+      margin: 10px;
+      margin-top: 0;
+      width: 100%;
+
+      th {
+        text-align: left;
+        padding-right: 10px;
+      }
+    }
+  }
+
+
+  .infoArea {
+    flex: 1 auto;
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+
+    .infoRow {
+      display: flex;
+      flex-grow: 1 auto;
+
+      .infoSquare {
+        padding: 5px;
+        padding-bottom: 10px;
+        text-align: center;
+        margin: 5px;
+        flex: 1 auto;
+        border: 1px solid black;
+        display: flex;
+        flex-direction: column;
+
+        .header {
+          flex: 0 auto;
+          text-transform: uppercase;
+          font-size: 10px;
+          text-align: center;
+        }
+        .value {
+          flex: 1 auto;
+          font-size: 24px;
+          vertical-align: middle;
+          text-align: center;
+
+          .hpInput {
+            width: 70px;
+            height: auto;
+            font-size: 24px;
+          }
+        }
+      }
+    }
+  }
+
+  .consumablesArea {
+    padding: 10px;
+  }
+}

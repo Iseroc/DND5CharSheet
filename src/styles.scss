@@ -4,28 +4,28 @@ html,
 body {
   margin: 0;
   padding: 0;
-  height: 100%;}
-
-body {
+  height: 100%;
   overflow: hidden;
   font-family: 'Roboto Condensed';
+  font-size: $fontSize;
   color: $fontColor;
 }
 
 button {
   border-radius: 0;
-  height: 20px;
+  height: $elementHeight;
   background: $buttonBackgroundColor;
   border: 1px solid $buttonBorderColor;
   cursor: pointer;
 }
 
 select {
-  height: 20px;
+  height: $elementHeight;
 }
 
-input[type="text"] {
-  height: 20px;
+input[type="text"],
+input[type="number"] {
+  height: $elementHeight;
 }
 
 .navbar {
@@ -88,4 +88,43 @@ input[type="text"] {
   position: relative;
   margin-left: $areaSize_functions;
   margin-top: $areaSize_functions;
+}
+
+// ******
+// Generic classes
+// ******
+
+.fa-button {
+  background: none;
+  border: none;
+  font-size: 13px;
+  padding: 0;
+  margin: 0;
+  height: auto;
+  cursor: pointer;
+  height: $lineHeight;
+
+  &.red {
+    color: red;
+  }
+  &.blue {
+    color: dodgerblue;
+  }
+}
+
+.flex-container {
+  display: flex;
+
+  &.flex-justify-center {
+    justify-content: center;
+  }
+  .flex-center {
+    text-align: center;
+  }
+  > * {
+    flex: 1 auto;
+  }
+  .flex-fixed {
+    flex: 0 auto;
+  }
 }
