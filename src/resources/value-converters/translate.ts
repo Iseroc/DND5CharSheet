@@ -9,6 +9,9 @@ export class TranslateValueConverter {
       else if(type.toLowerCase() === 'stat') {
         return translations.translateStat(valueToTranslate);
       }
+      else if(type.toLowerCase() === 'charmod') {
+        return translations.translateCharMod(valueToTranslate);
+      }
     }
 
     return valueToTranslate;

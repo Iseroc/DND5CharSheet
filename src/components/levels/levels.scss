@@ -1,0 +1,34 @@
+@import "../../variables";
+
+.levelTable {
+  > tbody > tr > td {
+    padding-bottom: 10px;
+    vertical-align: top;
+  }
+
+  .hdInput {
+    width: 50px;
+  }
+
+  .bonusesArea {
+    border: 1px solid black;
+    padding: 10px;
+    margin-left: 10px;
+
+    .bonusesTable {
+      > tbody > tr:not(:last-child) {
+        > td {
+          padding-bottom: 5px;
+        }
+      }
+
+      .inputElement {
+        width: 130px;
+      }
+      .addButton,
+      .removeButton {
+        margin-left: 5px;
+      }
+    }
+  }
+}

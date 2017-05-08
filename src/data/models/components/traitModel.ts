@@ -1,7 +1,4 @@
-import {CharacterModifyingElement} from './characterModifyingElement';
-
-export class TraitModel extends CharacterModifyingElement {
+export class TraitModel {
   constructor(public name: string) {
-    super();
   }
 }

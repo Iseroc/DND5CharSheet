@@ -20,10 +20,24 @@
           </div>
         </div>
         <div class="infoRow">
-          <div class="infoSquare full">
+          <div class="infoSquare">
             <span class="header">HP</span>
             <div class="value">
-              <input class="hpInput" type="number" value.bind="currentHP" />/${data.character.maxHP}
+              <input class="hpInput" type="number" value.bind="currentHP" /> / ${data.character.maxHP}
+            </div>
+          </div>
+        </div>
+        <div class="infoRow">
+          <div class="infoSquare">
+            <span class="header">Temporary HP</span>
+            <div class="value">
+              <input class="hpInput" type="number" value.bind="temporaryHP" />
+            </div>
+          </div>
+          <div class="infoSquare">
+            <span class="header">HD</span>
+            <div class="value">
+              <input class="hdInput" type="number" value.bind="hitDieNumber" />d${hitDie}
             </div>
           </div>
         </div>

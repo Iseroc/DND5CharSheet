@@ -93,8 +93,12 @@ export class CharacterAccessor {
     return -1000;
   }
 
+  get levels(): LevelModel[] {
+    return this.model.levels;
+  }
+
   // skill profiencies list
-  get skills() {
+  get skills(): SkillEnums[] {
     return this.model.skills;
   }
   addSkill(skill:SkillEnums) {

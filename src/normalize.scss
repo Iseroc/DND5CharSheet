@@ -487,3 +487,7 @@ button:focus {
  input[type='text'] {
    min-width: 0;
  }
+
+[disabled] {
+  pointer-events: none;
+}

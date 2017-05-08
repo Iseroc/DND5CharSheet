@@ -1,17 +1,15 @@
-import {StatEnums, SkillEnums} from './enums';
+import {StatEnums, SkillEnums, CharModEnums} from './enums';
 
 export class Translations {
   constructor() {
-    this.init();
+    this.initStatStrings();
+    this.initSkillStrings();
+    this.initCharModStrings();
   }
 
   statStrings = new Map();
   skillStrings = new Map();
-
-  private init() {
-    this.initStatStrings();
-    this.initSkillStrings();
-  }
+  charModStrings = new Map();
 
   private initStatStrings() {
     this.statStrings.set(StatEnums.STR, 'Strength');
@@ -43,11 +41,21 @@ export class Translations {
     this.skillStrings.set(SkillEnums.SURVIVAL, 'Survival');
   }
 
+  private initCharModStrings() {
+    this.charModStrings.set(CharModEnums.SKILLPROFIENCY, 'Skill profiency');
+    this.charModStrings.set(CharModEnums.OTHERPROFIENCY, 'Other profiency');
+    this.charModStrings.set(CharModEnums.TRAIT, 'Trait');
+  }
+
   translateStat(stat: StatEnums): string {
     return this.statStrings.get(stat);
   }
 
   translateSkill(skill: SkillEnums): string {
     return this.skillStrings.get(skill);
+  }
+
+  translateCharMod(charmod: CharModEnums): string {
+    return this.charModStrings.get(charmod);
   }
 }

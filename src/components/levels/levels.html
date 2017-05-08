@@ -1,0 +1,78 @@
+<template>
+  <require from="../../data/extra/enums"></require>
+  <require from="../../resources/value-converters/translate"></require>
+  <require from="./levels.css"></require>
+  <require from="./skillSelect/skillSelect"></require>
+
+  Race
+  <table class="levelTable">
+    <tr>
+      <th>
+        Level
+      </th>
+      <th>
+        Class
+      </th>
+      <th>
+        HD
+      </th>
+      <th>
+        Bonuses
+      </th>
+    </tr>
+    <tr repeat.for="level of data.character.levels">
+      <td>
+        ${data.character.levels.indexOf(level) + 1}
+      </td>
+      <td>
+        <input type="text" value.bind="level.characterClass" />
+      </td>
+      <td>
+        <input type="number" value.bind="level.hd" class="hdInput" />
+      </td>
+      <td>
+        <div class="bonusesArea">
+          <table class="bonusesTable">
+            <tr repeat.for="skillProf of level.additionalSkillProfiencies">
+              <td>
+                Skill profiency
+              </td>
+              <td>
+                <skill-select current-skill.bind="skillProf" list.bind="level.additionalSkillProfiencies"></skill-select>
+              </td>
+              <td>
+                <button class="fa-button red removeButton" click.delegate="removeSkill(level, skillProf)"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
+              </td>
+            </tr>
+            <tr repeat.for="otherProf of level.additionalOtherProfiencies">
+              <td>
+                Other profiency
+              </td>
+              <td>
+                <input type="text" class="inputElement" value.bind="otherProf.name" />
+              </td>
+            </tr>
+            <tr repeat.for="trait of level.additionalTraits">
+              <td>
+                Trait
+              </td>
+              <td>
+                <input type="text" class="inputElement" value.bind="trait.name" />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <select ref="featureTypeSelect">
+                  <option repeat.for="charmod of CharModEnums" value.bind="charmod">${charmod | translate:data.translations:'charmod'}</option>
+                </select>
+              </td>
+              <td>
+                <button class="addButton" click.delegate="addNewFeature(level, featureTypeSelect.value)">Add</button>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </td>
+    </tr>
+  </ul>
+</template>

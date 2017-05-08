@@ -38,4 +38,24 @@ export class Combat {
   set currentHP(value: number) {
     this.data.character.currentHP = value;
   }
+
+  tempHP = 0;
+  get temporaryHP(): number {
+    return this.tempHP;
+  }
+  set temporaryHP(value: number) {
+    this.tempHP = value;
+  }
+
+  currentHD = 16;
+  get hitDieNumber(): number {
+    return this.currentHD;
+  }
+  set hitDieNumber(value: number) {
+    this.currentHD = value;
+  }
+
+  get hitDie() {
+    return '10';
+  }
 }
