@@ -90,21 +90,21 @@ export class DataAccessor {
       this.character.levels[0].additionalSkillProfiencies.push(SkillEnums.ATHLETICS);
 
       // Parse all other profiencies
-      this.character.addProfiency(new ProfiencyModel('Simple weapons', 'equipment'));
-      this.character.addProfiency(new ProfiencyModel('Martial weapons', 'equipment'));
-      this.character.addProfiency(new ProfiencyModel('Desert weapons', 'equipment'));
-      this.character.addProfiency(new ProfiencyModel('Light armor', 'equipment'));
-      this.character.addProfiency(new ProfiencyModel('Medium armor', 'equipment'));
-      this.character.addProfiency(new ProfiencyModel('Heavy armor', 'equipment'));
-      this.character.addProfiency(new ProfiencyModel('Shields', 'equipment'));
-      this.character.addProfiency(new ProfiencyModel('Sami drum', 'instrument'));
-      this.character.addProfiency(new ProfiencyModel('Nubian (elven)', 'language'));
-      this.character.addProfiency(new ProfiencyModel('Trade common', 'language'));
-      this.character.addProfiency(new ProfiencyModel('Druidic', 'language'));
+      this.character.levels[0].additionalOtherProfiencies.push(new ProfiencyModel('Simple weapons'));
+      this.character.levels[0].additionalOtherProfiencies.push(new ProfiencyModel('Martial weapons'));
+      this.character.levels[0].additionalOtherProfiencies.push(new ProfiencyModel('Desert weapons'));
+      this.character.levels[0].additionalOtherProfiencies.push(new ProfiencyModel('Light armor'));
+      this.character.levels[0].additionalOtherProfiencies.push(new ProfiencyModel('Medium armor'));
+      this.character.levels[0].additionalOtherProfiencies.push(new ProfiencyModel('Heavy armor'));
+      this.character.levels[0].additionalOtherProfiencies.push(new ProfiencyModel('Shields'));
+      this.character.levels[0].additionalOtherProfiencies.push(new ProfiencyModel('Sami drum'));
+      this.character.levels[0].additionalOtherProfiencies.push(new ProfiencyModel('Nubian (elven)'));
+      this.character.levels[0].additionalOtherProfiencies.push(new ProfiencyModel('Trade common'));
+      this.character.levels[0].additionalOtherProfiencies.push(new ProfiencyModel('Druidic'));
 
       // Parse all traits
-      this.character.addTrait(new TraitModel('Darkvision 120ft'));
-      this.character.addTrait(new TraitModel('Keen Hearing'));
+      this.character.race.additionalTraits.push(new TraitModel('Darkvision 120ft'));
+      this.character.race.additionalTraits.push(new TraitModel('Keen Hearing'));
 
       // Parse inventory
       let arm1 = new ArmorModel('Adamantium full plate', ArmorType.Heavy, 18, 0);

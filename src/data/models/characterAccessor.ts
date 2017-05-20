@@ -116,42 +116,62 @@ export class CharacterAccessor {
         }
       }
     }
+    for(let skill of this.race.additionalSkillProfiencies) {
+      if(!unique[skill]) {
+        arr.push(skill);
+        unique[skill] = 1;
+      }
+    }
     return arr;
   }
 
   //skill expertises list
-  get expertises() {
-    return this.model.expertises;
+  get expertises(): SkillEnums[] {
+    //TODO: make expertises
+    return [];
+    //return this.model.expertises;
   }
 
   // other profiencies list
-  get profiencies() {
-    return this.model.profiencies;
-  }
-  addProfiency(prof: ProfiencyModel) {
-    if(!this.model.profiencies.includes(prof)) {
-      this.model.profiencies.push(prof);
+  get profiencies(): ProfiencyModel[] {
+    let arr = [];
+    let unique = {};
+    for(let level of this.levels) {
+      for(let prof of level.additionalOtherProfiencies) {
+        if(!unique[prof.name]) {
+          arr.push(prof);
+          unique[prof.name] = 1;
+        }
+      }
     }
-  }
-  removeProfiency(prof: ProfiencyModel) {
-    if(this.model.profiencies.includes(prof)) {
-      this.model.profiencies.splice(this.model.profiencies.indexOf(prof), 1);
+    for(let prof of this.race.additionalOtherProfiencies) {
+      if(!unique[prof.name]) {
+        arr.push(prof);
+        unique[prof.name] = 1;
+      }
     }
+    return arr;
   }
 
   // traits and features list
-  get traits() {
-    return this.model.traits;
-  }
-  addTrait(trait:TraitModel) {
-    if(!this.model.traits.includes(trait)) {
-      this.model.traits.push(trait);
+  get traits(): TraitModel[] {
+    let arr = [];
+    let unique = {};
+    for(let level of this.levels) {
+      for(let trait of level.additionalTraits) {
+        if(!unique[trait.name]) {
+          arr.push(trait);
+          unique[trait.name] = 1;
+        }
+      }
     }
-  }
-  removeTrait(trait:TraitModel) {
-    if(this.model.traits.includes(trait)) {
-      this.model.traits.splice(this.model.traits.indexOf(trait), 1);
+    for(let trait of this.race.additionalTraits) {
+      if(!unique[trait.name]) {
+        arr.push(trait);
+        unique[trait.name] = 1;
+      }
     }
+    return arr;
   }
 
   addLevel(level: LevelModel) {

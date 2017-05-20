@@ -3,6 +3,7 @@ import {BindingSignaler} from 'aurelia-templating-resources';
 import {DataAccessor} from '../../../data/dataAccessor';
 import {CharacterModifyingElement} from '../../../data/models/components/characterModifyingElement';
 import {ProfiencyModel} from '../../../data/models/components/profiencyModel';
+import {TraitModel} from '../../../data/models/components/traitModel';
 import {CharModEnums, SkillEnums} from '../../../data/extra/enums';
 
 @inject(DataAccessor, BindingSignaler)
@@ -32,6 +33,12 @@ export class Charmod {
   removeSkill(skill: SkillEnums) {
     this.model.additionalSkillProfiencies.splice(this.model.additionalSkillProfiencies.indexOf(skill), 1);
     this.signaler.signal('skill-list-changed');
+  }
+  removeOtherProf(prof: ProfiencyModel) {
+    this.model.additionalOtherProfiencies.splice(this.model.additionalOtherProfiencies.indexOf(prof), 1);
+  }
+  removeTrait(trait: TraitModel) {
+this.model.additionalTraits.splice(this.model.additionalTraits.indexOf(trait), 1);
   }
 
 }

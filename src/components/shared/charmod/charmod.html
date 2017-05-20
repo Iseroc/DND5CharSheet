@@ -23,6 +23,9 @@
       <td>
         <input type="text" class="inputElement" value.bind="otherProf.name" />
       </td>
+      <td>
+        <button class="fa-button red removeButton" click.delegate="removeOtherProf(otherProf)"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
+      </td>
     </tr>
     <tr repeat.for="trait of model.additionalTraits">
       <td>
@@ -30,6 +33,9 @@
       </td>
       <td>
         <input type="text" class="inputElement" value.bind="trait.name" />
+      </td>
+      <td>
+        <button class="fa-button red removeButton" click.delegate="removeTrait(trait)"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
       </td>
     </tr>
     <tr>

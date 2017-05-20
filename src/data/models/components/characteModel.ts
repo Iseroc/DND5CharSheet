@@ -10,11 +10,7 @@ export class CharacterModel {
     speed: number = 30;
     levels: LevelModel[] = [];
     race: RaceModel;
-
     stats: StatModel[] = [];
-    expertises: SkillEnums[] = [];
-    profiencies: ProfiencyModel[] = [];
-    traits: TraitModel[] = [];
 
     currentHP: number = 0;
 }
