@@ -1,6 +1,6 @@
 <template>
-  <require from="../../../data/extra/enums"></require>
-  <require from="../../../resources/value-converters/translate"></require>
+  <require from="../../../../data/extra/enums"></require>
+  <require from="../../../../resources/value-converters/translate"></require>
 
   <select class="inputElement" value.bind="currentSkill">
     <option repeat.for="skill of SkillEnums" model.bind="skill" disabled.bind="list.includes(skill) & signal:'skill-list-changed'">

@@ -1,34 +1,47 @@
 @import "../../variables";
 
-.levelTable {
-  > tbody > tr > td {
-    padding-bottom: 10px;
-    vertical-align: top;
-  }
+.levels-area {
+  padding: 5px;
 
-  .hdInput {
-    width: 50px;
-  }
+  .levelTable {
+    > tbody > tr > td {
+      padding-bottom: 10px;
+      vertical-align: top;
 
-  .bonusesArea {
-    border: 1px solid black;
-    padding: 10px;
-    margin-left: 10px;
-
-    .bonusesTable {
-      > tbody > tr:not(:last-child) {
-        > td {
-          padding-bottom: 5px;
-        }
-      }
-
-      .inputElement {
-        width: 130px;
-      }
-      .addButton,
-      .removeButton {
-        margin-left: 5px;
+      &:first-child {
+        font-size: $fontSizeLarge;
+        line-height: $elementHeight;
+        text-align: center;
       }
     }
+    .hdInput {
+      width: 50px;
+    }
+    .bonusesArea {
+      border: 1px solid black;
+      padding: 10px;
+      margin-left: 10px;
+    }
+    .removeLevelButton {
+      margin-left: 5px;
+      line-height: $elementHeight;
+    }
+  }
+}
+
+.stat-area {
+  padding: 5px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  > * {
+    margin: 5px;
+  }
+}
+
+.race-area {
+  .race-charmod {
+    margin-top: 5px;
   }
 }

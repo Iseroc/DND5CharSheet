@@ -12,9 +12,9 @@
   <div class="generalinfo">
     <h1>${data.character.name}</h1>
     <div class="saveAndLoadButtons">
-      <button click.delegate="data.save()">Download</button>
+      <button click.delegate="data.save()">Save</button>
       <input type="file" ref="fileinput" change.delegate="data.loadFile(fileinput)" style="display:none;" />
-      <button click.delegate="data.load(fileinput)">Upload</button>
+      <button click.delegate="data.sendClickEvent(fileinput)">Open</button>
     </div>
   </div>
 

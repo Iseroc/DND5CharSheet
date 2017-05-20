@@ -1,78 +1,66 @@
 <template>
-  <require from="../../data/extra/enums"></require>
-  <require from="../../resources/value-converters/translate"></require>
   <require from="./levels.css"></require>
-  <require from="./skillSelect/skillSelect"></require>
+  <require from="../shared/stat/stat"></require>
+  <require from="../shared/charmod/charmod"></require>
 
-  Race
-  <table class="levelTable">
-    <tr>
-      <th>
-        Level
-      </th>
-      <th>
-        Class
-      </th>
-      <th>
-        HD
-      </th>
-      <th>
-        Bonuses
-      </th>
-    </tr>
-    <tr repeat.for="level of data.character.levels">
-      <td>
-        ${data.character.levels.indexOf(level) + 1}
-      </td>
-      <td>
-        <input type="text" value.bind="level.characterClass" />
-      </td>
-      <td>
-        <input type="number" value.bind="level.hd" class="hdInput" />
-      </td>
-      <td>
-        <div class="bonusesArea">
-          <table class="bonusesTable">
-            <tr repeat.for="skillProf of level.additionalSkillProfiencies">
-              <td>
-                Skill profiency
-              </td>
-              <td>
-                <skill-select current-skill.bind="skillProf" list.bind="level.additionalSkillProfiencies"></skill-select>
-              </td>
-              <td>
-                <button class="fa-button red removeButton" click.delegate="removeSkill(level, skillProf)"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
-              </td>
-            </tr>
-            <tr repeat.for="otherProf of level.additionalOtherProfiencies">
-              <td>
-                Other profiency
-              </td>
-              <td>
-                <input type="text" class="inputElement" value.bind="otherProf.name" />
-              </td>
-            </tr>
-            <tr repeat.for="trait of level.additionalTraits">
-              <td>
-                Trait
-              </td>
-              <td>
-                <input type="text" class="inputElement" value.bind="trait.name" />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <select ref="featureTypeSelect">
-                  <option repeat.for="charmod of CharModEnums" value.bind="charmod">${charmod | translate:data.translations:'charmod'}</option>
-                </select>
-              </td>
-              <td>
-                <button class="addButton" click.delegate="addNewFeature(level, featureTypeSelect.value)">Add</button>
-              </td>
-            </tr>
-          </table>
+  <div class="flex-container">
+    <div class="flex-50 levels-area">
+      <table class="levelTable">
+        <tr>
+          <th>
+            Level
+          </th>
+          <th>
+            Class
+          </th>
+          <th>
+            HD
+          </th>
+          <th>
+            Bonuses
+          </th>
+        </tr>
+        <tr repeat.for="level of data.character.levels">
+          <td>
+            ${data.character.levels.indexOf(level) + 1}
+          </td>
+          <td>
+            <input type="text" value.bind="level.characterClass" />
+          </td>
+          <td>
+            <input type="number" value.bind="level.hd" class="hdInput" />
+          </td>
+          <td>
+            <div class="bonusesArea">
+              <charmod model.bind="level"></charmod>
+            </div>
+          </td>
+          <td>
+            <button show.bind="data.character.levels[data.character.levels.length-1] === level" class="fa-button red removeLevelButton" click.delegate="removeLevel(level)"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <button disabled.bind="data.character.levels.length > 19" click.delegate="addNewLevel()">Levelup</button>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="flex-50 flex-container flex-column">
+      <div class="flex-fixed">
+        <div class="stat-area">
+          <stat repeat.for="stat of data.character.stats" model.bind="stat.key" edit-mode="true"></stat>
         </div>
-      </td>
-    </tr>
-  </ul>
+      </div>
+      <div class="flex-fixed race-area">
+        <div class="textInput">
+          <label>Race</label>
+          <input type="text" value.bind="data.character.race.name" placeholder="race"/>
+        </div>
+        <div class="race-charmod">
+          <charmod model.bind="data.character.race"></charmod>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>

@@ -2,6 +2,7 @@ import {inject} from 'aurelia-framework';
 import {bindable} from 'aurelia-framework';
 import {DataAccessor} from '../../../data/dataAccessor';
 import {ItemModel, WeaponModel, ArmorModel, ArmorType} from '../../../data/models/components/itemModel';
+import {CharacterModifyingElement} from '../../../data/models/components/characterModifyingElement';
 import {SkillEnums} from '../../../data/extra/enums';
 import {ProfiencyModel} from '../../../data/models/components/profiencyModel';
 import {TraitModel} from '../../../data/models/components/traitModel';
@@ -11,6 +12,8 @@ export class ItemPopup {
   constructor(protected data: DataAccessor) {
     this.reset();
   }
+
+  protected innerModel: CharacterModifyingElement = new CharacterModifyingElement();
 
   @bindable
   cancelItem: Function;
@@ -35,33 +38,25 @@ export class ItemPopup {
   damage: string = '';
   damageType: string = '';
 
-  additionalSkillProfiencies: SkillEnums[] = [];
-  selectedSkillProfiency: SkillEnums = SkillEnums.ACROBATICS;
-
-  addSkillProfiency() {
-    if(!this.additionalSkillProfiencies.includes(this.selectedSkillProfiency)) {
-      this.additionalSkillProfiencies.push(this.selectedSkillProfiency);
-    }
+  get additionalSkillProfiencies(): SkillEnums[] {
+    return this.innerModel.additionalSkillProfiencies;
+  }
+  set additionalSkillProfiencies(value: SkillEnums[]) {
+    this.innerModel.additionalSkillProfiencies = value;
   }
 
-  additionalOtherProfiencies: ProfiencyModel[] = [];
-  newOtherProfiencyName: string = '';
-
-  addOtherProfiency() {
-    if(this.newOtherProfiencyName) {
-      this.additionalOtherProfiencies.push(new ProfiencyModel(this.newOtherProfiencyName, 'other'));
-      this.newOtherProfiencyName = '';
-    }
+  get additionalOtherProfiencies(): ProfiencyModel[] {
+    return this.innerModel.additionalOtherProfiencies;
+  }
+  set additionalOtherProfiencies(value: ProfiencyModel[]) {
+    this.innerModel.additionalOtherProfiencies = value;
   }
 
-  additionalTraits: TraitModel[] = [];
-  newTraitName: string;
-
-  addTrait() {
-    if(this.newTraitName) {
-      this.additionalTraits.push(new TraitModel(this.newTraitName));
-      this.newTraitName = '';
-    }
+  get additionalTraits(): TraitModel[] {
+    return this.innerModel.additionalTraits;
+  }
+  set additionalTraits(value: TraitModel[]) {
+    this.innerModel.additionalTraits = value;
   }
 
   reset() {
@@ -70,14 +65,7 @@ export class ItemPopup {
     this.equippable = false;
     this.attunement = false;
 
-    this.additionalSkillProfiencies = [];
-    this.selectedSkillProfiency = SkillEnums.ACROBATICS;
-
-    this.additionalOtherProfiencies = [];
-    this.newOtherProfiencyName = '';
-
-    this.additionalTraits = [];
-    this.newTraitName = '';
+    this.innerModel = new CharacterModifyingElement();
 
     this.baseAC = 10;
     this.bonusAC = 0;

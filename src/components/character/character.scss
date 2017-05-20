@@ -23,39 +23,6 @@
   .attribute {
     margin-top: 10px;
 
-    .stat {
-      display: flex;
-      flex-direction: column;
-      border: 1px solid black;
-      padding: 5px;
-
-      .stat-header {
-        flex: 0 auto;
-        text-transform: uppercase;
-        font-size: $fontSizeSmall;
-        text-align: center;
-      }
-      .stat-value {
-        flex: 1 auto;
-        font-size: $fontSizeGargantuan;
-        vertical-align: middle;
-        text-align: center;
-
-        .stat-editButton {
-          &.left {
-          margin-left: 5px;
-          }
-          &.right {
-            margin-right: 5px;
-          }
-        }
-      }
-      .stat-modifier {
-        flex: 0 auto;
-        font-size: $fontSizeLarge;
-        text-align: center;
-      }
-    }
     .skills {
       display: flex;
       max-height: 60px;
@@ -136,10 +103,17 @@
     .add-button {
       margin-left: 5px;
     }
-    .item-placeholder {
-      color: $placeholderColor;
-      font-size: $fontSizeSmall;
-      line-height: $lineHeight;
+    .trait,
+    .profiency {
+      > .type-placeholder {
+        display: none;
+        color: $placeholderColor;
+        font-size: $fontSizeSmall;
+        line-height: $lineHeight;
+      }
+      &:hover > .type-placeholder {
+        display: inline-block;
+      }
     }
   }
 }

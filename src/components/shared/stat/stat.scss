@@ -1,0 +1,38 @@
+@import "../../../variables";
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  padding: 5px;
+  width: 75px;
+
+  .stat-header {
+    flex: 0 auto;
+    text-transform: uppercase;
+    font-size: $fontSizeSmall;
+    text-align: center;
+  }
+  .stat-value {
+    flex: 1 auto;
+    font-size: $fontSizeGargantuan;
+    vertical-align: middle;
+    text-align: center;
+
+    .stat-editButton {
+      height: auto;
+      
+      &.left {
+      margin-left: 5px;
+      }
+      &.right {
+        margin-right: 5px;
+      }
+    }
+  }
+  .stat-modifier {
+    flex: 0 auto;
+    font-size: $fontSizeLarge;
+    text-align: center;
+  }
+}

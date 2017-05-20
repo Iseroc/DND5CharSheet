@@ -1,6 +1,7 @@
 import {inject} from 'aurelia-framework';
 import {CharacterAccessor} from './models/characterAccessor';
 import {LevelModel} from './models/components/levelModel';
+import {RaceModel} from './models/components/raceModel';
 import {InventoryAccessor} from './models/inventoryAccessor';
 import {Translations} from './extra/translations';
 import {TraitModel} from './models/components/traitModel';
@@ -16,8 +17,8 @@ export class DataAccessor {
   }
 
   save() {
-    var char_data = this.character.getCharacterDataJSON;
-    var inv_data = JSON.stringify(this.inventory.model);
+    var char_data = this.character.CharacterDataJSON;
+    var inv_data = this.inventory.InventoryDataJSON;
 
     var data = new Blob([char_data, '<&/>', inv_data], {type: 'text/plain'});
 
@@ -39,7 +40,7 @@ export class DataAccessor {
     });
   }
 
-  load(input) {
+  sendClickEvent(input) {
     var event = new MouseEvent('click');
     input.dispatchEvent(event);
   }
@@ -54,8 +55,8 @@ export class DataAccessor {
       //make a reader and set up a trigger on the "read" event
       reader.onload = () => {
         var resArr = reader.result.split('<&/>');
-        this.character.setCharacterDataFromJSON(resArr[0]);
-        this.inventory.model = JSON.parse(resArr[1]);
+        this.character.CharacterDataJSON = resArr[0];
+        this.inventory.InventoryDataJSON = resArr[1];
         input.value = '';
       };
 
@@ -69,6 +70,8 @@ export class DataAccessor {
       this.character.name = 'Galadin';
 
       this.character.currentHP = 99;
+
+      this.character.race = new RaceModel("Human");
 
       // Parse level
       for(let i = 0; i < 16; i++) {
@@ -84,7 +87,7 @@ export class DataAccessor {
       this.character.setStat(StatEnums.CHA, 18);
 
       // Parse skill profiencies
-      this.character.addSkill(SkillEnums.ATHLETICS);
+      this.character.levels[0].additionalSkillProfiencies.push(SkillEnums.ATHLETICS);
 
       // Parse all other profiencies
       this.character.addProfiency(new ProfiencyModel('Simple weapons', 'equipment'));
@@ -117,7 +120,6 @@ export class DataAccessor {
 
       let item2 = new ItemModel('Torch');
       this.inventory.moveToBackpack(item2);
-
     }
   }
 }

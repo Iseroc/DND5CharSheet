@@ -17,14 +17,6 @@
   .labelCheckBox {
     margin-right: 5px;
   }
-  .textInput {
-    > label {
-      display: block;
-      text-transform: uppercase;
-      font-size: $fontSizeTiny;
-      margin-bottom: 2px;
-    }
-  }
 
   /* Area styles */
   .itemName {
@@ -82,22 +74,9 @@
     margin-right: 1px;
     margin-bottom: 1px;
     flex: 1 auto;
-    .profiencyArea,
-    .traitArea,
-    .skillArea {
-      margin: 0 10px 10px 10px;
 
-      .header {
-        font-size: $fontSizeMedium;
-        text-transform: uppercase;
-        margin: 10px 0;
-      }
-      .listItem {
-        font-size: $fontSize;
-      }
-      .addButton {
-        margin-left: 5px;
-      }
+    .charmodeArea {
+      padding: 0 10px 10px 10px;
     }
   }
   .buttonArea {

@@ -115,6 +115,12 @@ input[type="number"] {
 .flex-container {
   display: flex;
 
+  &.flex-wrap {
+    flex-wrap: wrap;
+  }
+  &.flex-column {
+    flex-direction: column;
+  }
   &.flex-justify-center {
     justify-content: center;
   }
@@ -126,5 +132,17 @@ input[type="number"] {
   }
   .flex-fixed {
     flex: 0 auto;
+  }
+  .flex-50 {
+    flex: 1 50%;
+  }
+}
+
+.textInput {
+  > label {
+    display: block;
+    text-transform: uppercase;
+    font-size: $fontSizeTiny;
+    margin-bottom: 2px;
   }
 }

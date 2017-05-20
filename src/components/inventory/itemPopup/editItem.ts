@@ -30,14 +30,17 @@ export class EditItem extends ItemPopup {
       return;
     }
 
+    console.log(this.itemToEdit);
+
     this.name = this.itemToEdit.name;
     this.equippable = this.itemToEdit.equippable;
     this.attunement = this.itemToEdit.requiresAttunement;
     this.bonusAC = this.itemToEdit.bonusAC;
 
-    this.additionalSkillProfiencies = this.itemToEdit.additionalSkillProfiencies;
-    this.additionalOtherProfiencies = this.itemToEdit.additionalOtherProfiencies;
-    this.additionalTraits = this.itemToEdit.additionalTraits;
+    // JSON to deep copy the arrays
+    this.additionalSkillProfiencies = JSON.parse(JSON.stringify(this.itemToEdit.additionalSkillProfiencies));
+    this.additionalOtherProfiencies = JSON.parse(JSON.stringify(this.itemToEdit.additionalOtherProfiencies));
+    this.additionalTraits = JSON.parse(JSON.stringify(this.itemToEdit.additionalTraits));
 
     // setup armor
     if(this.itemToEdit instanceof ArmorModel) {

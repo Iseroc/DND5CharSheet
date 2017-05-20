@@ -8,7 +8,14 @@ import {InventoryModel} from './components/inventoryModel';
 export class InventoryAccessor {
   constructor() { }
 
-  model: InventoryModel = new InventoryModel();
+  private model: InventoryModel = new InventoryModel();
+
+  get InventoryDataJSON(): string {
+    return JSON.stringify(this.model, null, '\t');
+  }
+  set InventoryDataJSON(json) {
+    this.model = InventoryModel.parseJSON(JSON.parse(json));
+  }
 
   // ------------------------------------------- //
   //   Variables                                 //

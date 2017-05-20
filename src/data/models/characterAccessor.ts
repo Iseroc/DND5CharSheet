@@ -5,6 +5,7 @@ import {StatEnums, SkillEnums} from '../extra/enums';
 import {CharacterModel} from './components/characteModel';
 import {LevelModel} from './components/levelModel';
 import {StatModel} from './components/statModel';
+import {RaceModel} from './components/raceModel';
 
 export class CharacterAccessor {
   constructor() {
@@ -18,12 +19,11 @@ export class CharacterAccessor {
 
   private model: CharacterModel = new CharacterModel();
 
-  getCharacterDataJSON(): string {
-    return JSON.stringify(this.model)
+  get CharacterDataJSON(): string {
+    return JSON.stringify(this.model, null, '\t');
   }
-  setCharacterDataFromJSON(json): boolean {
-    JSON.parse(json);
-    return true;
+  set CharacterDataJSON(json) {
+    this.model = JSON.parse(json);
   }
 
   get name() {
@@ -31,6 +31,13 @@ export class CharacterAccessor {
   }
   set name(value: string) {
     this.model.name = value;
+  }
+
+  get race() {
+    return this.model.race;
+  }
+  set race(value: RaceModel) {
+    this.model.race = value;
   }
 
   get totalLevel() {
@@ -99,17 +106,17 @@ export class CharacterAccessor {
 
   // skill profiencies list
   get skills(): SkillEnums[] {
-    return this.model.skills;
-  }
-  addSkill(skill:SkillEnums) {
-    if(!this.model.skills.includes(skill)) {
-      this.model.skills.push(skill);
+    let arr = [];
+    let unique = {};
+    for(let level of this.levels) {
+      for(let skill of level.additionalSkillProfiencies) {
+        if(!unique[skill]) {
+          arr.push(skill);
+          unique[skill] = 1;
+        }
+      }
     }
-  }
-  removeSkill(skill:SkillEnums) {
-    if(this.model.skills.includes(skill)) {
-      this.model.skills.splice(this.model.skills.indexOf(skill), 1);
-    }
+    return arr;
   }
 
   //skill expertises list

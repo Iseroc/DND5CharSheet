@@ -1,0 +1,15 @@
+.bonusesTable {
+  > tbody > tr:not(:last-child) {
+    > td {
+      padding-bottom: 5px;
+    }
+  }
+
+  .inputElement {
+    width: 130px;
+  }
+}
+.addButton,
+.removeButton {
+  margin-left: 5px;
+}
