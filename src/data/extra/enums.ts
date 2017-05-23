@@ -34,11 +34,14 @@ export enum CharModEnums {
     SKILLPROFIENCY = 1,
     OTHERPROFIENCY = 2,
     TRAIT = 3,
+    SETSTAT = 4,
+    ADDTOSTAT = 5,
 }
 
 // Make SkillEnums bindable, with only the values represented in the array
 export class CountryViewEngineHooks implements ViewEngineHooks {
   beforeBind(view) {
+    view.overrideContext.StatEnums = Object.keys(StatEnums).map(k => StatEnums[k]).filter(v => typeof v === "number") as number[];
     view.overrideContext.SkillEnums = Object.keys(SkillEnums).map(k => SkillEnums[k]).filter(v => typeof v === "number") as number[];
     view.overrideContext.CharModEnums = Object.keys(CharModEnums).map(k => CharModEnums[k]).filter(v => typeof v === "number") as number[];
   }

@@ -2,7 +2,6 @@
   <require from="./charmod.css"></require>
   <require from="./skillSelect/skillSelect"></require>
   <require from="../../../data/extra/enums"></require>
-  <require from="../../../resources/value-converters/translate"></require>
 
   <table class="bonusesTable">
     <tr repeat.for="skillProf of model.additionalSkillProfiencies">
@@ -36,6 +35,28 @@
       </td>
       <td>
         <button class="fa-button red removeButton" click.delegate="removeTrait(trait)"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
+      </td>
+    </tr>
+    <tr repeat.for="setstat of model.setStats">
+      <td>
+        Set stat to
+      </td>
+      <td>
+        <select value.bind="setstat.stat">
+          <option repeat.for="statEnum of StatEnums" model.bind="statEnum">${statEnum | translate:data.translations:'stat'}</option>
+        </select>
+        <input type="number" value.bind="setstat.value" />
+      </td>
+    </tr>
+    <tr repeat.for="addstat of model.addToStats">
+      <td>
+        Add to stat
+      </td>
+      <td>
+        <select value.bind="addstat.stat">
+          <option repeat.for="statEnum of StatEnums" model.bind="statEnum">${statEnum | translate:data.translations:'stat'}</option>
+        </select>
+        <input type="number" value.bind="addstat.value" />
       </td>
     </tr>
     <tr>

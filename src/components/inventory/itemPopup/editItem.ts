@@ -30,8 +30,6 @@ export class EditItem extends ItemPopup {
       return;
     }
 
-    console.log(this.itemToEdit);
-
     this.name = this.itemToEdit.name;
     this.equippable = this.itemToEdit.equippable;
     this.attunement = this.itemToEdit.requiresAttunement;
@@ -41,6 +39,10 @@ export class EditItem extends ItemPopup {
     this.additionalSkillProfiencies = JSON.parse(JSON.stringify(this.itemToEdit.additionalSkillProfiencies));
     this.additionalOtherProfiencies = JSON.parse(JSON.stringify(this.itemToEdit.additionalOtherProfiencies));
     this.additionalTraits = JSON.parse(JSON.stringify(this.itemToEdit.additionalTraits));
+    this.setStats = JSON.parse(JSON.stringify(this.itemToEdit.setStats));
+    this.addToStats = JSON.parse(JSON.stringify(this.itemToEdit.addToStats));
+    console.log(this.itemToEdit.addToStats);
+    console.log(this.addToStats);
 
     // setup armor
     if(this.itemToEdit instanceof ArmorModel) {
@@ -67,6 +69,9 @@ export class EditItem extends ItemPopup {
     this.itemToEdit.additionalSkillProfiencies = this.additionalSkillProfiencies;
     this.itemToEdit.additionalOtherProfiencies = this.additionalOtherProfiencies;
     this.itemToEdit.additionalTraits = this.additionalTraits;
+    this.itemToEdit.setStats = this.setStats;
+    this.itemToEdit.addToStats = this.addToStats;
+    console.log(this.addToStats);
 
     // setup armor
     if(this.itemToEdit instanceof ArmorModel) {

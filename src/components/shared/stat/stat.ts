@@ -21,13 +21,10 @@ export class Stat {
   }
 
   get value(): number {
-    if(this.model) {
-      return this.data.character.getStat(this.model);
-    }
-    return -1000;
+    return this.data.statValue(this.model);
   }
   set value(value:number) {
-    if(this.model) {
+    if(this.model && this.editMode) {
       this.data.character.setStat(this.model, value);
     }
   }

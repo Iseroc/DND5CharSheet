@@ -1,10 +1,10 @@
 import {inject, bindable} from 'aurelia-framework';
 import {BindingSignaler} from 'aurelia-templating-resources';
 import {DataAccessor} from '../../../data/dataAccessor';
-import {CharacterModifyingElement} from '../../../data/models/components/characterModifyingElement';
+import {CharacterModifyingElement, SetStatModel} from '../../../data/models/components/characterModifyingElement';
 import {ProfiencyModel} from '../../../data/models/components/profiencyModel';
 import {TraitModel} from '../../../data/models/components/traitModel';
-import {CharModEnums, SkillEnums} from '../../../data/extra/enums';
+import {CharModEnums, SkillEnums, StatEnums} from '../../../data/extra/enums';
 
 @inject(DataAccessor, BindingSignaler)
 export class Charmod {
@@ -28,6 +28,12 @@ export class Charmod {
     else if(CharModEnums[select] === CharModEnums[CharModEnums.TRAIT]) {
       this.model.additionalTraits.push(new ProfiencyModel("New trait"));
     }
+    else if(CharModEnums[select] === CharModEnums[CharModEnums.SETSTAT]) {
+      this.model.setStats.push(new SetStatModel(StatEnums.STR, 10));
+    }
+    else if(CharModEnums[select] === CharModEnums[CharModEnums.ADDTOSTAT]) {
+      this.model.addToStats.push(new SetStatModel(StatEnums.STR, 1));
+    }
   }
 
   removeSkill(skill: SkillEnums) {
@@ -38,7 +44,7 @@ export class Charmod {
     this.model.additionalOtherProfiencies.splice(this.model.additionalOtherProfiencies.indexOf(prof), 1);
   }
   removeTrait(trait: TraitModel) {
-this.model.additionalTraits.splice(this.model.additionalTraits.indexOf(trait), 1);
+    this.model.additionalTraits.splice(this.model.additionalTraits.indexOf(trait), 1);
   }
 
 }

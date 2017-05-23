@@ -45,6 +45,8 @@ export class Translations {
     this.charModStrings.set(CharModEnums.SKILLPROFIENCY, 'Skill profiency');
     this.charModStrings.set(CharModEnums.OTHERPROFIENCY, 'Other profiency');
     this.charModStrings.set(CharModEnums.TRAIT, 'Trait');
+    this.charModStrings.set(CharModEnums.SETSTAT, 'Set stat to');
+    this.charModStrings.set(CharModEnums.ADDTOSTAT, 'Add to stat');
   }
 
   translateStat(stat: StatEnums): string {

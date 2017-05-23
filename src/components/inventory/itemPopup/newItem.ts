@@ -3,7 +3,7 @@ import {bindable} from 'aurelia-framework';
 import {DataAccessor} from '../../../data/dataAccessor';
 import {ItemModel, WeaponModel, ArmorModel, ArmorType} from '../../../data/models/components/itemModel';
 import {SkillEnums} from '../../../data/extra/enums';
-import {CharacterModifyingElement} from '../../../data/models/components/characterModifyingElement';
+import {CharacterModifyingElement, SetStatModel, AddToStatModel} from '../../../data/models/components/characterModifyingElement';
 import {ProfiencyModel} from '../../../data/models/components/profiencyModel';
 import {TraitModel} from '../../../data/models/components/traitModel';
 import {ItemPopup} from './itemPopup';
@@ -35,6 +35,8 @@ export class NewItem extends ItemPopup {
     item.additionalOtherProfiencies = this.additionalOtherProfiencies;
     item.additionalSkillProfiencies = this.additionalSkillProfiencies;
     item.additionalTraits = this.additionalTraits;
+    item.setStats = this.setStats;
+    item.addToStats = this.addToStats;
 
     this.createItem({item: item});
     this.reset();

@@ -2,7 +2,7 @@ import {inject} from 'aurelia-framework';
 import {bindable} from 'aurelia-framework';
 import {DataAccessor} from '../../../data/dataAccessor';
 import {ItemModel, WeaponModel, ArmorModel, ArmorType} from '../../../data/models/components/itemModel';
-import {CharacterModifyingElement} from '../../../data/models/components/characterModifyingElement';
+import {CharacterModifyingElement, SetStatModel, AddToStatModel} from '../../../data/models/components/characterModifyingElement';
 import {SkillEnums} from '../../../data/extra/enums';
 import {ProfiencyModel} from '../../../data/models/components/profiencyModel';
 import {TraitModel} from '../../../data/models/components/traitModel';
@@ -57,6 +57,20 @@ export class ItemPopup {
   }
   set additionalTraits(value: TraitModel[]) {
     this.innerModel.additionalTraits = value;
+  }
+
+  get setStats(): SetStatModel[] {
+    return this.innerModel.setStats;
+  }
+  set setStats(value: SetStatModel[]) {
+    this.innerModel.setStats = value;
+  }
+
+  get addToStats(): AddToStatModel[] {
+    return this.innerModel.addToStats;
+  }
+  set addToStats(value: AddToStatModel[]) {
+    this.innerModel.addToStats = value;
   }
 
   reset() {

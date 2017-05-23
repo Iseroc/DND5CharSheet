@@ -15,7 +15,7 @@ export class Skill {
   }
 
   get skillScore(): number {
-    var score = this.data.character.statModifier(SkillStats.get(this.model));
+    var score = this.data.statModifier(SkillStats.get(this.model));
 
     if(this.hasProfiency) {
       score += this.data.character.profiencyBonus;

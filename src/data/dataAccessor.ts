@@ -122,13 +122,29 @@ export class DataAccessor {
       this.inventory.moveToBackpack(item2);
     }
   }
-}
 
-interface FileReaderEventTarget extends EventTarget {
-    result:string
-}
-
-interface FileReaderEvent extends Event {
-    target: FileReaderEventTarget;
-    getMessage():string;
+  public statValue(statKey: StatEnums, base: boolean = false): number {
+    let val: number = this.character.getStat(statKey);
+    if(!base) {
+      let max = val;
+      for(let item of this.inventory.equipped) {
+        for(let setstat of item.setStats) {
+          if(setstat.stat === statKey) {
+            max = Math.max(max, setstat.value);
+          }
+        }
+        for(let addstat of item.addToStats) {
+          if(addstat.stat === statKey) {
+            console.log(addstat);
+            val += addstat.value as number;
+          }
+        }
+      }
+      val = Math.max(val, max);
+    }
+    return val;
+  }
+  public statModifier(statKey: StatEnums): number {
+    return Math.floor((this.statValue(statKey) - 10) / 2);
+  }
 }
