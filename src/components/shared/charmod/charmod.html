@@ -56,7 +56,7 @@
         <select value.bind="addstat.stat">
           <option repeat.for="statEnum of StatEnums" model.bind="statEnum">${statEnum | translate:data.translations:'stat'}</option>
         </select>
-        <input type="number" value.bind="addstat.value" />
+        <input type="number" value.bind="addstat.value | number" />
       </td>
     </tr>
     <tr>

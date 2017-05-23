@@ -135,7 +135,6 @@ export class DataAccessor {
         }
         for(let addstat of item.addToStats) {
           if(addstat.stat === statKey) {
-            console.log(addstat);
             val += addstat.value as number;
           }
         }

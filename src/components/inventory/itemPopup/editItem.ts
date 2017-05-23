@@ -41,8 +41,6 @@ export class EditItem extends ItemPopup {
     this.additionalTraits = JSON.parse(JSON.stringify(this.itemToEdit.additionalTraits));
     this.setStats = JSON.parse(JSON.stringify(this.itemToEdit.setStats));
     this.addToStats = JSON.parse(JSON.stringify(this.itemToEdit.addToStats));
-    console.log(this.itemToEdit.addToStats);
-    console.log(this.addToStats);
 
     // setup armor
     if(this.itemToEdit instanceof ArmorModel) {

@@ -6,6 +6,7 @@ export function configure(config: FrameworkConfiguration) {
     './value-converters/attackBonus',
     './value-converters/translate',
     './value-converters/statModifier',
+    './value-converters/number',
   ]);
   //'./value-converters/number'
 }
