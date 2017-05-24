@@ -26,6 +26,10 @@ export class CharacterAccessor {
     this.model = JSON.parse(json);
   }
 
+  public reset() {
+    this.model = new CharacterModel();
+  }
+
   get name() {
     return this.model.name;
   }

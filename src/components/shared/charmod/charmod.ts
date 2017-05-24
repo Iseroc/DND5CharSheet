@@ -1,7 +1,7 @@
 import {inject, bindable} from 'aurelia-framework';
 import {BindingSignaler} from 'aurelia-templating-resources';
 import {DataAccessor} from '../../../data/dataAccessor';
-import {CharacterModifyingElement, SetStatModel} from '../../../data/models/components/characterModifyingElement';
+import {CharacterModifyingElement, SetStatModel, AddToStatModel} from '../../../data/models/components/characterModifyingElement';
 import {ProfiencyModel} from '../../../data/models/components/profiencyModel';
 import {TraitModel} from '../../../data/models/components/traitModel';
 import {CharModEnums, SkillEnums, StatEnums} from '../../../data/extra/enums';
@@ -45,6 +45,12 @@ export class Charmod {
   }
   removeTrait(trait: TraitModel) {
     this.model.additionalTraits.splice(this.model.additionalTraits.indexOf(trait), 1);
+  }
+  removeAddStat(addstat: AddToStatModel) {
+    this.model.addToStats.splice(this.model.addToStats.indexOf(addstat), 1);
+  }
+  removeSetStat(setstat: SetStatModel) {
+    this.model.setStats.splice(this.model.setStats.indexOf(setstat), 1);
   }
 
 }

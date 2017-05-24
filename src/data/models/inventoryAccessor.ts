@@ -17,6 +17,10 @@ export class InventoryAccessor {
     this.model = InventoryModel.parseJSON(JSON.parse(json));
   }
 
+  public reset() {
+    this.model = new InventoryModel();
+  }
+
   // ------------------------------------------- //
   //   Variables                                 //
   // ------------------------------------------- //

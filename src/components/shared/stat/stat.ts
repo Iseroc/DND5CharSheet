@@ -21,7 +21,7 @@ export class Stat {
   }
 
   get value(): number {
-    return this.data.statValue(this.model);
+    return this.data.statValue(this.model, this.editMode);
   }
   set value(value:number) {
     if(this.model && this.editMode) {
