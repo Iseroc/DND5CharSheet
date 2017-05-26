@@ -3,7 +3,7 @@ import {bindable} from 'aurelia-framework';
 import {DataAccessor} from '../../../data/dataAccessor';
 import {ItemModel, WeaponModel, ArmorModel, ArmorType} from '../../../data/models/components/itemModel';
 import {CharacterModifyingElement, SetStatModel, AddToStatModel} from '../../../data/models/components/characterModifyingElement';
-import {SkillEnums} from '../../../data/extra/enums';
+import {SkillEnums, StatEnums} from '../../../data/extra/enums';
 import {ProfiencyModel} from '../../../data/models/components/profiencyModel';
 import {TraitModel} from '../../../data/models/components/traitModel';
 
@@ -38,25 +38,25 @@ export class ItemPopup {
   damage: string = '';
   damageType: string = '';
 
-  get additionalSkillProfiencies(): SkillEnums[] {
-    return this.innerModel.additionalSkillProfiencies;
+  get skillProfiencies(): SkillEnums[] {
+    return this.innerModel.skillProfiencies;
   }
-  set additionalSkillProfiencies(value: SkillEnums[]) {
-    this.innerModel.additionalSkillProfiencies = value;
-  }
-
-  get additionalOtherProfiencies(): ProfiencyModel[] {
-    return this.innerModel.additionalOtherProfiencies;
-  }
-  set additionalOtherProfiencies(value: ProfiencyModel[]) {
-    this.innerModel.additionalOtherProfiencies = value;
+  set skillProfiencies(value: SkillEnums[]) {
+    this.innerModel.skillProfiencies = value;
   }
 
-  get additionalTraits(): TraitModel[] {
-    return this.innerModel.additionalTraits;
+  get otherProfiencies(): ProfiencyModel[] {
+    return this.innerModel.otherProfiencies;
   }
-  set additionalTraits(value: TraitModel[]) {
-    this.innerModel.additionalTraits = value;
+  set otherProfiencies(value: ProfiencyModel[]) {
+    this.innerModel.otherProfiencies = value;
+  }
+
+  get traits(): TraitModel[] {
+    return this.innerModel.traits;
+  }
+  set traits(value: TraitModel[]) {
+    this.innerModel.traits = value;
   }
 
   get setStats(): SetStatModel[] {
@@ -71,6 +71,13 @@ export class ItemPopup {
   }
   set addToStats(value: AddToStatModel[]) {
     this.innerModel.addToStats = value;
+  }
+
+  get saveProfiencies(): StatEnums[] {
+    return this.innerModel.saveProfiencies;
+  }
+  set saveProfiencies(value: StatEnums[]) {
+    this.innerModel.saveProfiencies = value;
   }
 
   reset() {

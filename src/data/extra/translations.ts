@@ -45,8 +45,10 @@ export class Translations {
     this.charModStrings.set(CharModEnums.SKILLPROFIENCY, 'Skill profiency');
     this.charModStrings.set(CharModEnums.OTHERPROFIENCY, 'Other profiency');
     this.charModStrings.set(CharModEnums.TRAIT, 'Trait');
-    this.charModStrings.set(CharModEnums.SETSTAT, 'Set stat to');
-    this.charModStrings.set(CharModEnums.ADDTOSTAT, 'Add to stat');
+    this.charModStrings.set(CharModEnums.SETSTAT, 'Set stat to minimum');
+    this.charModStrings.set(CharModEnums.ADDTOSTAT, 'Stat bonus');
+    this.charModStrings.set(CharModEnums.SAVEPROFIENCY, 'Saving throw profiency');
+    this.charModStrings.set(CharModEnums.ALLSAVESBONUS, 'Bonus to all saves');
   }
 
   translateStat(stat: StatEnums): string {

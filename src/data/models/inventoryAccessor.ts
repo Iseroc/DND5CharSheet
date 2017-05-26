@@ -63,7 +63,7 @@ export class InventoryAccessor {
     let arr: TraitModel[] = [];
 
     this.model.equipped.forEach( item => {
-      arr = arr.concat(item.additionalTraits);
+      arr = arr.concat(item.traits);
     });
 
     return arr;
@@ -74,7 +74,7 @@ export class InventoryAccessor {
     let arr: SkillEnums[] = [];
 
     this.model.equipped.forEach( item => {
-      arr = arr.concat(item.additionalSkillProfiencies);
+      arr = arr.concat(item.skillProfiencies);
     });
 
     return arr;
@@ -85,7 +85,7 @@ export class InventoryAccessor {
     let arr: ProfiencyModel[] = [];
 
     this.model.equipped.forEach( item => {
-      arr = arr.concat(item.additionalOtherProfiencies);
+      arr = arr.concat(item.otherProfiencies);
     });
 
     return arr;

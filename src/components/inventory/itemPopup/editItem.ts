@@ -36,9 +36,10 @@ export class EditItem extends ItemPopup {
     this.bonusAC = this.itemToEdit.bonusAC;
 
     // JSON to deep copy the arrays
-    this.additionalSkillProfiencies = JSON.parse(JSON.stringify(this.itemToEdit.additionalSkillProfiencies));
-    this.additionalOtherProfiencies = JSON.parse(JSON.stringify(this.itemToEdit.additionalOtherProfiencies));
-    this.additionalTraits = JSON.parse(JSON.stringify(this.itemToEdit.additionalTraits));
+    this.skillProfiencies = JSON.parse(JSON.stringify(this.itemToEdit.skillProfiencies));
+    this.otherProfiencies = JSON.parse(JSON.stringify(this.itemToEdit.otherProfiencies));
+    this.traits = JSON.parse(JSON.stringify(this.itemToEdit.traits));
+    this.saveProfiencies = JSON.parse(JSON.stringify(this.itemToEdit.saveProfiencies));
     this.setStats = JSON.parse(JSON.stringify(this.itemToEdit.setStats));
     this.addToStats = JSON.parse(JSON.stringify(this.itemToEdit.addToStats));
 
@@ -64,12 +65,12 @@ export class EditItem extends ItemPopup {
     this.itemToEdit.requiresAttunement = this.attunement;
     this.itemToEdit.bonusAC = this.bonusAC;
 
-    this.itemToEdit.additionalSkillProfiencies = this.additionalSkillProfiencies;
-    this.itemToEdit.additionalOtherProfiencies = this.additionalOtherProfiencies;
-    this.itemToEdit.additionalTraits = this.additionalTraits;
+    this.itemToEdit.skillProfiencies = this.skillProfiencies;
+    this.itemToEdit.otherProfiencies = this.otherProfiencies;
+    this.itemToEdit.traits = this.traits;
+    this.itemToEdit.saveProfiencies = this.saveProfiencies;
     this.itemToEdit.setStats = this.setStats;
     this.itemToEdit.addToStats = this.addToStats;
-    console.log(this.addToStats);
 
     // setup armor
     if(this.itemToEdit instanceof ArmorModel) {

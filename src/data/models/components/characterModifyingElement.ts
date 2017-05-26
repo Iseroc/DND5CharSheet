@@ -5,27 +5,31 @@ import {SkillEnums, StatEnums} from '../../extra/enums';
 export class CharacterModifyingElement {
   constructor() { }
 
-  additionalSkillProfiencies: SkillEnums[] = [];
-  additionalOtherProfiencies: ProfiencyModel[] = [];
-  additionalTraits: TraitModel[] = [];
+  skillProfiencies: SkillEnums[] = [];
+  otherProfiencies: ProfiencyModel[] = [];
+  traits: TraitModel[] = [];
+  saveProfiencies: StatEnums[] = [];
   setStats: SetStatModel[] = [];
   addToStats: AddToStatModel[] = [];
   baseAC: number;
   maxDexBonus: number;
   bonusAC: number;
   bonusAB: number;
+  bonusToSaves: number;
 
   fillFromJSON(json) {
     if(json) {
-      this.additionalSkillProfiencies = json.additionalSkillProfiencies;
-      this.additionalOtherProfiencies = json.additionalOtherProfiencies;
-      this.additionalTraits = json.additionalTraits;
+      this.skillProfiencies = json.skillProfiencies;
+      this.otherProfiencies = json.otherProfiencies;
+      this.traits = json.traits;
+      this.saveProfiencies = json.saveProfiencies;
       this.setStats = json.setStats;
       this.addToStats = json.addToStats;
       this.baseAC = json.baseAC;
       this.maxDexBonus = json.maxDexBonus;
       this.bonusAC = json.bonusAC;
       this.bonusAB = json.bonusAB;
+      this.bonusToSaves = json.bonusToSaves;
     }
   }
 }

@@ -112,34 +112,34 @@ export class DataAccessor {
     this.character.setStat(StatEnums.CHA, 16);
 
     // Parse skill profiencies
-    this.character.levels[0].additionalSkillProfiencies.push(SkillEnums.ATHLETICS);
+    this.character.levels[0].skillProfiencies.push(SkillEnums.ATHLETICS);
 
     // Parse all other profiencies
-    this.character.levels[0].additionalOtherProfiencies.push(new ProfiencyModel('Simple weapons'));
-    this.character.levels[0].additionalOtherProfiencies.push(new ProfiencyModel('Martial weapons'));
-    this.character.levels[0].additionalOtherProfiencies.push(new ProfiencyModel('Desert weapons'));
-    this.character.levels[0].additionalOtherProfiencies.push(new ProfiencyModel('Light armor'));
-    this.character.levels[0].additionalOtherProfiencies.push(new ProfiencyModel('Medium armor'));
-    this.character.levels[0].additionalOtherProfiencies.push(new ProfiencyModel('Heavy armor'));
-    this.character.levels[0].additionalOtherProfiencies.push(new ProfiencyModel('Shields'));
-    this.character.levels[0].additionalOtherProfiencies.push(new ProfiencyModel('Sami drum'));
+    this.character.levels[0].otherProfiencies.push(new ProfiencyModel('Simple weapons'));
+    this.character.levels[0].otherProfiencies.push(new ProfiencyModel('Martial weapons'));
+    this.character.levels[0].otherProfiencies.push(new ProfiencyModel('Desert weapons'));
+    this.character.levels[0].otherProfiencies.push(new ProfiencyModel('Light armor'));
+    this.character.levels[0].otherProfiencies.push(new ProfiencyModel('Medium armor'));
+    this.character.levels[0].otherProfiencies.push(new ProfiencyModel('Heavy armor'));
+    this.character.levels[0].otherProfiencies.push(new ProfiencyModel('Shields'));
+    this.character.levels[0].otherProfiencies.push(new ProfiencyModel('Sami drum'));
 
     // Level 16
     this.character.levels[15].addToStats.push(new AddToStatModel(StatEnums.CHA, 2));
 
     // Parse all traits
-    this.character.race.additionalTraits.push(new TraitModel('Darkvision 120ft'));
-    this.character.race.additionalTraits.push(new TraitModel('Desert Nomad'));
-    this.character.race.additionalTraits.push(new TraitModel('Fey Ancestry'));
-    this.character.race.additionalTraits.push(new TraitModel('Keen Senses'));
-    this.character.race.additionalOtherProfiencies.push(new ProfiencyModel('Nubian (elven)'));
-    this.character.race.additionalOtherProfiencies.push(new ProfiencyModel('Trade common'));
-    this.character.race.additionalOtherProfiencies.push(new ProfiencyModel('Druidic'));
-    this.character.race.additionalSkillProfiencies.push(SkillEnums.PERCEPTION);
+    this.character.race.traits.push(new TraitModel('Darkvision 120ft'));
+    this.character.race.traits.push(new TraitModel('Desert Nomad'));
+    this.character.race.traits.push(new TraitModel('Fey Ancestry'));
+    this.character.race.traits.push(new TraitModel('Keen Senses'));
+    this.character.race.otherProfiencies.push(new ProfiencyModel('Nubian (elven)'));
+    this.character.race.otherProfiencies.push(new ProfiencyModel('Trade common'));
+    this.character.race.otherProfiencies.push(new ProfiencyModel('Druidic'));
+    this.character.race.skillProfiencies.push(SkillEnums.PERCEPTION);
 
     // Parse inventory
     let arm1 = new ArmorModel('Adamantium full plate', ArmorType.Heavy, 18, 0);
-    arm1.additionalTraits.push(new TraitModel('Critical hit immunity'));
+    arm1.traits.push(new TraitModel('Critical hit immunity'));
     this.inventory.equip(arm1);
 
     let wep1 = new WeaponModel('Greatsword of Life Stealing +1', '2d6+1', 'Slashing');
@@ -205,7 +205,53 @@ export class DataAccessor {
     }
     return val;
   }
+
   public statModifier(statKey: StatEnums): number {
     return Math.floor((this.statValue(statKey) - 10) / 2);
+  }
+
+  public savingThrow(statKey: StatEnums) {
+    let save = this.statModifier(statKey);
+    let prof = false;
+
+    // Check equipped items for save profiencies
+    for(let item of this.inventory.equipped) {
+      for(let saveprof of item.saveProfiencies) {
+        if(saveprof === statKey) {
+          prof = true;
+        }
+      }
+      if(item.bonusToSaves) {
+        save += item.bonusToSaves;
+      }
+    }
+
+    // Check levels for save profiencies
+    for(let level of this.character.levels) {
+      for(let saveprof of level.saveProfiencies) {
+        if(saveprof === statKey) {
+          prof = true;
+        }
+      }
+      if(level.bonusToSaves) {
+        save += level.bonusToSaves;
+      }
+    }
+
+    // Check race for save profiencies
+    for(let saveprof of this.character.race.saveProfiencies) {
+      if(saveprof === statKey) {
+        prof = true;
+      }
+    }
+    if(this.character.race.bonusToSaves) {
+      save += this.character.race.bonusToSaves;
+    }
+
+    if(prof) {
+      save += this.character.profiencyBonus;
+    }
+
+    return save;
   }
 }

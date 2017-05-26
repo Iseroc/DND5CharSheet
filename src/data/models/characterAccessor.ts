@@ -113,14 +113,14 @@ export class CharacterAccessor {
     let arr = [];
     let unique = {};
     for(let level of this.levels) {
-      for(let skill of level.additionalSkillProfiencies) {
+      for(let skill of level.skillProfiencies) {
         if(!unique[skill]) {
           arr.push(skill);
           unique[skill] = 1;
         }
       }
     }
-    for(let skill of this.race.additionalSkillProfiencies) {
+    for(let skill of this.race.skillProfiencies) {
       if(!unique[skill]) {
         arr.push(skill);
         unique[skill] = 1;
@@ -141,14 +141,14 @@ export class CharacterAccessor {
     let arr = [];
     let unique = {};
     for(let level of this.levels) {
-      for(let prof of level.additionalOtherProfiencies) {
+      for(let prof of level.otherProfiencies) {
         if(!unique[prof.name]) {
           arr.push(prof);
           unique[prof.name] = 1;
         }
       }
     }
-    for(let prof of this.race.additionalOtherProfiencies) {
+    for(let prof of this.race.otherProfiencies) {
       if(!unique[prof.name]) {
         arr.push(prof);
         unique[prof.name] = 1;
@@ -162,14 +162,14 @@ export class CharacterAccessor {
     let arr = [];
     let unique = {};
     for(let level of this.levels) {
-      for(let trait of level.additionalTraits) {
+      for(let trait of level.traits) {
         if(!unique[trait.name]) {
           arr.push(trait);
           unique[trait.name] = 1;
         }
       }
     }
-    for(let trait of this.race.additionalTraits) {
+    for(let trait of this.race.traits) {
       if(!unique[trait.name]) {
         arr.push(trait);
         unique[trait.name] = 1;

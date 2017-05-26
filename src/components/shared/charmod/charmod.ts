@@ -16,17 +16,17 @@ export class Charmod {
     if(CharModEnums[select] === CharModEnums[CharModEnums.SKILLPROFIENCY]) {
       // find the first available skill not already on the item and add it
       var i = SkillEnums.ACROBATICS;
-      while(this.model.additionalSkillProfiencies && this.model.additionalSkillProfiencies.includes(i)) {
+      while(this.model.skillProfiencies && this.model.skillProfiencies.includes(i)) {
         i++;
       }
-      this.model.additionalSkillProfiencies.push(i);
+      this.model.skillProfiencies.push(i);
       this.signaler.signal('skill-list-changed');
     }
     else if(CharModEnums[select] === CharModEnums[CharModEnums.OTHERPROFIENCY]) {
-      this.model.additionalOtherProfiencies.push(new ProfiencyModel("New profiency"));
+      this.model.otherProfiencies.push(new ProfiencyModel("New profiency"));
     }
     else if(CharModEnums[select] === CharModEnums[CharModEnums.TRAIT]) {
-      this.model.additionalTraits.push(new ProfiencyModel("New trait"));
+      this.model.traits.push(new ProfiencyModel("New trait"));
     }
     else if(CharModEnums[select] === CharModEnums[CharModEnums.SETSTAT]) {
       this.model.setStats.push(new SetStatModel(StatEnums.STR, 10));
@@ -34,17 +34,23 @@ export class Charmod {
     else if(CharModEnums[select] === CharModEnums[CharModEnums.ADDTOSTAT]) {
       this.model.addToStats.push(new SetStatModel(StatEnums.STR, 1));
     }
+    else if(CharModEnums[select] === CharModEnums[CharModEnums.SAVEPROFIENCY]) {
+      this.model.saveProfiencies.push(StatEnums.STR);
+    }
+    else if(CharModEnums[select] === CharModEnums[CharModEnums.ALLSAVESBONUS]) {
+      this.model.bonusToSaves = 1;
+    }
   }
 
   removeSkill(skill: SkillEnums) {
-    this.model.additionalSkillProfiencies.splice(this.model.additionalSkillProfiencies.indexOf(skill), 1);
+    this.model.skillProfiencies.splice(this.model.skillProfiencies.indexOf(skill), 1);
     this.signaler.signal('skill-list-changed');
   }
   removeOtherProf(prof: ProfiencyModel) {
-    this.model.additionalOtherProfiencies.splice(this.model.additionalOtherProfiencies.indexOf(prof), 1);
+    this.model.otherProfiencies.splice(this.model.otherProfiencies.indexOf(prof), 1);
   }
   removeTrait(trait: TraitModel) {
-    this.model.additionalTraits.splice(this.model.additionalTraits.indexOf(trait), 1);
+    this.model.traits.splice(this.model.traits.indexOf(trait), 1);
   }
   removeAddStat(addstat: AddToStatModel) {
     this.model.addToStats.splice(this.model.addToStats.indexOf(addstat), 1);
@@ -52,5 +58,10 @@ export class Charmod {
   removeSetStat(setstat: SetStatModel) {
     this.model.setStats.splice(this.model.setStats.indexOf(setstat), 1);
   }
-
+  removeSaveProfiency(saveprof: StatEnums) {
+    this.model.saveProfiencies.splice(this.model.saveProfiencies.indexOf(saveprof), 1);
+  }
+  removeBonusToSaves() {
+    this.model.bonusToSaves = undefined;
+  }
 }

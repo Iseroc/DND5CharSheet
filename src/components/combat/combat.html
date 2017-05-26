@@ -40,6 +40,17 @@
             </div>
           </div>
         </div>
+        <div class="infoRow">
+          <div class="infoSquare">
+            <span class="header">Saves</span>
+            <div class="flex-container">
+              <div repeat.for="stat of data.character.stats">
+                <span class="header">${stat.key | translate:data.translations:'stat'}</span>
+                <div class="value">${stat.key | savingThrow:data}</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="weaponArea">
         <table class="weaponTable">

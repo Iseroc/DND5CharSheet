@@ -58,4 +58,8 @@ export class Combat {
   get hitDie() {
     return '10';
   }
+
+  savingThrow(stat: StatEnums) {
+    
+  }
 }

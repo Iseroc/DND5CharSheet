@@ -4,18 +4,18 @@
   <require from="../../../data/extra/enums"></require>
 
   <table class="bonusesTable">
-    <tr repeat.for="skillProf of model.additionalSkillProfiencies">
+    <tr repeat.for="skillProf of model.skillProfiencies">
       <td>
         Skill profiency
       </td>
       <td>
-        <skill-select current-skill.bind="skillProf" list.bind="model.additionalSkillProfiencies"></skill-select>
+        <skill-select current-skill.bind="skillProf" list.bind="model.skillProfiencies"></skill-select>
       </td>
       <td>
         <button class="fa-button red removeButton" click.delegate="removeSkill(skillProf)"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
       </td>
     </tr>
-    <tr repeat.for="otherProf of model.additionalOtherProfiencies">
+    <tr repeat.for="otherProf of model.otherProfiencies">
       <td>
         Other profiency
       </td>
@@ -26,7 +26,7 @@
         <button class="fa-button red removeButton" click.delegate="removeOtherProf(otherProf)"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
       </td>
     </tr>
-    <tr repeat.for="trait of model.additionalTraits">
+    <tr repeat.for="trait of model.traits">
       <td>
         Trait
       </td>
@@ -45,7 +45,7 @@
         <select value.bind="setstat.stat">
           <option repeat.for="statEnum of StatEnums" model.bind="statEnum">${statEnum | translate:data.translations:'stat'}</option>
         </select>
-        <input type="number" value.bind="setstat.value" />
+        <input type="number" value.bind="setstat.value | number & throttle" />
       </td>
       <td>
         <button class="fa-button red removeButton" click.delegate="removeSetStat(setstat)"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
@@ -59,10 +59,34 @@
         <select value.bind="addstat.stat">
           <option repeat.for="statEnum of StatEnums" model.bind="statEnum">${statEnum | translate:data.translations:'stat'}</option>
         </select>
-        <input type="number" value.bind="addstat.value | number" />
+        <input type="number" value.bind="addstat.value | number & throttle" />
       </td>
       <td>
         <button class="fa-button red removeButton" click.delegate="removeAddStat(addstat)"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
+      </td>
+    </tr>
+    <tr repeat.for="saveprof of model.saveProfiencies">
+      <td>
+        Add to stat
+      </td>
+      <td>
+        <select value.bind="saveprof">
+          <option repeat.for="statEnum of StatEnums" model.bind="statEnum">${statEnum | translate:data.translations:'stat'}</option>
+        </select>
+      </td>
+      <td>
+        <button class="fa-button red removeButton" click.delegate="removeSaveProfiency(saveprof)"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
+      </td>
+    </tr>
+    <tr show.bind="model.bonusToSaves">
+      <td>
+        Bonus to all saves
+      </td>
+      <td>
+        <input type="number" value.bind="model.bonusToSaves | number & throttle" />
+      </td>
+      <td>
+        <button class="fa-button red removeButton" click.delegate="removeBonusToSaves()"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
       </td>
     </tr>
     <tr>

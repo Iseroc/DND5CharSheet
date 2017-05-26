@@ -7,6 +7,7 @@ export function configure(config: FrameworkConfiguration) {
     './value-converters/translate',
     './value-converters/statModifier',
     './value-converters/number',
+    './value-converters/savingThrow',
   ]);
   //'./value-converters/number'
 }

@@ -32,9 +32,9 @@ export class NewItem extends ItemPopup {
       item = new ItemModel(this.name, true);
     }
     item.equippable = this.equippable;
-    item.additionalOtherProfiencies = this.additionalOtherProfiencies;
-    item.additionalSkillProfiencies = this.additionalSkillProfiencies;
-    item.additionalTraits = this.additionalTraits;
+    item.otherProfiencies = this.otherProfiencies;
+    item.skillProfiencies = this.skillProfiencies;
+    item.traits = this.traits;
     item.setStats = this.setStats;
     item.addToStats = this.addToStats;
 
