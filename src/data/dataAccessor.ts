@@ -1,7 +1,7 @@
 import {inject} from 'aurelia-framework';
 import {CharacterAccessor} from './models/characterAccessor';
 import {LevelModel} from './models/components/levelModel';
-import {AddToStatModel} from './models/components/characterModifyingElement';
+import {AddToStatModel, SetStatModel} from './models/components/characterModifyingElement';
 import {RaceModel} from './models/components/raceModel';
 import {InventoryAccessor} from './models/inventoryAccessor';
 import {Translations} from './extra/translations';
@@ -106,9 +106,9 @@ export class DataAccessor {
     // Parse stats
     this.character.setStat(StatEnums.STR, 18);
     this.character.setStat(StatEnums.DEX, 8);
-    this.character.setStat(StatEnums.CON, 16);
+    this.character.setStat(StatEnums.CON, 14);
     this.character.setStat(StatEnums.INT, 8);
-    this.character.setStat(StatEnums.WIS, 12);
+    this.character.setStat(StatEnums.WIS, 10);
     this.character.setStat(StatEnums.CHA, 16);
 
     // Parse skill profiencies
@@ -118,24 +118,49 @@ export class DataAccessor {
     this.character.levels[0].otherProfiencies.push(new ProfiencyModel('Simple weapons'));
     this.character.levels[0].otherProfiencies.push(new ProfiencyModel('Martial weapons'));
     this.character.levels[0].otherProfiencies.push(new ProfiencyModel('Desert weapons'));
-    this.character.levels[0].otherProfiencies.push(new ProfiencyModel('Light armor'));
-    this.character.levels[0].otherProfiencies.push(new ProfiencyModel('Medium armor'));
-    this.character.levels[0].otherProfiencies.push(new ProfiencyModel('Heavy armor'));
+    this.character.levels[0].otherProfiencies.push(new ProfiencyModel('All armor'));
     this.character.levels[0].otherProfiencies.push(new ProfiencyModel('Shields'));
     this.character.levels[0].otherProfiencies.push(new ProfiencyModel('Sami drum'));
+    this.character.levels[0].traits.push(new TraitModel('Divine Sense'));
+    this.character.levels[0].traits.push(new TraitModel('Lay on Hands'));
+    this.character.levels[0].saveProfiencies.push(StatEnums.CHA);
+    this.character.levels[0].saveProfiencies.push(StatEnums.WIS);
 
-    // Level 16
+    this.character.levels[1].traits.push(new TraitModel('Great Weapon Fighting'));
+    this.character.levels[1].traits.push(new TraitModel('Divine Smite'));
+
+    this.character.levels[2].traits.push(new TraitModel('Divine Health'));
+    this.character.levels[2].traits.push(new TraitModel('Oath of Vengeance'));
+
+    this.character.levels[4].traits.push(new TraitModel('Extra Attack'));
+
+    this.character.levels[5].traits.push(new TraitModel('Aura of Protection'));
+    this.character.levels[5].bonusToSaves = 4;
+
+    this.character.levels[6].traits.push(new TraitModel('Relentless Avenger'));
+
+    this.character.levels[9].traits.push(new TraitModel('Aura of Courage'));
+
+    this.character.levels[13].traits.push(new TraitModel('Cleansing Touch'));
+
+    this.character.levels[14].traits.push(new TraitModel('Soul of Vengeance'));
+
     this.character.levels[15].addToStats.push(new AddToStatModel(StatEnums.CHA, 2));
 
     // Parse all traits
     this.character.race.traits.push(new TraitModel('Darkvision 120ft'));
     this.character.race.traits.push(new TraitModel('Desert Nomad'));
+    this.character.race.traits.push(new TraitModel('Trance'));
     this.character.race.traits.push(new TraitModel('Fey Ancestry'));
     this.character.race.traits.push(new TraitModel('Keen Senses'));
+    this.character.race.traits.push(new TraitModel('Blessing of Light'));
+    this.character.race.traits.push(new TraitModel('Blessing of Understanding'));
     this.character.race.otherProfiencies.push(new ProfiencyModel('Nubian (elven)'));
     this.character.race.otherProfiencies.push(new ProfiencyModel('Trade common'));
     this.character.race.otherProfiencies.push(new ProfiencyModel('Druidic'));
     this.character.race.skillProfiencies.push(SkillEnums.PERCEPTION);
+    this.character.race.addToStats.push(new AddToStatModel(StatEnums.CON, 2));
+    this.character.race.addToStats.push(new AddToStatModel(StatEnums.WIS, 2));
 
     // Parse inventory
     let arm1 = new ArmorModel('Adamantium full plate', ArmorType.Heavy, 18, 0);
@@ -143,14 +168,27 @@ export class DataAccessor {
     this.inventory.equip(arm1);
 
     let wep1 = new WeaponModel('Greatsword of Life Stealing +1', '2d6+1', 'Slashing');
-    wep1.bonusAB = 2;
+    wep1.bonusAB = 1;
     this.inventory.equip(wep1);
 
     let wep2 = new WeaponModel('Javelin', '1d6', 'Piercing');
     this.inventory.equip(wep2);
 
+    let cloak = new ItemModel('Cloak of Protection', true, true);
+    cloak.bonusAC = 1;
+    cloak.bonusToSaves = 1;
+    this.inventory.equip(cloak);
+
+    let gloves = new ItemModel('Belt of Frost Giant Strength', true, true);
+    gloves.setStats.push(new SetStatModel(StatEnums.STR, 23));
+    this.inventory.equip(gloves);
+
     let item2 = new ItemModel('Torch');
     this.inventory.moveToBackpack(item2);
+  }
+
+  get charModArrays(): any[] {
+    return [this.inventory.equipped, this.character.levels, [this.character.race]];
   }
 
   // **************** //
@@ -162,47 +200,25 @@ export class DataAccessor {
     if(!base) {
       let max = val;
 
-      // Loop through all equipped items
-      for(let item of this.inventory.equipped) {
-        for(let setstat of item.setStats) {
-          if(setstat.stat === statKey) {
-            max = Math.max(max, setstat.value);
+      for(let list of this.charModArrays) {
+        for(let item of list) {
+          for(let setstat of item.setStats) {
+            if(setstat.stat === statKey) {
+              max = Math.max(max, setstat.value);
+            }
           }
-        }
-        for(let addstat of item.addToStats) {
-          if(addstat.stat === statKey) {
-            val += addstat.value as number;
-          }
-        }
-      }
-
-      // Loop through all levels
-      for(let level of this.character.levels) {
-        for(let setstat of level.setStats) {
-          if(setstat.stat === statKey) {
-            max = Math.max(max, setstat.value);
-          }
-        }
-        for(let addstat of level.addToStats) {
-          if(addstat.stat === statKey) {
-            val += addstat.value as number;
+          for(let addstat of item.addToStats) {
+            if(addstat.stat === statKey) {
+              val += addstat.value as number;
+            }
           }
         }
       }
 
-      // Loop through race
-      for(let setstat of this.character.race.setStats) {
-        if(setstat.stat === statKey) {
-          max = Math.max(max, setstat.value);
-        }
-      }
-      for(let addstat of this.character.race.addToStats) {
-        if(addstat.stat === statKey) {
-          val += addstat.value as number;
-        }
-      }
+      // Check of the modified base stat is smaller than the largest SET value
       val = Math.max(val, max);
     }
+
     return val;
   }
 
@@ -215,37 +231,19 @@ export class DataAccessor {
     let prof = false;
 
     // Check equipped items for save profiencies
-    for(let item of this.inventory.equipped) {
-      for(let saveprof of item.saveProfiencies) {
-        if(saveprof === statKey) {
-          prof = true;
+    for(let list of this.charModArrays) {
+      for(let item of list) {
+        if(!prof) {
+          for(let saveprof of item.saveProfiencies) {
+            if(saveprof === statKey) {
+              prof = true;
+            }
+          }
+        }
+        if(item.bonusToSaves) {
+          save += item.bonusToSaves;
         }
       }
-      if(item.bonusToSaves) {
-        save += item.bonusToSaves;
-      }
-    }
-
-    // Check levels for save profiencies
-    for(let level of this.character.levels) {
-      for(let saveprof of level.saveProfiencies) {
-        if(saveprof === statKey) {
-          prof = true;
-        }
-      }
-      if(level.bonusToSaves) {
-        save += level.bonusToSaves;
-      }
-    }
-
-    // Check race for save profiencies
-    for(let saveprof of this.character.race.saveProfiencies) {
-      if(saveprof === statKey) {
-        prof = true;
-      }
-    }
-    if(this.character.race.bonusToSaves) {
-      save += this.character.race.bonusToSaves;
     }
 
     if(prof) {

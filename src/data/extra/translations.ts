@@ -49,6 +49,8 @@ export class Translations {
     this.charModStrings.set(CharModEnums.ADDTOSTAT, 'Stat bonus');
     this.charModStrings.set(CharModEnums.SAVEPROFIENCY, 'Saving throw profiency');
     this.charModStrings.set(CharModEnums.ALLSAVESBONUS, 'Bonus to all saves');
+    this.charModStrings.set(CharModEnums.ACBONUS, 'Bonus to AC');
+    this.charModStrings.set(CharModEnums.ABBONUS, 'Bonus to AB');
   }
 
   translateStat(stat: StatEnums): string {

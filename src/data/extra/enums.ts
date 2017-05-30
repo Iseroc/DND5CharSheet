@@ -38,6 +38,8 @@ export enum CharModEnums {
     ADDTOSTAT = 5,
     SAVEPROFIENCY = 6,
     ALLSAVESBONUS = 7,
+    ACBONUS = 8,
+    ABBONUS = 9,
 }
 
 // Make SkillEnums bindable, with only the values represented in the array

@@ -32,7 +32,6 @@ export class ItemPopup {
   attunement: boolean = false;
 
   baseAC: number = 10;
-  bonusAC: number = 0;
   maxDexBonus: number = 8;
 
   damage: string = '';
@@ -80,6 +79,27 @@ export class ItemPopup {
     this.innerModel.saveProfiencies = value;
   }
 
+  get bonusAB(): number {
+    return this.innerModel.bonusAB;
+  }
+  set bonusAB(value: number) {
+    this.innerModel.bonusAB = value;
+  }
+
+  get bonusAC(): number {
+    return this.innerModel.bonusAC;
+  }
+  set bonusAC(value: number) {
+    this.innerModel.bonusAC = value;
+  }
+
+  get bonusToSaves(): number {
+    return this.innerModel.bonusToSaves;
+  }
+  set bonusToSaves(value: number) {
+    this.innerModel.bonusToSaves = value;
+  }
+
   reset() {
     this.name = '';
     this.selectedType = 'item';
@@ -89,7 +109,6 @@ export class ItemPopup {
     this.innerModel = new CharacterModifyingElement();
 
     this.baseAC = 10;
-    this.bonusAC = 0;
     this.maxDexBonus = 8;
 
     this.damage = '';

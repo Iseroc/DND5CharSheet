@@ -40,6 +40,12 @@ export class Charmod {
     else if(CharModEnums[select] === CharModEnums[CharModEnums.ALLSAVESBONUS]) {
       this.model.bonusToSaves = 1;
     }
+    else if(CharModEnums[select] === CharModEnums[CharModEnums.ACBONUS]) {
+      this.model.bonusAC = 1;
+    }
+    else if(CharModEnums[select] === CharModEnums[CharModEnums.ABBONUS]) {
+      this.model.bonusAB = 1;
+    }
   }
 
   removeSkill(skill: SkillEnums) {
@@ -63,5 +69,11 @@ export class Charmod {
   }
   removeBonusToSaves() {
     this.model.bonusToSaves = undefined;
+  }
+  removeBonusToAC() {
+    this.model.bonusAC = undefined;
+  }
+  removeBonusToAB() {
+    this.model.bonusAB = undefined;
   }
 }

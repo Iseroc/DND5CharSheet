@@ -34,6 +34,8 @@ export class EditItem extends ItemPopup {
     this.equippable = this.itemToEdit.equippable;
     this.attunement = this.itemToEdit.requiresAttunement;
     this.bonusAC = this.itemToEdit.bonusAC;
+    this.bonusAB = this.itemToEdit.bonusAB;
+    this.bonusToSaves = this.itemToEdit.bonusToSaves;
 
     // JSON to deep copy the arrays
     this.skillProfiencies = JSON.parse(JSON.stringify(this.itemToEdit.skillProfiencies));
@@ -64,6 +66,7 @@ export class EditItem extends ItemPopup {
     this.itemToEdit.equippable = this.equippable;
     this.itemToEdit.requiresAttunement = this.attunement;
     this.itemToEdit.bonusAC = this.bonusAC;
+    this.itemToEdit.bonusAB = this.bonusAB;
 
     this.itemToEdit.skillProfiencies = this.skillProfiencies;
     this.itemToEdit.otherProfiencies = this.otherProfiencies;
@@ -71,6 +74,7 @@ export class EditItem extends ItemPopup {
     this.itemToEdit.saveProfiencies = this.saveProfiencies;
     this.itemToEdit.setStats = this.setStats;
     this.itemToEdit.addToStats = this.addToStats;
+    this.itemToEdit.bonusToSaves = this.bonusToSaves;
 
     // setup armor
     if(this.itemToEdit instanceof ArmorModel) {

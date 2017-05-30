@@ -1,0 +1,13 @@
+<template>
+  <tr if.bind="model !== undefined">
+    <td>
+      ${text}
+    </td>
+    <td>
+      <input type="number" value.bind="model | number & throttle" />
+    </td>
+    <td>
+      <button class="fa-button red removeButton" click.delegate="removeMethod()"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
+    </td>
+  </tr>
+</template>

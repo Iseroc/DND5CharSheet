@@ -37,6 +37,9 @@ export class NewItem extends ItemPopup {
     item.traits = this.traits;
     item.setStats = this.setStats;
     item.addToStats = this.addToStats;
+    item.bonusAC = this.bonusAC;
+    item.bonusAB = this.bonusAB;
+    item.bonusToSaves = this.bonusToSaves;
 
     this.createItem({item: item});
     this.reset();

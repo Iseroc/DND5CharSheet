@@ -3,6 +3,7 @@ export class NumberValueConverter {
     return value;
   }
   fromView(value) {
-    return parseInt(value);
+    let parsed = parseInt(value);
+    return parsed && parsed != NaN ? parsed : 0;
   }
 }

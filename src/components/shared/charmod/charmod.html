@@ -1,6 +1,7 @@
 <template>
   <require from="./charmod.css"></require>
   <require from="./skillSelect/skillSelect"></require>
+  <require from="./numberSelect/numberSelect"></require>
   <require from="../../../data/extra/enums"></require>
 
   <table class="bonusesTable">
@@ -67,7 +68,7 @@
     </tr>
     <tr repeat.for="saveprof of model.saveProfiencies">
       <td>
-        Add to stat
+        Saving throw profiency
       </td>
       <td>
         <select value.bind="saveprof">
@@ -78,17 +79,9 @@
         <button class="fa-button red removeButton" click.delegate="removeSaveProfiency(saveprof)"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
       </td>
     </tr>
-    <tr show.bind="model.bonusToSaves">
-      <td>
-        Bonus to all saves
-      </td>
-      <td>
-        <input type="number" value.bind="model.bonusToSaves | number & throttle" />
-      </td>
-      <td>
-        <button class="fa-button red removeButton" click.delegate="removeBonusToSaves()"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
-      </td>
-    </tr>
+    <tr as-element="number-select" model.bind="model.bonusToSaves" text="Bonus to all saves" remove-method.call="removeBonusToSaves()"></tr>
+    <tr as-element="number-select" model.bind="model.bonusAC" text="Bonus AC" remove-method.call="removeBonusToAC()"></tr>
+    <tr as-element="number-select" model.bind="model.bonusAB" text="Bonus AB" remove-method.call="removeBonusToAB()"></tr>
     <tr>
       <td>
         <select ref="featureTypeSelect">
