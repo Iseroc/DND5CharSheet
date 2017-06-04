@@ -1,6 +1,7 @@
 <template>
   <require from="./charmod.css"></require>
   <require from="./skillSelect/skillSelect"></require>
+  <require from="./statSelect/statSelect"></require>
   <require from="./numberSelect/numberSelect"></require>
   <require from="../../../data/extra/enums"></require>
 
@@ -71,9 +72,7 @@
         Saving throw profiency
       </td>
       <td>
-        <select value.bind="saveprof">
-          <option repeat.for="statEnum of StatEnums" model.bind="statEnum">${statEnum | translate:data.translations:'stat'}</option>
-        </select>
+        <stat-select current-stat.bind="saveprof" list.bind="model.saveProfiencies"></stat-select>
       </td>
       <td>
         <button class="fa-button red removeButton" click.delegate="removeSaveProfiency(saveprof)"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>

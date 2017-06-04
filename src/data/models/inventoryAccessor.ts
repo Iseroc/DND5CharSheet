@@ -1,4 +1,4 @@
-import {ItemModel, ArmorModel, WeaponModel, ArmorType} from './components/itemModel';
+import {ItemModel, ArmorType, ItemType} from './components/itemModel';
 import {TraitModel} from './components/traitModel';
 import {ProfiencyModel} from './components/profiencyModel';
 import {SkillEnums, StatEnums} from '../extra/enums';
@@ -32,20 +32,20 @@ export class InventoryAccessor {
     return this.model.backpack;
   }
 
-  get armor(): ArmorModel {
+  get armor(): ItemModel {
     for(let item of this.model.equipped) {
-      if(item instanceof ArmorModel) {
+      if(item.itemType === ItemType.Armor) {
         return item;
       }
     }
     return null;
   }
-  set armor(armor: ArmorModel) {
+  set armor(armor: ItemModel) {
     this.equip(armor);
   }
 
-  get weapons(): WeaponModel[] {
-    return this.model.equipped.filter(i => i instanceof WeaponModel) as WeaponModel[];
+  get weapons(): ItemModel[] {
+    return this.model.equipped.filter(i => i.itemType === ItemType.Weapon);
   }
 
   // ------------------------------------------- //
@@ -97,10 +97,10 @@ export class InventoryAccessor {
 
   equip(item: ItemModel): boolean {
     if(!this.isEquipped(item)) {
-      if(item instanceof ArmorModel) {
+      if(item.itemType === ItemType.Armor) {
         // unequip old armor
         for(let equippedArmor of this.equipped) {
-          if(equippedArmor instanceof ArmorModel) {
+          if(equippedArmor.itemType === ItemType.Armor) {
             this.model.equipped.splice(this.equipped.indexOf(equippedArmor), 1);
             this.model.backpack.push(equippedArmor);
             break;

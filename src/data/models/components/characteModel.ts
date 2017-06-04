@@ -13,4 +13,5 @@ export class CharacterModel {
     stats: StatModel[] = [];
 
     currentHP: number = 0;
+    currentHD: number = 0;
 }

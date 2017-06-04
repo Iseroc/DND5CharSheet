@@ -1,59 +1,72 @@
 import {CharacterModifyingElement} from './characterModifyingElement';
 
 export class ItemModel extends CharacterModifyingElement {
-  constructor(public name: string, public equippable: boolean = false, public requiresAttunement: boolean = false) {
+  private constructor() {
     super();
-    this.class = "item";
   }
+  itemType: ItemType;
 
-  protected class;
+  // Generic item variables
+  name: string;
+  equippable: boolean;
+  requiresAttunement: boolean;
+
+  // Armor variables
+  armorType: ArmorType;
+
+  // Weapon variables
+  damage: string;
+  damageType: string;
+  light: boolean;
+  heavy: boolean;
+  twohanded: boolean;
+  range: string; // 'melee' or range in feets
+
+  public static ItemModel(name, equippable = true, requiresAttunement = true): ItemModel {
+    let item: ItemModel = new ItemModel();
+    item.itemType = ItemType.Item;
+
+    item.name = name;
+    item.equippable = equippable;
+    item.requiresAttunement = requiresAttunement;
+
+    return item;
+  }
+  public static ArmorModel(name, armorType, baseAC, maxDexBonus): ItemModel {
+    let item: ItemModel = new ItemModel();
+    item.itemType = ItemType.Armor;
+
+    item.name = name;
+    item.armorType = armorType;
+    item.baseAC = baseAC;
+    item.maxDexBonus = maxDexBonus;
+
+    return item;
+  }
+  public static WeaponModel(name, damage, damageType): ItemModel {
+    let item: ItemModel = new ItemModel();
+    item.itemType = ItemType.Weapon;
+
+    item.name = name;
+    item.damage = damage;
+    item.damageType = damageType;
+
+    return item;
+  }
 
   fillFromJSON(json) {
     if(json) {
       super.fillFromJSON(json);
-      this.class = json.class;
+      this.itemType = json.itemType;
       this.name = json.name;
       this.equippable = json.equippable;
       this.requiresAttunement = json.requiresAttunement;
-    }
-  }
-}
 
-export class ArmorModel extends ItemModel {
-  constructor(name: string, public type: ArmorType, baseAC: number, maxDexBonus: number, requiresAttunement: boolean = false) {
-    super(name, true, requiresAttunement);
-    this.maxDexBonus = maxDexBonus;
-    this.baseAC = baseAC;
-    this.class = "armor";
-  }
-
-  fillFromJSON(json) {
-    if(json) {
-      super.fillFromJSON(json);
+      // Armor variables
       this.baseAC = json.baseAC;
       this.maxDexBonus = json.maxDexBonus;
-    }
-  }
-}
 
-export class WeaponModel extends ItemModel {
-  constructor(name: string, public damage: string, public damageType: string, requiresAttunement: boolean = false) {
-    super(name, true, requiresAttunement);
-    this.class = "weapon";
-  }
-
-  // 'melee' or range in feets
-  range: string;
-
-  // various different properties
-  light: boolean = false;
-  heavy: boolean = false;
-
-  twohanded: boolean = false;
-
-  fillFromJSON(json) {
-    if(json) {
-      super.fillFromJSON(json);
+      // Weapon variables
       this.damage = json.damage;
       this.damageType = json.damageType;
       this.range = json.range;
@@ -62,6 +75,14 @@ export class WeaponModel extends ItemModel {
       this.twohanded = json.twohanded;
     }
   }
+}
+
+export enum ItemType {
+  Item,
+  WonderousItem,
+  Artifact,
+  Armor,
+  Weapon,
 }
 
 export enum ArmorType {

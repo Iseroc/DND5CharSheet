@@ -4,17 +4,17 @@
   <require from="../../../data/extra/enums"></require>
 
   <div class="newItemArea">
-    <input class="itemName" type="text" placeholder="Name" value.bind="name"/>
+    <input class="itemName" type="text" placeholder="Name" value.bind="innerModel.name"/>
     <div class="typeSelectArea">
       <div class="typeTabs">
         <div>
-          <input type="radio" name="typeradio" value="item" checked.bind="selectedType" id="itemradio" ref="itemradio"/><label for="itemradio">Item</label>
+          <input type="radio" name="typeradio" value="ItemType.Item" checked.bind="innerModel.itemType" id="itemradio" ref="itemradio"/><label for="itemradio">Item</label>
         </div>
         <div>
-          <input type="radio" name="typeradio" value="armor" checked.bind="selectedType" id="armorradio" ref="armorradio"/><label for="armorradio">Armor</label>
+          <input type="radio" name="typeradio" value="ItemType.Armor" checked.bind="innerModel.itemType" id="armorradio" ref="armorradio"/><label for="armorradio">Armor</label>
         </div>
         <div>
-          <input type="radio" name="typeradio" value="weapon" checked.bind="selectedType" id="weaponradio" ref="weaponradio"/><label for="weaponradio">Weapon</label>
+          <input type="radio" name="typeradio" value="ItemType.Weapon" checked.bind="innerModel.itemType" id="weaponradio" ref="weaponradio"/><label for="weaponradio">Weapon</label>
         </div>
       </div>
       <div class="itemContentArea">
@@ -22,10 +22,10 @@
         <div show.bind="itemradio.checked" class="flex-container">
           <div class="textInput flex-center">
             <label>Quantity</label>
-            <input type="number" value.bind="quantity" placeholder="quantity" />
+            <input type="number" value.bind="innerModel.quantity" placeholder="quantity" />
           </div>
           <div class="flex-center itemEquippable">
-            <label><input type="checkbox" class="labelCheckBox" checked.bind="equippable" />Equippable</label>
+            <label><input type="checkbox" class="labelCheckBox" checked.bind="innerModel.equippable" />Equippable</label>
           </div>
         </div>
 
@@ -33,11 +33,11 @@
         <div show.bind="armorradio.checked" class="flex-container">
           <div class="textInput flex-center">
             <label>Base AC</label>
-            <input type="number" value.bind="baseAC" placeholder="base AC" />
+            <input type="number" value.bind="innerModel.baseAC" placeholder="base AC" />
           </div>
           <div class="textInput flex-center">
             <label>Max Dex bonus</label>
-            <input type="number" value.bind="maxDexBonus" placeholder="Max Dex bonus" />
+            <input type="number" value.bind="innerModel.maxDexBonus" placeholder="Max Dex bonus" />
           </div>
         </div>
 
@@ -45,11 +45,11 @@
         <div show.bind="weaponradio.checked" class="flex-container">
           <div class="textInput flex-center">
             <label>Damage</label>
-            <input type="text" value.bind="damage" placeholder="1d8" />
+            <input type="text" value.bind="innerModel.damage" placeholder="1d8" />
           </div>
           <div class="textInput flex-center">
             <label>Type</label>
-            <input type="text" value.bind="damageType" placeholder="slashing" />
+            <input type="text" value.bind="innerModel.damageType" placeholder="slashing" />
           </div>
         </div>
       </div>
@@ -57,7 +57,7 @@
     <div class="flexArea">
       <!-- ATTUNEMENT -->
       <div class="itemContentArea">
-        <label><input type="checkbox" class="labelCheckBox" checked.bind="attunement" />Requires attunement</label>
+        <label><input type="checkbox" class="labelCheckBox" checked.bind="innerModel.requiresAttunement" />Requires attunement</label>
       </div>
       <div class="charmodeArea">
         <charmod model.bind="innerModel"></charmod>

@@ -1,7 +1,6 @@
 <template>
   <require from="./inventory.css"></require>
-  <require from="./itemPopup/newItem"></require>
-  <require from="./itemPopup/editItem"></require>
+  <require from="./itemPopup/itemPopup"></require>
 
   <div class="contentArea">
     <div class="itemArea">
@@ -70,6 +69,6 @@
       <button class="functionButton" click.delegate="startCreatingNewItem()">Create a new item</button>
     </div>
   </div>
-  <new-item show.bind="showItemPopup" create-item.call="createItem(item)" cancel-item.call="cancelCreatingNewItem()"></new-item>
-  <edit-item show.bind="showEditPopup" item-to-edit.bind="itemToEdit" cancel-item.call="cancelEditItem()"></edit-item>
+  <item-popup show.bind="showItemPopup" save-item.call="createItem(item)" cancel-item.call="cancelCreatingNewItem()"></item-popup>
+  <item-popup show.bind="showEditPopup" model.bind="itemToEdit" cancel-item.call="cancelEditItem()"></item-popup>
 </template>

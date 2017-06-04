@@ -13,7 +13,7 @@ export class Combat {
     if(this.data.inventory.armor) {
       ac = this.data.inventory.armor.baseAC;
 
-      if(this.data.inventory.armor.type !== ArmorType.Heavy) {
+      if(this.data.inventory.armor.armorType !== ArmorType.Heavy) {
         ac += Math.min(this.data.character.statModifier(StatEnums.DEX), this.data.inventory.armor.maxDexBonus);
       }
     }
@@ -47,19 +47,21 @@ export class Combat {
     this.tempHP = value;
   }
 
-  currentHD = 16;
-  get hitDieNumber(): number {
-    return this.currentHD;
+  get maxHD(): number {
+    return this.data.character.maxHD;
   }
-  set hitDieNumber(value: number) {
-    this.currentHD = value;
+  get currentHD(): number {
+    return this.data.character.currentHD;
+  }
+  set currentHD(value: number) {
+    this.data.character.currentHD = value;
   }
 
   get hitDie() {
-    return '10';
+    return this.data.character.levels[0].hd;
   }
 
   savingThrow(stat: StatEnums) {
-    
+
   }
 }

@@ -1,0 +1,9 @@
+<template>
+  <require from="../../../../data/extra/enums"></require>
+
+  <select class="inputElement" value.bind="currentStat">
+    <option repeat.for="stat of StatEnums" model.bind="stat" disabled.bind="list.includes(stat) & signal:'stat-list-changed'">
+      ${stat | translate:data.translations:'stat'}
+    </option>
+  </select>
+</template>

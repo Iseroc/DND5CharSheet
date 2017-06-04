@@ -1,10 +1,10 @@
 import {SkillStats} from '../../data/extra/enums';
 import {DataAccessor} from '../../data/dataAccessor';
-import {WeaponModel} from '../../data/models/components/itemModel';
+import {ItemModel, ItemType} from '../../data/models/components/itemModel';
 import {StatEnums} from '../../data/extra/enums';
 
 export class AttackBonusValueConverter {
-  toView(weapon: WeaponModel, data: DataAccessor) {
+  toView(weapon: ItemModel, data: DataAccessor) {
     let ab = data.character.profiencyBonus;
 
     if(weapon.light) {
@@ -16,7 +16,7 @@ export class AttackBonusValueConverter {
 
     for(let item of data.inventory.equipped) {
       if(item.bonusAB) {
-        if(item instanceof WeaponModel) {
+        if(item.itemType === ItemType.Weapon) {
           if(item === weapon) {
             ab += item.bonusAB;
           }

@@ -6,7 +6,7 @@ import {RaceModel} from './models/components/raceModel';
 import {InventoryAccessor} from './models/inventoryAccessor';
 import {Translations} from './extra/translations';
 import {TraitModel} from './models/components/traitModel';
-import {ItemModel, ArmorModel, WeaponModel, ArmorType} from './models/components/itemModel';
+import {ItemModel, ArmorType} from './models/components/itemModel';
 import {StatEnums, SkillEnums} from './extra/enums';
 import {ProfiencyModel} from './models/components/profiencyModel';
 //import {FileSaver} from 'file-saver';
@@ -163,27 +163,27 @@ export class DataAccessor {
     this.character.race.addToStats.push(new AddToStatModel(StatEnums.WIS, 2));
 
     // Parse inventory
-    let arm1 = new ArmorModel('Adamantium full plate', ArmorType.Heavy, 18, 0);
+    let arm1 = ItemModel.ArmorModel('Adamantium full plate', ArmorType.Heavy, 18, 0);
     arm1.traits.push(new TraitModel('Critical hit immunity'));
     this.inventory.equip(arm1);
 
-    let wep1 = new WeaponModel('Greatsword of Life Stealing +1', '2d6+1', 'Slashing');
+    let wep1 = ItemModel.WeaponModel('Greatsword of Life Stealing +1', '2d6+1', 'Slashing');
     wep1.bonusAB = 1;
     this.inventory.equip(wep1);
 
-    let wep2 = new WeaponModel('Javelin', '1d6', 'Piercing');
+    let wep2 = ItemModel.WeaponModel('Javelin', '1d6', 'Piercing');
     this.inventory.equip(wep2);
 
-    let cloak = new ItemModel('Cloak of Protection', true, true);
+    let cloak = ItemModel.ItemModel('Cloak of Protection', true, true);
     cloak.bonusAC = 1;
     cloak.bonusToSaves = 1;
     this.inventory.equip(cloak);
 
-    let gloves = new ItemModel('Belt of Frost Giant Strength', true, true);
+    let gloves = ItemModel.ItemModel('Belt of Frost Giant Strength', true, true);
     gloves.setStats.push(new SetStatModel(StatEnums.STR, 23));
     this.inventory.equip(gloves);
 
-    let item2 = new ItemModel('Torch');
+    let item2 = ItemModel.ItemModel('Torch');
     this.inventory.moveToBackpack(item2);
   }
 
@@ -198,7 +198,7 @@ export class DataAccessor {
   public statValue(statKey: StatEnums, base: boolean = false): number {
     let val: number = this.character.getStat(statKey);
     if(!base) {
-      let max = val;
+      let max = 0;
 
       for(let list of this.charModArrays) {
         for(let item of list) {

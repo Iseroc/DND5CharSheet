@@ -75,6 +75,16 @@ export class CharacterAccessor {
     this.model.currentHP = value;
   }
 
+  get maxHD(): number {
+    return this.model.levels.length;
+  }
+  get currentHD(): number {
+    return this.model.currentHD;
+  }
+  set currentHD(value: number) {
+    this.model.currentHD = value;
+  }
+
   get stats() {
     return this.model.stats;
   }
